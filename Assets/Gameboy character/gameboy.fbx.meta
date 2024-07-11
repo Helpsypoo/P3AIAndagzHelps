@@ -33,11 +33,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Armature-gameboy|00-KEYING
-      takeName: Armature-gameboy|00-KEYING
+      name: Armature-gameboy|01-WALK (1)
+      takeName: Armature-gameboy|01-WALK
       internalID: -4782091674183579732
       firstFrame: 0
-      lastFrame: 0
+      lastFrame: 24
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
