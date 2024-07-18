@@ -1,7 +1,11 @@
 using UnityEngine;
+using Cinemachine;
 
 public class GameManager : MonoBehaviour {
+
     public static GameManager Instance;
+
+    public Camera MainCamera { get; private set; }
 
     private void Awake() {
         if (Instance) {
@@ -9,5 +13,8 @@ public class GameManager : MonoBehaviour {
         } else {
             Instance = this;
         }
+
+        MainCamera = Camera.main;
     }
+
 }
