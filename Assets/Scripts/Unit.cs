@@ -170,6 +170,7 @@ public class Unit : MonoBehaviour {
     public void Revive() {
         ChangeHealth(_unitStats.MaxHealth - _health);
         SetState(UnitState.Idle);
+        _navAgent.isStopped = false;
         _mesh.SetActive(true); //TODO: replace this with a revive anim
         _tickEntity.AddToTickEventManager();
     }
@@ -179,6 +180,8 @@ public class Unit : MonoBehaviour {
         if (healthRegen != null) {
             StopCoroutine(healthRegen);
         }
+
+        _navAgent.isStopped = true;
         
         _mesh.SetActive(false); //TODO: replace this with a death anim
         _tickEntity.RemoveFromTickEventManager();
