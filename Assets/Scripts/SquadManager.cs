@@ -8,12 +8,20 @@ public class SquadManager : MonoBehaviour {
 
     public static SquadManager Instance { get; private set; }
 
+
+
+
     [SerializeField] private Unit[] _units;
     private int _unitIndex = 0;
+
+    // The unit that is currently active, and actions will be performed with.
     public Unit SelectedUnit => _units[_unitIndex];
 
     [SerializeField] private CinemachineVirtualCamera _cinemachineCamera;
     [SerializeField] private SelectionCursor _cursor;
+
+
+    // Any unit the cursor is currently hovering over.
     private Transform _highlightedUnit;
 
     private BaseInput _input;
@@ -30,6 +38,7 @@ public class SquadManager : MonoBehaviour {
 
     private void OnEnable() {
         _input.Player.MoveClick.performed += MoveClick;
+        _input.Player.ActionClick.performed += ActionClick;
         _input.Player.Unit1.performed += SelectUnit1;
         _input.Player.Unit2.performed += SelectUnit2;
         _input.Player.Unit3.performed += SelectUnit3;
@@ -39,6 +48,7 @@ public class SquadManager : MonoBehaviour {
 
     private void OnDisable() {
         _input.Player.MoveClick.performed -= MoveClick;
+        _input.Player.ActionClick.performed -= ActionClick;
         _input.Player.Unit1.performed -= SelectUnit1;
         _input.Player.Unit2.performed -= SelectUnit2;
         _input.Player.Unit3.performed -= SelectUnit3;
@@ -52,39 +62,90 @@ public class SquadManager : MonoBehaviour {
     }
 
     private void Update() {
-        UpdateCursorPos();
+        UpdateSelectionMarker();
     }
 
+    /// <summary>
+    /// Called when right mouse button (or equivalent) is clicked.
+    /// </summary>
+    /// <param name="obj"></param>
     private void MoveClick(InputAction.CallbackContext obj) {
 
+        Unit unit;
+        
+        // If we have highlighted unit.
         if (_highlightedUnit != null) {
-            SelectUnit(_highlightedUnit);
-        } else {
+
+            // Get the Unit component and make sure we succesfully got it.
+            unit = _highlightedUnit.GetComponent<Unit>();
+            if (unit != null) {
+                // If the selected unit's state is not dead, select dat unit.
+                if (unit.State != UnitState.Dead) {
+                    SelectUnit(_highlightedUnit);
+                } else {
+                    // TODO get distination near corpse rather than trying to walk onto it.
+                    SelectedUnit.MoveTo(_highlightedUnit.position);
+                }
+            }
+        // If we are clicking on navigable terrain, set the selected unit awf to that destination.
+        } else if (_cursor.Type == SelectionType.Navigation) {
             SelectedUnit.MoveTo(_cursor.transform.position);
         }
+
     }
 
-    private void UpdateCursorPos() {
+    /// <summary>
+    /// Called when the left mouse button (or equivalent) is clicked.
+    /// </summary>
+    /// <param name="obj"></param>
+    private void ActionClick(InputAction.CallbackContext obj) {
+
+        if (_highlightedUnit != null) {
+            Unit unit = _highlightedUnit.GetComponent<Unit>();
+            if (unit != null && unit.State == UnitState.Dead) {
+                unit.Revive();
+            }
+        }
+
+    }
+
+    /// <summary>
+    /// Updates the postition, orientation, and state of the selection marker.
+    /// </summary>
+    private void UpdateSelectionMarker() {
         Vector2 mousePosition = _input.Player.Mouse.ReadValue<Vector2>();
         Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hitInfo)) {
 
             Vector3 newPos = hitInfo.point;
 
-            if (hitInfo.transform.CompareTag("NotWalkable")) {
+            Vector3 newUp = hitInfo.normal;
+
+            if (hitInfo.transform.CompareTag(Globals.NOT_WALKABLE_TAG)) {
+
                 _cursor.SetSelectionType(SelectionType.Invalid);
                 _highlightedUnit = null;
-            } else if (hitInfo.transform.CompareTag("Unit")) {
+
+            } else if (hitInfo.transform.CompareTag(Globals.UNIT_TAG)) {
+
                 _cursor.SetSelectionType(SelectionType.SelectUnit);
                 _highlightedUnit = hitInfo.transform;
                 newPos = hitInfo.transform.position;
+                newUp = Vector3.up;
+
+            } else if (hitInfo.transform.CompareTag(Globals.DOWNED_UNIT_TAG)) {
+
+                _cursor.SetSelectionType(SelectionType.ReviveUnit);
+                _highlightedUnit = hitInfo.transform;
+                newPos = hitInfo.transform.position;
+                newUp = Vector3.up;
+
             } else {
                 _cursor.SetSelectionType(SelectionType.Navigation);
                 _highlightedUnit = null;
             }
             
-            newPos.y += 0.01f;  // Raise cursor up a smidgeon to avoid Z fighting.
-            _cursor.transform.position = newPos;
+            _cursor.Place(newPos, newUp);
         }
     }
 
@@ -124,7 +185,6 @@ public class SquadManager : MonoBehaviour {
 
         Unit unit = unitTransform.GetComponent<Unit>();
         if (unit == null) return;
-        Debug.Log("Selecting unit by click");
         SelectUnit(unit.SquadNumber);
 
     }

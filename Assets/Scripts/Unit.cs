@@ -8,10 +8,10 @@ public class Unit : MonoBehaviour {
 
     [SerializeField] private HealthDisplay _healthDisplay;
 
-    [SerializeField] GameObject _selectionIndicator;
+    [SerializeField] MeshRenderer _selectionIndicator;
     [SerializeField] GameObject _mesh;
-    private Collider _collider;
-    
+    [SerializeField] GameObject _dedMesh;
+  
     public UnitState State { get; private set; }
     private NavMeshAgent _navAgent;
     private TickEntity _tickEntity;
@@ -38,7 +38,6 @@ public class Unit : MonoBehaviour {
             throw new System.Exception($"Cannot find NavMeshAgent on unit {transform.name}.");
         }
 
-        _collider = GetComponent<Collider>();
         _tickEntity = GetComponent<TickEntity>();
     }
 
@@ -71,7 +70,12 @@ public class Unit : MonoBehaviour {
     /// <param name="destination">The location the unit will attempt to move to.</param>
     public void MoveTo(Vector3 destination) {
         if(State == UnitState.Dead) {
-            return;
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(destination, out hit, 2f, NavMesh.AllAreas)) {
+                _navAgent.SetDestination(hit.position);
+            } else {
+                return;
+            }
         }
         _navAgent.SetDestination(destination);
     }
@@ -80,14 +84,14 @@ public class Unit : MonoBehaviour {
     /// Called when this unit is selected by the player.
     /// </summary>
     public void Select() {
-        _selectionIndicator.SetActive(true);
+        _selectionIndicator.gameObject.SetActive(true);
     }
 
     /// <summary>
     /// Called when this unit becomes deselected.
     /// </summary>
     public void Deselect() {
-        _selectionIndicator?.SetActive(false);
+        _selectionIndicator.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -183,7 +187,8 @@ public class Unit : MonoBehaviour {
         SetState(UnitState.Idle);
         _navAgent.isStopped = false;
         _mesh.SetActive(true); //TODO: replace this with a revive anim
-        _collider.enabled = true;
+        _dedMesh.SetActive(false);
+        transform.tag = Globals.UNIT_TAG;
         _tickEntity.AddToTickEventManager();
     }
 
@@ -196,7 +201,8 @@ public class Unit : MonoBehaviour {
         _navAgent.isStopped = true;
         
         _mesh.SetActive(false); //TODO: replace this with a death anim
-        _collider.enabled = false;
+        _dedMesh.SetActive(true);
+        transform.tag = Globals.DOWNED_UNIT_TAG;
         _tickEntity.RemoveFromTickEventManager();
 
         // If we are the currently selected unit, tell the squadmanager to select another unit.
