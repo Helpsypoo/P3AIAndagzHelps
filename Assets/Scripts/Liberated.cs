@@ -1,18 +1,19 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Unit : MonoBehaviour {
-
+public class Liberated : MonoBehaviour
+{
     [SerializeField] private UnitStats _unitStats;
 
     [SerializeField] private HealthDisplay _healthDisplay;
-
-    [SerializeField] MeshRenderer _selectionIndicator;
     [SerializeField] GameObject _mesh;
     [SerializeField] GameObject _dedMesh;
-  
+    
     public UnitState State { get; private set; }
+    public bool IsLeader;
     private NavMeshAgent _navAgent;
     private TickEntity _tickEntity;
     
@@ -21,15 +22,7 @@ public class Unit : MonoBehaviour {
     private float _timeInShade;
 
     private Coroutine healthRegen;
-
-    /// <summary>
-    /// The index in the SquadManager._units array.
-    /// </summary>
-    private int _squadNumber = 0;
-    public int SquadNumber => _squadNumber;
-    public void UpdateSquadNumber(int number) {
-        _squadNumber = number;
-    }
+    
     
     private void Awake() {
         
@@ -40,7 +33,7 @@ public class Unit : MonoBehaviour {
 
         _tickEntity = GetComponent<TickEntity>();
     }
-
+    
     private void Start() {
         _tickEntity.AddToTickEventManager();
         ChangeHealth(_unitStats.MaxHealth - _health, true);
@@ -82,26 +75,30 @@ public class Unit : MonoBehaviour {
     }
 
     /// <summary>
-    /// Called when this unit is selected by the player.
-    /// </summary>
-    public void Select() {
-        _selectionIndicator.gameObject.SetActive(true);
-    }
-
-    /// <summary>
-    /// Called when this unit becomes deselected.
-    /// </summary>
-    public void Deselect() {
-        _selectionIndicator.gameObject.SetActive(false);
-    }
-
-    /// <summary>
     /// Called via the TickEntity system. A periodic check
     /// </summary>
     public void PeriodicUpdate() {
         float _timeSinceLastCheck = Time.time - _timeAtLastCheck;
         CheckLightingStatus(_timeSinceLastCheck);
+        if (IsLeader) {
+            if (GameManager.Instance.ActiveWaypoints.Count > 0) {
+                MoveTo(GameManager.Instance.ActiveWaypoints[0].transform.position);
+            }
+        } else {
+            MoveTo(GameManager.Instance.GetFollowingPosition(this));
+        }
+
+        State = _navAgent.velocity.magnitude > 0f ? UnitState.Moving : UnitState.Idle;
         _timeAtLastCheck = Time.time;
+    }
+
+    public void Revive() {
+        ChangeHealth(_unitStats.MaxHealth - _health);
+        SetState(UnitState.Idle);
+        _navAgent.isStopped = false;
+        _mesh.SetActive(true); //TODO: replace this with a revive anim
+        _dedMesh.SetActive(false);
+        _tickEntity.AddToTickEventManager();
     }
     
     /// <summary>
@@ -134,8 +131,6 @@ public class Unit : MonoBehaviour {
             case UnitState.Idle:
                 break;
             case UnitState.Moving:
-                break;
-            case UnitState.Attacking:
                 break;
             case UnitState.Dead:
                 Die();
@@ -182,16 +177,6 @@ public class Unit : MonoBehaviour {
             yield return new WaitForEndOfFrame();
         }
     }
-    
-    public void Revive() {
-        ChangeHealth(_unitStats.MaxHealth - _health);
-        SetState(UnitState.Idle);
-        _navAgent.isStopped = false;
-        _mesh.SetActive(true); //TODO: replace this with a revive anim
-        _dedMesh.SetActive(false);
-        transform.tag = Globals.UNIT_TAG;
-        _tickEntity.AddToTickEventManager();
-    }
 
     private void Die() {
         //Stop any current health regen
@@ -200,19 +185,13 @@ public class Unit : MonoBehaviour {
         }
 
         _navAgent.isStopped = true;
-        
+        GameManager.Instance.ProcessLiberatedDeath(this);
+        _tickEntity.RemoveFromTickEventManager();
         _mesh.SetActive(false); //TODO: replace this with a death anim
         _dedMesh.SetActive(true);
-        transform.tag = Globals.DOWNED_UNIT_TAG;
-        _tickEntity.RemoveFromTickEventManager();
+    }
 
-        // If we are the currently selected unit, tell the squadmanager to select another unit.
-        if (SquadManager.Instance.SelectedUnit == this) {
-            Debug.Log("Asking Squadmanager to select a new unit");
-            SquadManager.Instance.SelectNextAvailableUnit();
-        }
-
+    public void SetStopDistance(float _value) {
+        _navAgent.stoppingDistance = _value;
     }
 }
-
-

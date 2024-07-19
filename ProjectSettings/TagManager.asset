@@ -7,6 +7,7 @@ TagManager:
   - NotWalkable
   - Unit
   - DownedUnit
+  - Liberated
   layers:
   - Default
   - TransparentFX
