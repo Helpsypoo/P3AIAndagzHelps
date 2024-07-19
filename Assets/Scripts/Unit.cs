@@ -11,7 +11,7 @@ public class Unit : MonoBehaviour {
     [SerializeField] MeshRenderer _selectionIndicator;
     [SerializeField] GameObject _mesh;
     [SerializeField] GameObject _dedMesh;
-    
+  
     public UnitState State { get; private set; }
     private NavMeshAgent _navAgent;
     private TickEntity _tickEntity;
@@ -45,7 +45,6 @@ public class Unit : MonoBehaviour {
         _tickEntity.AddToTickEventManager();
         ChangeHealth(_unitStats.MaxHealth - _health, true);
         _mesh.SetActive(true);
-        _selectionIndicator.material.color = _unitStats.Colour;
     }
 
     private void Update() {

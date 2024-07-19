@@ -41,6 +41,7 @@ public class SelectionCursor : MonoBehaviour {
             case SelectionType.SelectUnit:
                 _renderer.material.color = Color.blue;
                 break;
+
             case SelectionType.ReviveUnit:
                 _renderer.material.color = Color.green;
                 break;

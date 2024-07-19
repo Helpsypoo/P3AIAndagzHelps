@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b2cf4d7924b603942a5706aeea40ab6f
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _unitStats: {fileID: 11400000, guid: f5621827a82d8944684cbc817e8ef525, type: 2}
+  - _healthDisplay: {instanceID: 0}
+  - _selectionIndicator: {instanceID: 0}
+  - _mesh: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

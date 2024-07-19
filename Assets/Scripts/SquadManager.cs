@@ -10,6 +10,7 @@ public class SquadManager : MonoBehaviour {
 
 
 
+
     [SerializeField] private Unit[] _units;
     private int _unitIndex = 0;
 
@@ -18,6 +19,7 @@ public class SquadManager : MonoBehaviour {
 
     [SerializeField] private CinemachineVirtualCamera _cinemachineCamera;
     [SerializeField] private SelectionCursor _cursor;
+
 
     // Any unit the cursor is currently hovering over.
     private Transform _highlightedUnit;
@@ -116,6 +118,7 @@ public class SquadManager : MonoBehaviour {
         if (Physics.Raycast(ray, out RaycastHit hitInfo)) {
 
             Vector3 newPos = hitInfo.point;
+
             Vector3 newUp = hitInfo.normal;
 
             if (hitInfo.transform.CompareTag(Globals.NOT_WALKABLE_TAG)) {
