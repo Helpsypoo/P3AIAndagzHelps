@@ -138,7 +138,7 @@ GameObject:
   - component: {fileID: 28291146}
   m_Layer: 0
   m_Name: Capsule (12)
-  m_TagString: Untagged
+  m_TagString: NotWalkable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -262,7 +262,7 @@ GameObject:
   - component: {fileID: 70669530}
   m_Layer: 0
   m_Name: Capsule (11)
-  m_TagString: Untagged
+  m_TagString: NotWalkable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -475,7 +475,7 @@ GameObject:
   - component: {fileID: 113996381}
   m_Layer: 0
   m_Name: Capsule (6)
-  m_TagString: Untagged
+  m_TagString: NotWalkable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -599,7 +599,7 @@ GameObject:
   - component: {fileID: 152917013}
   m_Layer: 0
   m_Name: Capsule (3)
-  m_TagString: Untagged
+  m_TagString: NotWalkable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -895,7 +895,7 @@ GameObject:
   - component: {fileID: 358584371}
   m_Layer: 0
   m_Name: Capsule (16)
-  m_TagString: Untagged
+  m_TagString: NotWalkable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -1137,7 +1137,7 @@ GameObject:
   - component: {fileID: 418000121}
   m_Layer: 0
   m_Name: Capsule (7)
-  m_TagString: Untagged
+  m_TagString: NotWalkable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -1261,7 +1261,7 @@ GameObject:
   - component: {fileID: 470934606}
   m_Layer: 0
   m_Name: Capsule (18)
-  m_TagString: Untagged
+  m_TagString: NotWalkable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -1385,7 +1385,7 @@ GameObject:
   - component: {fileID: 493303554}
   m_Layer: 0
   m_Name: Capsule (27)
-  m_TagString: Untagged
+  m_TagString: NotWalkable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -1509,7 +1509,7 @@ GameObject:
   - component: {fileID: 524952905}
   m_Layer: 0
   m_Name: Capsule (19)
-  m_TagString: Untagged
+  m_TagString: NotWalkable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -1686,6 +1686,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5344825663267763069, guid: 21e4e28341cf4064ca245be07c9b5fb4,
+        type: 3}
+      propertyPath: m_TagString
+      value: Unit
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1706,7 +1711,7 @@ GameObject:
   - component: {fileID: 646511326}
   m_Layer: 0
   m_Name: Capsule (24)
-  m_TagString: Untagged
+  m_TagString: NotWalkable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -1934,7 +1939,7 @@ GameObject:
   - component: {fileID: 824936493}
   m_Layer: 0
   m_Name: Capsule (21)
-  m_TagString: Untagged
+  m_TagString: NotWalkable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -2151,7 +2156,7 @@ GameObject:
   - component: {fileID: 911450698}
   m_Layer: 0
   m_Name: Capsule (14)
-  m_TagString: Untagged
+  m_TagString: NotWalkable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -2275,7 +2280,7 @@ GameObject:
   - component: {fileID: 928703175}
   m_Layer: 0
   m_Name: Capsule (10)
-  m_TagString: Untagged
+  m_TagString: NotWalkable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -2399,7 +2404,7 @@ GameObject:
   - component: {fileID: 939207038}
   m_Layer: 0
   m_Name: Capsule (23)
-  m_TagString: Untagged
+  m_TagString: NotWalkable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -2523,7 +2528,7 @@ GameObject:
   - component: {fileID: 999445601}
   m_Layer: 0
   m_Name: Capsule (15)
-  m_TagString: Untagged
+  m_TagString: NotWalkable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -2700,6 +2705,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5344825663267763069, guid: 21e4e28341cf4064ca245be07c9b5fb4,
+        type: 3}
+      propertyPath: m_TagString
+      value: Unit
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2809,7 +2819,7 @@ GameObject:
   - component: {fileID: 1204144406}
   m_Layer: 0
   m_Name: Capsule (25)
-  m_TagString: Untagged
+  m_TagString: NotWalkable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -2933,7 +2943,7 @@ GameObject:
   - component: {fileID: 1267420787}
   m_Layer: 0
   m_Name: Capsule (26)
-  m_TagString: Untagged
+  m_TagString: NotWalkable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -3057,7 +3067,7 @@ GameObject:
   - component: {fileID: 1332494185}
   m_Layer: 0
   m_Name: Capsule (8)
-  m_TagString: Untagged
+  m_TagString: NotWalkable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -3313,6 +3323,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1438864558}
+  - component: {fileID: 1438864559}
   - component: {fileID: 1438864557}
   - component: {fileID: 1438864556}
   m_Layer: 0
@@ -3387,6 +3398,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1438864559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1438864555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b424ec6f8a3c2d24baa10320e42b5ad1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1440085683
 GameObject:
   m_ObjectHideFlags: 0
@@ -3402,7 +3425,7 @@ GameObject:
   - component: {fileID: 1440085688}
   m_Layer: 0
   m_Name: Capsule (13)
-  m_TagString: Untagged
+  m_TagString: NotWalkable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -3526,7 +3549,7 @@ GameObject:
   - component: {fileID: 1452022742}
   m_Layer: 0
   m_Name: Capsule (1)
-  m_TagString: Untagged
+  m_TagString: NotWalkable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -3703,6 +3726,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5344825663267763069, guid: 21e4e28341cf4064ca245be07c9b5fb4,
+        type: 3}
+      propertyPath: m_TagString
+      value: Unit
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3723,7 +3751,7 @@ GameObject:
   - component: {fileID: 1554729887}
   m_Layer: 0
   m_Name: Capsule (5)
-  m_TagString: Untagged
+  m_TagString: NotWalkable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -3859,7 +3887,7 @@ GameObject:
   - component: {fileID: 1613396994}
   m_Layer: 0
   m_Name: Capsule (2)
-  m_TagString: Untagged
+  m_TagString: NotWalkable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -3983,7 +4011,7 @@ GameObject:
   - component: {fileID: 1687878248}
   m_Layer: 0
   m_Name: Capsule (4)
-  m_TagString: Untagged
+  m_TagString: NotWalkable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -4107,7 +4135,7 @@ GameObject:
   - component: {fileID: 1702279814}
   m_Layer: 0
   m_Name: Capsule
-  m_TagString: Untagged
+  m_TagString: NotWalkable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -4231,7 +4259,7 @@ GameObject:
   - component: {fileID: 1754604318}
   m_Layer: 0
   m_Name: Capsule (22)
-  m_TagString: Untagged
+  m_TagString: NotWalkable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -4375,7 +4403,7 @@ MonoBehaviour:
   - {fileID: 720090617}
   - {fileID: 1606653419}
   _cinemachineCamera: {fileID: 111726572}
-  _cursor: {fileID: 1438864558}
+  _cursor: {fileID: 1438864559}
 --- !u!4 &1824458237
 Transform:
   m_ObjectHideFlags: 0
@@ -4418,7 +4446,7 @@ GameObject:
   - component: {fileID: 2044019463}
   m_Layer: 0
   m_Name: Capsule (9)
-  m_TagString: Untagged
+  m_TagString: NotWalkable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -4542,7 +4570,7 @@ GameObject:
   - component: {fileID: 2075501043}
   m_Layer: 0
   m_Name: Capsule (17)
-  m_TagString: Untagged
+  m_TagString: NotWalkable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -4666,7 +4694,7 @@ GameObject:
   - component: {fileID: 2079866993}
   m_Layer: 0
   m_Name: Capsule (20)
-  m_TagString: Untagged
+  m_TagString: NotWalkable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -5027,6 +5055,11 @@ PrefabInstance:
     - target: {fileID: 5344825663267763069, guid: 21e4e28341cf4064ca245be07c9b5fb4,
         type: 3}
       propertyPath: m_Name
+      value: Unit
+      objectReference: {fileID: 0}
+    - target: {fileID: 5344825663267763069, guid: 21e4e28341cf4064ca245be07c9b5fb4,
+        type: 3}
+      propertyPath: m_TagString
       value: Unit
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -10,8 +10,9 @@ public class Unit : MonoBehaviour {
 
     [SerializeField] GameObject _selectionIndicator;
     [SerializeField] GameObject _mesh;
+    private Collider _collider;
     
-    private UnitState _unitState;
+    public UnitState State { get; private set; }
     private NavMeshAgent _navAgent;
     private TickEntity _tickEntity;
     
@@ -20,6 +21,15 @@ public class Unit : MonoBehaviour {
     private float _timeInShade;
 
     private Coroutine healthRegen;
+
+    /// <summary>
+    /// The index in the SquadManager._units array.
+    /// </summary>
+    private int _squadNumber = 0;
+    public int SquadNumber => _squadNumber;
+    public void UpdateSquadNumber(int number) {
+        _squadNumber = number;
+    }
     
     private void Awake() {
         
@@ -28,6 +38,7 @@ public class Unit : MonoBehaviour {
             throw new System.Exception($"Cannot find NavMeshAgent on unit {transform.name}.");
         }
 
+        _collider = GetComponent<Collider>();
         _tickEntity = GetComponent<TickEntity>();
     }
 
@@ -45,7 +56,7 @@ public class Unit : MonoBehaviour {
     /// If we have path, turn the unit to face the direction they are going.
     /// </summary>
     private void LookWhereYoureGoing() {
-        if (!_navAgent.hasPath || _unitState == UnitState.Dead) {
+        if (!_navAgent.hasPath || State == UnitState.Dead) {
             return;
         }
 
@@ -59,7 +70,7 @@ public class Unit : MonoBehaviour {
     /// </summary>
     /// <param name="destination">The location the unit will attempt to move to.</param>
     public void MoveTo(Vector3 destination) {
-        if(_unitState == UnitState.Dead) {
+        if(State == UnitState.Dead) {
             return;
         }
         _navAgent.SetDestination(destination);
@@ -109,7 +120,7 @@ public class Unit : MonoBehaviour {
     /// Sets the state of the current unit
     /// </summary>
     public void SetState(UnitState _newState) {
-        if (_newState == _unitState) {
+        if (_newState == State) {
             return;
         }
 
@@ -126,7 +137,7 @@ public class Unit : MonoBehaviour {
                 break;
         }
         
-        _unitState = _newState;
+        State = _newState;
     }
 
     public void ChangeHealth(float _amount, bool _hiddenDisplayUpdate = false) {
@@ -172,6 +183,7 @@ public class Unit : MonoBehaviour {
         SetState(UnitState.Idle);
         _navAgent.isStopped = false;
         _mesh.SetActive(true); //TODO: replace this with a revive anim
+        _collider.enabled = true;
         _tickEntity.AddToTickEventManager();
     }
 
@@ -184,7 +196,15 @@ public class Unit : MonoBehaviour {
         _navAgent.isStopped = true;
         
         _mesh.SetActive(false); //TODO: replace this with a death anim
+        _collider.enabled = false;
         _tickEntity.RemoveFromTickEventManager();
+
+        // If we are the currently selected unit, tell the squadmanager to select another unit.
+        if (SquadManager.Instance.SelectedUnit == this) {
+            Debug.Log("Asking Squadmanager to select a new unit");
+            SquadManager.Instance.SelectNextAvailableUnit();
+        }
+
     }
 }
 

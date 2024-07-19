@@ -5,7 +5,7 @@ public class GameManager : MonoBehaviour {
 
     public static GameManager Instance;
 
-    public float SunDamagePerSecond = .5f;
+    public float SunDamagePerSecond = 2.5f;
     
     public LayerMask ShadeLayerMask;
 
