@@ -100,12 +100,13 @@ public class SquadManager : MonoBehaviour {
     /// <param name="obj"></param>
     private void ActionClick(InputAction.CallbackContext obj) {
 
-        if (_highlightedUnit != null) {
-            Unit unit = _highlightedUnit.GetComponent<Unit>();
-            if (unit != null && unit.State == UnitState.Dead) {
-                unit.Revive();
-            }
-        }
+        //if (_highlightedUnit != null) {
+        //    Unit unit = _highlightedUnit.GetComponent<Unit>();
+        //    if (unit != null && unit.State == UnitState.Dead) {
+        //        unit.Revive();
+        //    }
+        //}
+        SelectedUnit.PerformAction(_cursor.transform.position);
 
     }
 

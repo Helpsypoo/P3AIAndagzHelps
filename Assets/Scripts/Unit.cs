@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
@@ -9,11 +10,13 @@ public class Unit : MonoBehaviour {
     [SerializeField] private HealthDisplay _healthDisplay;
 
     [SerializeField] MeshRenderer _selectionIndicator;
-    [SerializeField] GameObject _mesh;
+    [SerializeField] MeshRenderer _mesh;
     [SerializeField] GameObject _dedMesh;
+
+    
   
     public UnitState State { get; private set; }
-    private NavMeshAgent _navAgent;
+    protected NavMeshAgent _navAgent;
     private TickEntity _tickEntity;
     
     private float _health;
@@ -44,11 +47,12 @@ public class Unit : MonoBehaviour {
     private void Start() {
         _tickEntity.AddToTickEventManager();
         ChangeHealth(_unitStats.MaxHealth - _health, true);
-        _mesh.SetActive(true);
+        _mesh.material.color = _unitStats.Colour;
+        _mesh.gameObject.SetActive(true);
         _navAgent.speed = _unitStats.Speed;
     }
 
-    private void Update() {
+    public virtual void Update() {
         LookWhereYoureGoing();
     }
 
@@ -79,6 +83,17 @@ public class Unit : MonoBehaviour {
             }
         }
         _navAgent.SetDestination(destination);
+    }
+
+    /// <summary>
+    /// Called whenever this unit is called upon to perform an action (whatever their action is).
+    /// This function should contain any code that needs to be run for ANY unit regardless of type.
+    /// Code specific to an individual unit type should be run in an inherited override.
+    /// </summary>
+    /// <param name="position">The position that the action should be performed at (where the click happened)</param>
+    /// <param name="target">The thing that was clicked on. Can be null.</param>
+    public virtual void PerformAction(Vector3 position, Transform target = null) {
+        Debug.Log($"{_unitStats.Name} unit action has been called.");
     }
 
     /// <summary>
@@ -187,7 +202,7 @@ public class Unit : MonoBehaviour {
         ChangeHealth(_unitStats.MaxHealth - _health);
         SetState(UnitState.Idle);
         _navAgent.isStopped = false;
-        _mesh.SetActive(true); //TODO: replace this with a revive anim
+        _mesh.gameObject.SetActive(true); //TODO: replace this with a revive anim
         _dedMesh.SetActive(false);
         transform.tag = Globals.UNIT_TAG;
         _tickEntity.AddToTickEventManager();
@@ -201,7 +216,7 @@ public class Unit : MonoBehaviour {
 
         _navAgent.isStopped = true;
         
-        _mesh.SetActive(false); //TODO: replace this with a death anim
+        _mesh.gameObject.SetActive(false); //TODO: replace this with a death anim
         _dedMesh.SetActive(true);
         transform.tag = Globals.DOWNED_UNIT_TAG;
         _tickEntity.RemoveFromTickEventManager();
@@ -213,6 +228,7 @@ public class Unit : MonoBehaviour {
         }
 
     }
+
 }
 
 

@@ -110,4 +110,8 @@ public class GameManager : MonoBehaviour {
     public void RemoveWaypoint(Waypoint _waypoint) {
         ActiveWaypoints.Remove(_waypoint);
     }
+
+    public void AddWaypoint(Waypoint _waypoint) {
+        ActiveWaypoints.Add(_waypoint);
+    }
 }

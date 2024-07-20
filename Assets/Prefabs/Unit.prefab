@@ -444,7 +444,7 @@ MonoBehaviour:
   _unitStats: {fileID: 11400000, guid: f5621827a82d8944684cbc817e8ef525, type: 2}
   _healthDisplay: {fileID: 4620286243341599770}
   _selectionIndicator: {fileID: 2258014338002724124}
-  _mesh: {fileID: 285259293295838792}
+  _mesh: {fileID: 2341399444539801128}
   _dedMesh: {fileID: 4523440855280789941}
 --- !u!114 &417735457569587794
 MonoBehaviour:
