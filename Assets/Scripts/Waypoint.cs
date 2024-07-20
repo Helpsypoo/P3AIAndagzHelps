@@ -8,9 +8,17 @@ public class Waypoint : MonoBehaviour {
 				return;
 			}
 
-			GameManager.Instance.RemoveWaypoint(this);
-			Destroy(gameObject);
+			Remove();
+
 		}
 	}
+
+	/// <summary>
+	/// Removes this waypoint from the waypoints list and destroys the waypoint in the scene.
+	/// </summary>
+	public void Remove() {
+        GameManager.Instance.RemoveWaypoint(this);
+        Destroy(gameObject);
+    }
 
 }

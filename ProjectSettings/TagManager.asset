@@ -8,6 +8,8 @@ TagManager:
   - Unit
   - DownedUnit
   - Liberated
+  - Waypoint
+  - Walkable
   layers:
   - Default
   - TransparentFX

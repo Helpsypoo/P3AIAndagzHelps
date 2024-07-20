@@ -23,6 +23,8 @@ public class Unit : MonoBehaviour {
     private float _timeAtLastCheck;
     private float _timeInShade;
 
+    [field: SerializeField] public bool AtDestination { get; private set; }
+
     private Coroutine healthRegen;
 
     /// <summary>
@@ -54,6 +56,7 @@ public class Unit : MonoBehaviour {
 
     public virtual void Update() {
         LookWhereYoureGoing();
+        UpdateDestinationStatus();
     }
 
     /// <summary>
@@ -69,20 +72,32 @@ public class Unit : MonoBehaviour {
         transform.LookAt(lookTarget);
     }
 
+    private void UpdateDestinationStatus() {
+
+        bool prevDestination = AtDestination;
+
+        // If we don't currently have a path we are at our destination.
+        if (!_navAgent.hasPath) {
+            AtDestination = true;
+        } else {
+            float sqrThreshold = Globals.MIN_ACTION_DIST * Globals.MIN_ACTION_DIST;
+            AtDestination = (_navAgent.destination - transform.position).sqrMagnitude <= sqrThreshold;
+        }
+
+        // If we are now at our destination and we weren't before, throw a call to SelectionCursor to see if it needs to deactivate.
+        if (AtDestination && prevDestination != AtDestination) {
+            GameManager.Instance.SelectionMarker.CheckAction(transform.position);
+        }
+
+    }
+
     /// <summary>
     /// Sends unit to a new destination.
     /// </summary>
     /// <param name="destination">The location the unit will attempt to move to.</param>
     public void MoveTo(Vector3 destination) {
-        if(State == UnitState.Dead) {
-            NavMeshHit hit;
-            if (NavMesh.SamplePosition(destination, out hit, 2f, NavMesh.AllAreas)) {
-                _navAgent.SetDestination(hit.position);
-            } else {
-                return;
-            }
-        }
         _navAgent.SetDestination(destination);
+        GameManager.Instance.SelectionMarker.Activate();
     }
 
     /// <summary>
@@ -93,7 +108,7 @@ public class Unit : MonoBehaviour {
     /// <param name="position">The position that the action should be performed at (where the click happened)</param>
     /// <param name="target">The thing that was clicked on. Can be null.</param>
     public virtual void PerformAction(Vector3 position, Transform target = null) {
-        Debug.Log($"{_unitStats.Name} unit action has been called.");
+        Debug.Log($"{_unitStats.Name}'s action has been called.");
     }
 
     /// <summary>

@@ -3550,7 +3550,7 @@ GameObject:
   - component: {fileID: 6838831912168305907}
   m_Layer: 0
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: Walkable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647

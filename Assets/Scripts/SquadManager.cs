@@ -16,13 +16,13 @@ public class SquadManager : MonoBehaviour {
 
     // The unit that is currently active, and actions will be performed with.
     public Unit SelectedUnit => _units[_unitIndex];
+    [field: SerializeField] public int WaypointStash { get; private set; }
 
     [SerializeField] private CinemachineVirtualCamera _cinemachineCamera;
-    [SerializeField] private SelectionCursor _cursor;
 
 
     // Any unit the cursor is currently hovering over.
-    private Transform _highlightedUnit;
+    private Transform _highlightedEntity;
 
     private BaseInput _input;
 
@@ -56,13 +56,12 @@ public class SquadManager : MonoBehaviour {
     }
 
     private void Start() {
-        Cursor.visible = false;
         UpdateSquadNumbers();
         SelectUnit(0);
     }
 
     private void Update() {
-        UpdateSelectionMarker();
+        //UpdateSelectionMarker();
     }
 
     /// <summary>
@@ -71,25 +70,27 @@ public class SquadManager : MonoBehaviour {
     /// <param name="obj"></param>
     private void MoveClick(InputAction.CallbackContext obj) {
 
+        UpdateSelectionMarker();
+
         Unit unit;
         
         // If we have highlighted unit.
-        if (_highlightedUnit != null) {
+        if (_highlightedEntity != null && _highlightedEntity.CompareTag(Globals.UNIT_TAG)) {
 
             // Get the Unit component and make sure we succesfully got it.
-            unit = _highlightedUnit.GetComponent<Unit>();
+            unit = _highlightedEntity.GetComponent<Unit>();
             if (unit != null) {
                 // If the selected unit's state is not dead, select dat unit.
                 if (unit.State != UnitState.Dead) {
-                    SelectUnit(_highlightedUnit);
+                    SelectUnit(_highlightedEntity);
                 } else {
                     // TODO get distination near corpse rather than trying to walk onto it.
-                    SelectedUnit.MoveTo(_highlightedUnit.position);
+                    SelectedUnit.MoveTo(_highlightedEntity.position);
                 }
             }
         // If we are clicking on navigable terrain, set the selected unit awf to that destination.
-        } else if (_cursor.Type == SelectionType.Navigation) {
-            SelectedUnit.MoveTo(_cursor.transform.position);
+        } else if (GameManager.Instance.SelectionMarker.CanWalk) {
+            SelectedUnit.MoveTo(GameManager.Instance.SelectionMarker.transform.position);
         }
 
     }
@@ -100,13 +101,8 @@ public class SquadManager : MonoBehaviour {
     /// <param name="obj"></param>
     private void ActionClick(InputAction.CallbackContext obj) {
 
-        //if (_highlightedUnit != null) {
-        //    Unit unit = _highlightedUnit.GetComponent<Unit>();
-        //    if (unit != null && unit.State == UnitState.Dead) {
-        //        unit.Revive();
-        //    }
-        //}
-        SelectedUnit.PerformAction(_cursor.transform.position);
+        UpdateSelectionMarker();
+        SelectedUnit.PerformAction(GameManager.Instance.SelectionMarker.transform.position, _highlightedEntity);
 
     }
 
@@ -114,39 +110,26 @@ public class SquadManager : MonoBehaviour {
     /// Updates the postition, orientation, and state of the selection marker.
     /// </summary>
     private void UpdateSelectionMarker() {
+
         Vector2 mousePosition = _input.Player.Mouse.ReadValue<Vector2>();
         Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hitInfo)) {
 
             Vector3 newPos = hitInfo.point;
-
             Vector3 newUp = hitInfo.normal;
 
-            if (hitInfo.transform.CompareTag(Globals.NOT_WALKABLE_TAG)) {
+            if (hitInfo.transform.CompareTag(Globals.UNIT_TAG) || hitInfo.transform.CompareTag(Globals.WAYPOINT_TAG)) {
 
-                _cursor.SetSelectionType(SelectionType.Invalid);
-                _highlightedUnit = null;
-
-            } else if (hitInfo.transform.CompareTag(Globals.UNIT_TAG)) {
-
-                _cursor.SetSelectionType(SelectionType.SelectUnit);
-                _highlightedUnit = hitInfo.transform;
+                _highlightedEntity = hitInfo.transform;
                 newPos = hitInfo.transform.position;
                 newUp = Vector3.up;
 
-            } else if (hitInfo.transform.CompareTag(Globals.DOWNED_UNIT_TAG)) {
+            } else if (hitInfo.transform.CompareTag(Globals.NOT_WALKABLE_TAG) || hitInfo.transform.CompareTag(Globals.WALKABLE_TAG)) {
 
-                _cursor.SetSelectionType(SelectionType.ReviveUnit);
-                _highlightedUnit = hitInfo.transform;
-                newPos = hitInfo.transform.position;
-                newUp = Vector3.up;
+                _highlightedEntity = null;
 
-            } else {
-                _cursor.SetSelectionType(SelectionType.Navigation);
-                _highlightedUnit = null;
             }
-            
-            _cursor.Place(newPos, newUp);
+            GameManager.Instance.SelectionMarker.Place(newPos, newUp, hitInfo.transform);
         }
     }
 
@@ -211,5 +194,8 @@ public class SquadManager : MonoBehaviour {
         }
 
     }
+
+    public void DecrementWaypoints() => WaypointStash--;
+    public void IncrementWaypoints() => WaypointStash++;
 
 }

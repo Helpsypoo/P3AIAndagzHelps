@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour {
     public LayerMask ShadeLayerMask;
 
     public Camera MainCamera { get; private set; }
+    [field: SerializeField] public SelectionCursor SelectionMarker { get; private set; }
 
     public Level ActiveLevel;
     public Level[] Levels;
@@ -109,6 +110,7 @@ public class GameManager : MonoBehaviour {
 
     public void RemoveWaypoint(Waypoint _waypoint) {
         ActiveWaypoints.Remove(_waypoint);
+        Destroy(_waypoint.gameObject);
     }
 
     public void AddWaypoint(Waypoint _waypoint) {
