@@ -17,7 +17,8 @@ public class Unit : MonoBehaviour {
     [SerializeField] Weapon _weapon;
     [SerializeField] Rigidbody _weaponPrefab;
 
-    private Unit followTarget;
+    public Unit FollowTarget { get; private set; }
+    
 
     Rigidbody _looseGun;
 
@@ -30,6 +31,7 @@ public class Unit : MonoBehaviour {
     public float _health { get; private set; }
     private float _timeAtLastCheck;
     private float _timeInShade;
+    private bool _attacking;
 
     [field: SerializeField] public bool AtDestination { get; private set; }
 
@@ -66,7 +68,6 @@ public class Unit : MonoBehaviour {
 
     public virtual void Update() {
         LookWhereYoureGoing();
-        UpdateDestinationStatus();
         if(_anim){ _anim.SetFloat(speed, _navAgent.velocity.magnitude);}
     }
 
@@ -82,11 +83,11 @@ public class Unit : MonoBehaviour {
     /// If we have path, turn the unit to face the direction they are going.
     /// </summary>
     public void LookWhereYoureGoing() {
-        if (!followTarget && (!_navAgent.hasPath || State == UnitState.Dead)) {
+        if (!FollowTarget && (!_navAgent.hasPath || State == UnitState.Dead)) {
             return;
         }
 
-        Vector3 lookTarget = followTarget ? followTarget.transform.position : _navAgent.nextPosition;
+        Vector3 lookTarget = FollowTarget ? FollowTarget.transform.position : _navAgent.nextPosition;
         lookTarget.y = transform.position.y;
         transform.LookAt(lookTarget);
     }
@@ -95,7 +96,7 @@ public class Unit : MonoBehaviour {
 
         bool prevDestination = AtDestination;
 
-        // If we don't currently have a path we are at our destination.
+        // If we don't currently have a path we are at our destination (or we can't get there).
         if (!_navAgent.hasPath) {
             AtDestination = true;
         } else {
@@ -116,7 +117,6 @@ public class Unit : MonoBehaviour {
     /// <param name="destination">The location the unit will attempt to move to.</param>
     public void MoveTo(Vector3 destination) {
         _navAgent.SetDestination(destination);
-        GameManager.Instance.SelectionMarker.Activate();
     }
 
     /// <summary>
@@ -150,12 +150,14 @@ public class Unit : MonoBehaviour {
     public void PeriodicUpdate() {
         float _timeSinceLastCheck = Time.time - _timeAtLastCheck;
         CheckLightingStatus(_timeSinceLastCheck);
-        
-        if (followTarget) {
-            bool _isInAttackRange = Vector3.Distance(followTarget.transform.position, transform.position) <= _navAgent.stoppingDistance;
+        UpdateDestinationStatus();
+        if (FollowTarget) {
+            bool _isInAttackRange = Vector3.Distance(FollowTarget.transform.position, transform.position) <= _navAgent.stoppingDistance;
             _anim?.SetBool(isAttackTargetInRange, _isInAttackRange);
-            if (!_isInAttackRange) {
-                MoveTo(followTarget.transform.position);
+            if (_attacking && !_isInAttackRange) {
+                MoveTo(FollowTarget.transform.position);
+            } else if (!_isInAttackRange) {
+                MoveTo(FollowTarget.FollowPosition);
             }
 
         }
@@ -259,10 +261,15 @@ public class Unit : MonoBehaviour {
         }
     }
 
-    public void SetFollowTarget(Unit _followTarget) {
-        Debug.Log($"Set follow target to {_followTarget.UnitStats.Name}");
-        followTarget = _followTarget;
-        SetStopDistance(UnitStats.AttackRange);
+    public void SetFollowTarget(Unit followTarget) {
+        Debug.Log($"Set follow target to {followTarget.UnitStats.Name}");
+        this.FollowTarget = followTarget;
+        SetStopDistance(Globals.FOLLOW_DIST);
+    }
+
+    public void ClearFollowTarget() {
+        FollowTarget = null;
+        StandDown();
     }
 
     public void ClearAttackTarget() {
@@ -315,6 +322,26 @@ public class Unit : MonoBehaviour {
     public void SetStopDistance(float _value) {
         _navAgent.stoppingDistance = _value;
     }
+
+    public Vector3 FollowPosition => transform.position - (transform.forward * Globals.FOLLOW_DIST);
+
+    /// <summary>
+    /// Sets this unit to attack whenever it is in range of the target but only if this unit has a weapon to attack with.
+    /// </summary>
+    public void Attack(Unit unit) {
+        if (_weapon != null) {
+            _attacking = true;
+            SetFollowTarget(unit);
+        }
+    }
+
+    /// <summary>
+    /// Makes this unit chill (stop attacking things).
+    /// </summary>
+    public void StandDown() {
+        _attacking = false;
+    }
+
 }
 
 

@@ -254,8 +254,9 @@ GameObject:
   - component: {fileID: 4856073037475929663}
   - component: {fileID: 418485124985571544}
   - component: {fileID: 3941804770730810014}
-  - component: {fileID: 3574888411303231625}
-  m_Layer: 0
+  - component: {fileID: 3558668848061138399}
+  - component: {fileID: 2693168243461246065}
+  m_Layer: 7
   m_Name: Liberated
   m_TagString: Liberated
   m_Icon: {fileID: 0}
@@ -298,9 +299,8 @@ MonoBehaviour:
   _healthDisplay: {fileID: 3509633462032511147}
   _selectionIndicator: {fileID: 2254535425426678469}
   _renderers: []
-  _gun: {fileID: 0}
-  _gunPrefab: {fileID: 0}
-  _muzzle: {fileID: 0}
+  _weapon: {fileID: 0}
+  _weaponPrefab: {fileID: 0}
   <AtDestination>k__BackingField: 0
   IsLeader: 0
 --- !u!195 &418485124985571544
@@ -312,7 +312,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 3459883887262350751}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 1
   m_Speed: 7.5
   m_Acceleration: 50
   avoidancePriority: 50
@@ -352,7 +352,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!54 &3574888411303231625
+--- !u!136 &3558668848061138399
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3459883887262350751}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Height: 3
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!54 &2693168243461246065
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -377,7 +400,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!1 &4417496720279562966
 GameObject:

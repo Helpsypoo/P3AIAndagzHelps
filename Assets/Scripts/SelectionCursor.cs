@@ -9,13 +9,22 @@ public class SelectionCursor : MonoBehaviour {
     public SelectionType Type { get; private set; }
     public Transform Attached { get ; private set; }
     public bool CanWalk { get; private set; }
+    public Vector3 Position => transform.position;
+
+    private Unit _activeUnit;   // The unit whose action the marker is currently representing.
 
     private void Awake() {
         _renderer = GetComponent<MeshRenderer>();
     }
 
-    public void Activate() => gameObject.SetActive(true);
-    public void Deactivate() => gameObject.SetActive(false);
+    public void Activate(Unit unit) {
+        _activeUnit = unit;
+        gameObject.SetActive(true);
+    }
+    public void Deactivate() {
+        _activeUnit = null;
+        gameObject.SetActive(false);
+    }
 
     /// <summary>
     /// Places the selection marker at the given position and orientation.
@@ -42,7 +51,7 @@ public class SelectionCursor : MonoBehaviour {
 
         if (Vector3.Distance(location, transform.position) < Globals.MIN_ACTION_DIST) {
             Attached = null;
-            gameObject.SetActive(false);
+            Deactivate();
         }
     }
 

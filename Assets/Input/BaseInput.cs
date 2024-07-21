@@ -28,7 +28,7 @@ public partial class @BaseInput: IInputActionCollection2, IDisposable
             ""id"": ""17370877-260f-4373-9c1e-07e73830ab6a"",
             ""actions"": [
                 {
-                    ""name"": ""MoveClick"",
+                    ""name"": ""SelectClick"",
                     ""type"": ""Button"",
                     ""id"": ""41ab0fc4-0d24-48b7-969a-f9f72a70afb3"",
                     ""expectedControlType"": ""Button"",
@@ -98,17 +98,26 @@ public partial class @BaseInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ActionModifier"",
+                    ""type"": ""Button"",
+                    ""id"": ""c663756b-e2d5-465e-abd3-f6bf0ff68e47"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
                 {
                     ""name"": """",
                     ""id"": ""dd9bfab1-a91d-4b22-93ee-18b0938a2011"",
-                    ""path"": ""<Mouse>/rightButton"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""MoveClick"",
+                    ""action"": ""SelectClick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -126,7 +135,7 @@ public partial class @BaseInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""c612e872-0aac-440d-b37c-c4058b1cbb5d"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -188,6 +197,17 @@ public partial class @BaseInput: IInputActionCollection2, IDisposable
                     ""action"": ""Unit4"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7b98119c-5c22-4712-bec7-4127bf0abb1d"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ActionModifier"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -196,7 +216,7 @@ public partial class @BaseInput: IInputActionCollection2, IDisposable
 }");
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
-        m_Player_MoveClick = m_Player.FindAction("MoveClick", throwIfNotFound: true);
+        m_Player_SelectClick = m_Player.FindAction("SelectClick", throwIfNotFound: true);
         m_Player_Mouse = m_Player.FindAction("Mouse", throwIfNotFound: true);
         m_Player_ActionClick = m_Player.FindAction("ActionClick", throwIfNotFound: true);
         m_Player_CameraClick = m_Player.FindAction("CameraClick", throwIfNotFound: true);
@@ -204,6 +224,7 @@ public partial class @BaseInput: IInputActionCollection2, IDisposable
         m_Player_Unit2 = m_Player.FindAction("Unit2", throwIfNotFound: true);
         m_Player_Unit3 = m_Player.FindAction("Unit3", throwIfNotFound: true);
         m_Player_Unit4 = m_Player.FindAction("Unit4", throwIfNotFound: true);
+        m_Player_ActionModifier = m_Player.FindAction("ActionModifier", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -265,7 +286,7 @@ public partial class @BaseInput: IInputActionCollection2, IDisposable
     // Player
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
-    private readonly InputAction m_Player_MoveClick;
+    private readonly InputAction m_Player_SelectClick;
     private readonly InputAction m_Player_Mouse;
     private readonly InputAction m_Player_ActionClick;
     private readonly InputAction m_Player_CameraClick;
@@ -273,11 +294,12 @@ public partial class @BaseInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Unit2;
     private readonly InputAction m_Player_Unit3;
     private readonly InputAction m_Player_Unit4;
+    private readonly InputAction m_Player_ActionModifier;
     public struct PlayerActions
     {
         private @BaseInput m_Wrapper;
         public PlayerActions(@BaseInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @MoveClick => m_Wrapper.m_Player_MoveClick;
+        public InputAction @SelectClick => m_Wrapper.m_Player_SelectClick;
         public InputAction @Mouse => m_Wrapper.m_Player_Mouse;
         public InputAction @ActionClick => m_Wrapper.m_Player_ActionClick;
         public InputAction @CameraClick => m_Wrapper.m_Player_CameraClick;
@@ -285,6 +307,7 @@ public partial class @BaseInput: IInputActionCollection2, IDisposable
         public InputAction @Unit2 => m_Wrapper.m_Player_Unit2;
         public InputAction @Unit3 => m_Wrapper.m_Player_Unit3;
         public InputAction @Unit4 => m_Wrapper.m_Player_Unit4;
+        public InputAction @ActionModifier => m_Wrapper.m_Player_ActionModifier;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -294,9 +317,9 @@ public partial class @BaseInput: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_PlayerActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_PlayerActionsCallbackInterfaces.Add(instance);
-            @MoveClick.started += instance.OnMoveClick;
-            @MoveClick.performed += instance.OnMoveClick;
-            @MoveClick.canceled += instance.OnMoveClick;
+            @SelectClick.started += instance.OnSelectClick;
+            @SelectClick.performed += instance.OnSelectClick;
+            @SelectClick.canceled += instance.OnSelectClick;
             @Mouse.started += instance.OnMouse;
             @Mouse.performed += instance.OnMouse;
             @Mouse.canceled += instance.OnMouse;
@@ -318,13 +341,16 @@ public partial class @BaseInput: IInputActionCollection2, IDisposable
             @Unit4.started += instance.OnUnit4;
             @Unit4.performed += instance.OnUnit4;
             @Unit4.canceled += instance.OnUnit4;
+            @ActionModifier.started += instance.OnActionModifier;
+            @ActionModifier.performed += instance.OnActionModifier;
+            @ActionModifier.canceled += instance.OnActionModifier;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
         {
-            @MoveClick.started -= instance.OnMoveClick;
-            @MoveClick.performed -= instance.OnMoveClick;
-            @MoveClick.canceled -= instance.OnMoveClick;
+            @SelectClick.started -= instance.OnSelectClick;
+            @SelectClick.performed -= instance.OnSelectClick;
+            @SelectClick.canceled -= instance.OnSelectClick;
             @Mouse.started -= instance.OnMouse;
             @Mouse.performed -= instance.OnMouse;
             @Mouse.canceled -= instance.OnMouse;
@@ -346,6 +372,9 @@ public partial class @BaseInput: IInputActionCollection2, IDisposable
             @Unit4.started -= instance.OnUnit4;
             @Unit4.performed -= instance.OnUnit4;
             @Unit4.canceled -= instance.OnUnit4;
+            @ActionModifier.started -= instance.OnActionModifier;
+            @ActionModifier.performed -= instance.OnActionModifier;
+            @ActionModifier.canceled -= instance.OnActionModifier;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -365,7 +394,7 @@ public partial class @BaseInput: IInputActionCollection2, IDisposable
     public PlayerActions @Player => new PlayerActions(this);
     public interface IPlayerActions
     {
-        void OnMoveClick(InputAction.CallbackContext context);
+        void OnSelectClick(InputAction.CallbackContext context);
         void OnMouse(InputAction.CallbackContext context);
         void OnActionClick(InputAction.CallbackContext context);
         void OnCameraClick(InputAction.CallbackContext context);
@@ -373,5 +402,6 @@ public partial class @BaseInput: IInputActionCollection2, IDisposable
         void OnUnit2(InputAction.CallbackContext context);
         void OnUnit3(InputAction.CallbackContext context);
         void OnUnit4(InputAction.CallbackContext context);
+        void OnActionModifier(InputAction.CallbackContext context);
     }
 }

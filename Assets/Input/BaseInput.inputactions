@@ -6,7 +6,7 @@
             "id": "17370877-260f-4373-9c1e-07e73830ab6a",
             "actions": [
                 {
-                    "name": "MoveClick",
+                    "name": "SelectClick",
                     "type": "Button",
                     "id": "41ab0fc4-0d24-48b7-969a-f9f72a70afb3",
                     "expectedControlType": "Button",
@@ -76,17 +76,26 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ActionModifier",
+                    "type": "Button",
+                    "id": "c663756b-e2d5-465e-abd3-f6bf0ff68e47",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
                 {
                     "name": "",
                     "id": "dd9bfab1-a91d-4b22-93ee-18b0938a2011",
-                    "path": "<Mouse>/rightButton",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveClick",
+                    "action": "SelectClick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -104,7 +113,7 @@
                 {
                     "name": "",
                     "id": "c612e872-0aac-440d-b37c-c4058b1cbb5d",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -164,6 +173,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Unit4",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7b98119c-5c22-4712-bec7-4127bf0abb1d",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ActionModifier",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

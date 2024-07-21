@@ -3372,7 +3372,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bcd418798134614bb64089b03fbe184, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _units:
+  Units:
   - {fileID: 5081445479639936722}
   - {fileID: 1904799728}
   - {fileID: 720090617}
@@ -4000,7 +4000,7 @@ GameObject:
   - component: {fileID: 8134892115737883442}
   - component: {fileID: 5792888962127962365}
   - component: {fileID: 6628726023006886777}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}

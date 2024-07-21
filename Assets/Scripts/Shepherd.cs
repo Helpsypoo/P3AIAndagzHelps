@@ -22,20 +22,26 @@ public class Shepherd : Unit {
     public override void PerformAction(Vector3 position, Transform target = null) {
         base.PerformAction(position, target);
 
+        // Whatever happens with the action, attempting to perform it will cancel any follow command.
+        ClearFollowTarget();
+
         // If we have not been given a target, our default action is to place a beacon/waypoint at the given location if we have enough.
         if (target == null) {
             if (SquadManager.Instance.WaypointStash > 0) {
                 _wayPointPlacement = position;
+                SetStopDistance(UnitStats.ActionRange);
                 MoveTo(_wayPointPlacement.Value);
             }
         } else if (target.CompareTag(Globals.WAYPOINT_TAG)) {
             _wayPointToRemove = target.GetComponent<Waypoint>();
             if (_wayPointToRemove != null) {
                 MoveTo(_wayPointToRemove.transform.position);
+                SetStopDistance(UnitStats.ActionRange);
             }
         }
+        GameManager.Instance.SelectionMarker.Activate(this);
 
-        
+
     }
 
     /// <summary>

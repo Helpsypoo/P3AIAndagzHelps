@@ -2233,7 +2233,7 @@ GameObject:
   - component: {fileID: 417735457569587794}
   - component: {fileID: 2616360468254000453}
   - component: {fileID: 3447121892483940033}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Unit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2328,7 +2328,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 5344825663267763069}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 1
   m_Speed: 7.5
   m_Acceleration: 50
   avoidancePriority: 50
@@ -2360,7 +2360,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.7
+  m_Radius: 1
   m_Height: 2.72
   m_Direction: 1
   m_Center: {x: 0, y: 0.96, z: 0}

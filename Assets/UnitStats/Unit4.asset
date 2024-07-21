@@ -20,3 +20,6 @@ MonoBehaviour:
   Speed: 7.5
   AttackDamage: -3
   AttackRate: 0.5
+  AttackRange: 4
+  IsEnemy: 0
+  ActionRange: 1.5
