@@ -43,7 +43,7 @@ public class Unit : MonoBehaviour {
     private int _squadNumber = 0;
 
     private static readonly int speed = Animator.StringToHash("Speed");
-    private static readonly int isAttackTargetInRange = Animator.StringToHash("IsAttackTargetInRange");
+    private static readonly int hasAttackTargetInRange = Animator.StringToHash("HasAttackTargetInRange");
     public int SquadNumber => _squadNumber;
     public void UpdateSquadNumber(int number) {
         _squadNumber = number;
@@ -95,7 +95,6 @@ public class Unit : MonoBehaviour {
     public void UpdateDestinationStatus() {
 
         bool prevDestination = AtDestination;
-
         // If we don't currently have a path we are at our destination (or we can't get there).
         if (!_navAgent.hasPath) {
             AtDestination = true;
@@ -151,16 +150,11 @@ public class Unit : MonoBehaviour {
         float _timeSinceLastCheck = Time.time - _timeAtLastCheck;
         CheckLightingStatus(_timeSinceLastCheck);
         UpdateDestinationStatus();
-        if (FollowTarget) {
-            bool _isInAttackRange = Vector3.Distance(FollowTarget.transform.position, transform.position) <= _navAgent.stoppingDistance;
-            _anim?.SetBool(isAttackTargetInRange, _isInAttackRange);
-            if (_attacking && !_isInAttackRange) {
-                MoveTo(FollowTarget.transform.position);
-            } else if (!_isInAttackRange) {
-                MoveTo(FollowTarget.FollowPosition);
-            }
-
+        if (FollowTarget){
+            ProcessAttack();
+            ProcessFriendlyFollow();
         }
+        
         _timeAtLastCheck = Time.time;
     }
     
@@ -172,12 +166,14 @@ public class Unit : MonoBehaviour {
         Vector3 lightDir = -mainLight.transform.forward;
         //Debug.DrawLine(transform.position, transform.position + lightDir * 100f, Color.red, 1f);
         bool isInShadow = Physics.Raycast(transform.position, lightDir, out RaycastHit _hitInfo, 100f, GameManager.Instance.ShadeLayerMask);
-        if (!isInShadow) {
-            //Debug.Log(gameObject.name + " is NOT in shadow.");
-            ChangeHealth(GameManager.Instance.SunDamagePerSecond * _timeSinceLastCheck);
-        } else {
+       
+        if (isInShadow) {
             //Debug.Log(gameObject.name + $" is shaded by {_hitInfo.transform.gameObject.name}.");
+            return;
         }
+
+        //Debug.Log(gameObject.name + " is NOT in shadow.");
+        ChangeHealth(GameManager.Instance.SunDamagePerSecond * _timeSinceLastCheck);
     }
     
 
@@ -264,7 +260,7 @@ public class Unit : MonoBehaviour {
     public void SetFollowTarget(Unit followTarget) {
         Debug.Log($"Set follow target to {followTarget.UnitStats.Name}");
         this.FollowTarget = followTarget;
-        SetStopDistance(Globals.FOLLOW_DIST);
+        SetStopDistance(FollowTarget.UnitStats.IsEnemy ? UnitStats.AttackRange : Globals.FOLLOW_DIST);
     }
 
     public void ClearFollowTarget() {
@@ -272,17 +268,12 @@ public class Unit : MonoBehaviour {
         StandDown();
     }
 
-    public void ClearAttackTarget() {
-        SetStopDistance(0);
-    }
-
     [ContextMenu("Toggle Shoot")]
     public void ToggleShoot() {
-        _anim?.SetBool(isAttackTargetInRange, !_anim.GetBool(isAttackTargetInRange)); //this calls the Fire() function at a specific frame of the anim
+        _anim?.SetBool(hasAttackTargetInRange, !_anim.GetBool(hasAttackTargetInRange)); //this calls the Fire() function at a specific frame of the anim
     }
 
     public void Fire() {
-        //Face Target
         _weapon.Fire();
     }
 
@@ -323,6 +314,28 @@ public class Unit : MonoBehaviour {
         _navAgent.stoppingDistance = _value;
     }
 
+    private void ProcessAttack() {
+        if (!FollowTarget.UnitStats || !FollowTarget.UnitStats.IsEnemy || FollowTarget._health <= 0 || !UnitStats) {
+            _anim?.SetBool(hasAttackTargetInRange, false);
+            return;
+        }
+        
+        bool _isInAttackRange = Vector3.Distance(FollowTarget.transform.position, transform.position) <= UnitStats.AttackRange;
+        _anim?.SetBool(hasAttackTargetInRange, _isInAttackRange);
+        if (!_isInAttackRange) {
+            MoveTo(FollowTarget.transform.position);
+        }
+    }
+    
+    private void ProcessFriendlyFollow() {
+        if (FollowTarget.UnitStats.IsEnemy || FollowTarget._health <= 0) {
+            return;
+        }
+
+        //Debug.Log($"Friendly following {FollowTarget.UnitStats.Name}");
+        MoveTo(FollowTarget.FollowPosition);
+    }
+
     public Vector3 FollowPosition => transform.position - (transform.forward * Globals.FOLLOW_DIST);
 
     /// <summary>
@@ -340,6 +353,8 @@ public class Unit : MonoBehaviour {
     /// </summary>
     public void StandDown() {
         _attacking = false;
+        FollowTarget = null;
+        SetStopDistance(0);
     }
 
 }

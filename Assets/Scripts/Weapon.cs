@@ -1,16 +1,39 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour {
     [SerializeField] private ParticleSystem _muzzleFlashFX;
-    [SerializeField] private Rigidbody _tracerPrefab;
+    [SerializeField] private Bullet _tracerPrefab;
+
+    private Unit unit;
+
+    private void Awake() {
+        unit = GetComponentInParent<Unit>();
+    }
 
     public void Fire() {
         //Debug.Log($"Running fire on weapon");
         _muzzleFlashFX?.Play();
-        Rigidbody _rb = Instantiate(_tracerPrefab, _muzzleFlashFX.transform.position, _muzzleFlashFX.transform.rotation);
+        Bullet _bullet = Instantiate(_tracerPrefab, _muzzleFlashFX.transform.position, _muzzleFlashFX.transform.rotation);
         //_rb.transform.localScale = _muzzleFlashFX.transform.localScale * 3f;
-        _rb.AddForce(_rb.transform.forward * 4000f);
+        if (!unit.FollowTarget) {
+            _bullet.gameObject.SetActive(false);
+            return;
+        }
+
+        _bullet.Shooter = unit;
+        _bullet.Target = unit.FollowTarget;
+        _bullet.ShotLocation = unit.transform.position;
+        
+        Vector3 _attackDir = unit.FollowTarget.transform.position - _muzzleFlashFX.transform.position;
+        _attackDir = _attackDir.normalized;
+
+        Vector3 _lookAtLocation = unit.FollowTarget.transform.position;
+        _lookAtLocation.y = _muzzleFlashFX.transform.position.y;
+        _bullet.Rb.transform.LookAt(_lookAtLocation);
+        
+        _bullet.Rb.AddForce(_attackDir * 4000f);
     }
 }

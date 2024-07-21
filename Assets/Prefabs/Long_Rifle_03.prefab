@@ -164,7 +164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _muzzleFlashFX: {fileID: 7283333655816500255}
-  _tracerPrefab: {fileID: 54453457801900860, guid: edc555170136714468e06ae43a7e0c86,
+  _tracerPrefab: {fileID: 8984501566734356877, guid: edc555170136714468e06ae43a7e0c86,
     type: 3}
 --- !u!54 &920266114437748004
 Rigidbody:

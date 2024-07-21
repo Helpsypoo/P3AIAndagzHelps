@@ -127,22 +127,22 @@ public class SquadManager : MonoBehaviour {
 
                 // If the highlighted entity is a comrade, set the currently selected unit to follow them and switch to that unit.
                 if (unit.transform.CompareTag(Globals.UNIT_TAG) && unit != SelectedUnit) {
-
+                    
+                    SelectedUnit.StandDown();
                     SelectedUnit.SetFollowTarget(unit);
                     SelectUnit(_highlightedEntity);
-                    SelectedUnit.StandDown();
-
+                    
                 } else if (_highlightedEntity.CompareTag(Globals.DOWNED_UNIT_TAG)) {
 
                     // TODO walk to unit and revive them.
 
                 // If the highlighted entity is a liberated, follow them.
                 } else if (_highlightedEntity.CompareTag(Globals.LIBERATED_TAG)) {
-
-                    SelectedUnit.SetFollowTarget(unit);
+                    
                     SelectedUnit.StandDown();
+                    SelectedUnit.SetFollowTarget(unit);
 
-                // If the highlighted entity is an enemy, attack them.
+                    // If the highlighted entity is an enemy, attack them.
                 } else if (_highlightedEntity.CompareTag(Globals.ENEMY_TAG)) {
 
                     SelectedUnit.Attack(unit);
