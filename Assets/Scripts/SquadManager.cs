@@ -80,6 +80,7 @@ public class SquadManager : MonoBehaviour {
             // Get the Unit component and make sure we succesfully got it.
             unit = _highlightedEntity.GetComponent<Unit>();
             if (unit != null) {
+                SelectedUnit.ClearAttackTarget();
                 // If the selected unit's state is not dead, select dat unit.
                 if (unit.State != UnitState.Dead) {
                     SelectUnit(_highlightedEntity);
@@ -90,6 +91,7 @@ public class SquadManager : MonoBehaviour {
             }
         // If we are clicking on navigable terrain, set the selected unit awf to that destination.
         } else if (GameManager.Instance.SelectionMarker.CanWalk) {
+            SelectedUnit.ClearAttackTarget();
             SelectedUnit.MoveTo(GameManager.Instance.SelectionMarker.transform.position);
         }
 

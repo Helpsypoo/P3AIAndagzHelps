@@ -10,6 +10,7 @@ TagManager:
   - Liberated
   - Waypoint
   - Walkable
+  - Enemy
   layers:
   - Default
   - TransparentFX

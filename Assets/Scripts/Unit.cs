@@ -1,25 +1,33 @@
 using System;
 using System.Collections;
+using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class Unit : MonoBehaviour {
 
-    [SerializeField] private UnitStats _unitStats;
+    public UnitStats UnitStats;
 
     [SerializeField] private HealthDisplay _healthDisplay;
 
     [SerializeField] MeshRenderer _selectionIndicator;
-    [SerializeField] MeshRenderer _mesh;
-    [SerializeField] GameObject _dedMesh;
+    [SerializeField] Renderer[] _renderers;
+    [SerializeField] Weapon _weapon;
+    [SerializeField] Rigidbody _weaponPrefab;
 
-    
+    private Unit followTarget;
+
+    Rigidbody _looseGun;
+
+    private Animator _anim;
   
     public UnitState State { get; private set; }
     protected NavMeshAgent _navAgent;
     private TickEntity _tickEntity;
     
-    private float _health;
+    public float _health { get; private set; }
     private float _timeAtLastCheck;
     private float _timeInShade;
 
@@ -31,48 +39,59 @@ public class Unit : MonoBehaviour {
     /// The index in the SquadManager._units array.
     /// </summary>
     private int _squadNumber = 0;
+
+    private static readonly int speed = Animator.StringToHash("Speed");
+    private static readonly int isAttackTargetInRange = Animator.StringToHash("IsAttackTargetInRange");
     public int SquadNumber => _squadNumber;
     public void UpdateSquadNumber(int number) {
         _squadNumber = number;
     }
     
-    private void Awake() {
-        
+    public void Awake() {
         _navAgent = GetComponent<NavMeshAgent>();
         if (_navAgent == null) {
             throw new System.Exception($"Cannot find NavMeshAgent on unit {transform.name}.");
         }
 
         _tickEntity = GetComponent<TickEntity>();
+        _anim = GetComponentInChildren<Animator>();
     }
 
-    private void Start() {
-        _tickEntity.AddToTickEventManager();
-        ChangeHealth(_unitStats.MaxHealth - _health, true);
-        _mesh.material.color = _unitStats.Colour;
-        _mesh.gameObject.SetActive(true);
-        _navAgent.speed = _unitStats.Speed;
+    public void Start() {
+        _tickEntity?.AddToTickEventManager();
+        ChangeHealth(UnitStats.MaxHealth - _health, true);
+        SetColors();
+        _navAgent.speed = UnitStats.Speed;
     }
 
     public virtual void Update() {
         LookWhereYoureGoing();
         UpdateDestinationStatus();
+        if(_anim){ _anim.SetFloat(speed, _navAgent.velocity.magnitude);}
+    }
+
+    private void SetColors() {
+        foreach (Renderer _rend in _renderers) {
+            foreach (Material material in _rend.materials) {
+                material.color = UnitStats.Colour;
+            }
+        }
     }
 
     /// <summary>
     /// If we have path, turn the unit to face the direction they are going.
     /// </summary>
-    private void LookWhereYoureGoing() {
-        if (!_navAgent.hasPath || State == UnitState.Dead) {
+    public void LookWhereYoureGoing() {
+        if (!followTarget && (!_navAgent.hasPath || State == UnitState.Dead)) {
             return;
         }
 
-        Vector3 lookTarget = _navAgent.nextPosition;
+        Vector3 lookTarget = followTarget ? followTarget.transform.position : _navAgent.nextPosition;
         lookTarget.y = transform.position.y;
         transform.LookAt(lookTarget);
     }
 
-    private void UpdateDestinationStatus() {
+    public void UpdateDestinationStatus() {
 
         bool prevDestination = AtDestination;
 
@@ -108,7 +127,7 @@ public class Unit : MonoBehaviour {
     /// <param name="position">The position that the action should be performed at (where the click happened)</param>
     /// <param name="target">The thing that was clicked on. Can be null.</param>
     public virtual void PerformAction(Vector3 position, Transform target = null) {
-        Debug.Log($"{_unitStats.Name}'s action has been called.");
+        Debug.Log($"{UnitStats.Name}'s action has been called.");
     }
 
     /// <summary>
@@ -131,13 +150,22 @@ public class Unit : MonoBehaviour {
     public void PeriodicUpdate() {
         float _timeSinceLastCheck = Time.time - _timeAtLastCheck;
         CheckLightingStatus(_timeSinceLastCheck);
+        
+        if (followTarget) {
+            bool _isInAttackRange = Vector3.Distance(followTarget.transform.position, transform.position) <= _navAgent.stoppingDistance;
+            _anim?.SetBool(isAttackTargetInRange, _isInAttackRange);
+            if (!_isInAttackRange) {
+                MoveTo(followTarget.transform.position);
+            }
+
+        }
         _timeAtLastCheck = Time.time;
     }
     
     /// <summary>
     /// Checks if the object is in shade or not
     /// </summary>
-    private void CheckLightingStatus(float _timeSinceLastCheck) {
+    public void CheckLightingStatus(float _timeSinceLastCheck) {
         Light mainLight = RenderSettings.sun;
         Vector3 lightDir = -mainLight.transform.forward;
         //Debug.DrawLine(transform.position, transform.position + lightDir * 100f, Color.red, 1f);
@@ -176,12 +204,12 @@ public class Unit : MonoBehaviour {
     }
 
     public void ChangeHealth(float _amount, bool _hiddenDisplayUpdate = false) {
-        _health = Mathf.Clamp(_health + _amount, 0, _unitStats.MaxHealth);
+        _health = Mathf.Clamp(_health + _amount, 0, UnitStats.MaxHealth);
         
         if (_hiddenDisplayUpdate) {
-            _healthDisplay.HiddenHealthDisplayUpdate(_health, _unitStats.MaxHealth);
+            _healthDisplay.HiddenHealthDisplayUpdate(_health, UnitStats.MaxHealth);
         } else {
-            _healthDisplay.UpdateHealthDisplay(_health, _unitStats.MaxHealth);
+            _healthDisplay.UpdateHealthDisplay(_health, UnitStats.MaxHealth);
         }
         
         if (_health <= 0) {
@@ -205,22 +233,50 @@ public class Unit : MonoBehaviour {
     }
 
     IEnumerator StartRegen() {
-        yield return new WaitForSeconds(_unitStats.HealthRegenDelay);
+        yield return new WaitForSeconds(UnitStats.HealthRegenDelay);
         
-        while (_health < _unitStats.MaxHealth) {
-            ChangeHealth(_unitStats.HealthRegenRate * Time.deltaTime);
+        while (_health < UnitStats.MaxHealth) {
+            ChangeHealth(UnitStats.HealthRegenRate * Time.deltaTime);
             yield return new WaitForEndOfFrame();
         }
     }
     
+    [ContextMenu("Revive")]
     public void Revive() {
-        ChangeHealth(_unitStats.MaxHealth - _health);
+        ChangeHealth(UnitStats.MaxHealth - _health);
         SetState(UnitState.Idle);
         _navAgent.isStopped = false;
-        _mesh.gameObject.SetActive(true); //TODO: replace this with a revive anim
-        _dedMesh.SetActive(false);
         transform.tag = Globals.UNIT_TAG;
-        _tickEntity.AddToTickEventManager();
+        _tickEntity?.AddToTickEventManager();
+        
+        _looseGun?.gameObject.SetActive(false);
+        _weapon?.gameObject.SetActive(true);
+        
+        if (_anim) {
+            _anim.Play("Idle", 0);
+            _anim.transform.localPosition = Vector3.zero;
+            _anim.transform.rotation = Quaternion.identity;
+        }
+    }
+
+    public void SetFollowTarget(Unit _followTarget) {
+        Debug.Log($"Set follow target to {_followTarget.UnitStats.Name}");
+        followTarget = _followTarget;
+        SetStopDistance(UnitStats.AttackRange);
+    }
+
+    public void ClearAttackTarget() {
+        SetStopDistance(0);
+    }
+
+    [ContextMenu("Toggle Shoot")]
+    public void ToggleShoot() {
+        _anim?.SetBool(isAttackTargetInRange, !_anim.GetBool(isAttackTargetInRange)); //this calls the Fire() function at a specific frame of the anim
+    }
+
+    public void Fire() {
+        //Face Target
+        _weapon.Fire();
     }
 
     private void Die() {
@@ -231,10 +287,22 @@ public class Unit : MonoBehaviour {
 
         _navAgent.isStopped = true;
         
-        _mesh.gameObject.SetActive(false); //TODO: replace this with a death anim
-        _dedMesh.SetActive(true);
+        if(_anim){_anim.Play("Death", 0);}
+        _weapon?.gameObject.SetActive(false);
+        if (!_looseGun && _weaponPrefab) {
+            _looseGun = Instantiate(_weaponPrefab, _weapon.transform.position, _weapon.transform.rotation);
+        } else if (_looseGun) {
+            _looseGun.transform.position = _weapon.transform.position;
+            _looseGun.transform.rotation = _weapon.transform.rotation;
+            _looseGun.gameObject.SetActive(true);
+        }
+        
+        Vector3 _randomUpwardForce = new Vector3(Random.Range(-1f, 1f), Random.Range(3f, 6f), Random.Range(-1f, 1f));
+        _looseGun?.AddForce(_randomUpwardForce);
+        _looseGun?.AddTorque(Random.rotation.eulerAngles * Random.Range(-2f, 2f));
+
         transform.tag = Globals.DOWNED_UNIT_TAG;
-        _tickEntity.RemoveFromTickEventManager();
+        _tickEntity?.RemoveFromTickEventManager();
 
         // If we are the currently selected unit, tell the squadmanager to select another unit.
         if (SquadManager.Instance.SelectedUnit == this) {
@@ -244,6 +312,9 @@ public class Unit : MonoBehaviour {
 
     }
 
+    public void SetStopDistance(float _value) {
+        _navAgent.stoppingDistance = _value;
+    }
 }
 
 

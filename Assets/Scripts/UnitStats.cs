@@ -12,4 +12,6 @@ public class UnitStats : ScriptableObject {
 	public float Speed;
 	public int AttackDamage;
 	public float AttackRate;
+	public float AttackRange;
+	public bool IsEnemy;
 }
