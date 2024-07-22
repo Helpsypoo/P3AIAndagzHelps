@@ -19,7 +19,7 @@ MonoBehaviour:
   HealthRegenDelay: 3
   Speed: 7.5
   AttackDamage: -3
-  AttackRate: 0.5
+  AttackRate: 5
   AttackRange: 25
   IsEnemy: 0
   ActionRange: 1.5

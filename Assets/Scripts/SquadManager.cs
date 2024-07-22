@@ -12,14 +12,13 @@ public class SquadManager : MonoBehaviour {
 
 
     public Unit[] Units;
-    private int _unitIndex = 0;
+    public int UnitIndex { get; private set; } = 0;
 
     // The unit that is currently active, and actions will be performed with.
-    public Unit SelectedUnit => Units[_unitIndex];
+    public Unit SelectedUnit => Units[UnitIndex];
     [field: SerializeField] public int WaypointStash { get; private set; }
 
     [SerializeField] private CinemachineVirtualCamera _cinemachineCamera;
-
 
     // Any unit the cursor is currently hovering over.
     private Transform _highlightedEntity;
@@ -199,9 +198,9 @@ public class SquadManager : MonoBehaviour {
         // If Unit is dead, we can't select it.
         if (Units[index].State == UnitState.Dead) return;
 
-        _unitIndex = index;
+        UnitIndex = index;
         for (int i = 0; i < Units.Length; i++) {
-            if (i == _unitIndex) Units[i].Select();
+            if (i == UnitIndex) Units[i].Select();
             else Units[i].Deselect();
         }
 
@@ -226,11 +225,11 @@ public class SquadManager : MonoBehaviour {
     /// Selects the next unit in the squad (incrementing upwards). Wraps around to 0.
     /// </summary>
     public void SelectNextAvailableUnit () {
-        _unitIndex++;
-        if (_unitIndex >= Units.Length) {
-            _unitIndex = 0;
+        UnitIndex++;
+        if (UnitIndex >= Units.Length) {
+            UnitIndex = 0;
         }
-        SelectUnit(_unitIndex);
+        SelectUnit(UnitIndex);
     }
 
     /// <summary>

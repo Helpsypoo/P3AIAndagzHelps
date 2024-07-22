@@ -15,7 +15,14 @@ public class HUD : MonoBehaviour {
         }
     }
 
-    [SerializeField] private TextMeshProUGUI _squadList;
+    [SerializeField] private UI_Character[] _squad;
+
+    private void Start() {
+
+        for (int i = 0; i < _squad.Length; i++) {
+            _squad[i].Init(SquadManager.Instance.Units[i]);
+        }
+    }
 
     private void Update() {
         UpdateSquad();
@@ -23,23 +30,16 @@ public class HUD : MonoBehaviour {
 
     public void UpdateSquad() {
 
-        string text = "";
+        for (int i = 0; i < _squad.Length; i++) {
 
-        foreach (Unit unit in SquadManager.Instance.Units) {
-            if (unit == SquadManager.Instance.SelectedUnit) {
-                text += $"<color=black>{unit.UnitStats.Name}</color>";
+            if (i == SquadManager.Instance.UnitIndex) {
+                _squad[i].Select();
             } else {
-                text += unit.UnitStats.Name;
+                _squad[i].Deselect();
             }
-
-            if (unit.FollowTarget != null) {
-                text += $"(following {unit.FollowTarget.UnitStats.Name})";
-            }
-
-
-            text += "\n";
+            _squad[i].UpdateCharacter();
         }
-        _squadList.text = text;
+
     }
 
 

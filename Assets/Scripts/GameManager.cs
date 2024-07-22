@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour {
     public Transform KillZone;
     public bool IsProcessing { get; private set; }
 
+    [field: SerializeField] public BulletPool BulletStash { get; private set; }
+
     private void Awake() {
         if (Instance) {
             Destroy(this);
@@ -127,6 +129,7 @@ public class GameManager : MonoBehaviour {
 
     public void RemoveWaypoint(Waypoint _waypoint) {
         ActiveWaypoints.Remove(_waypoint);
+        SquadManager.Instance.IncrementWaypoints();
         Destroy(_waypoint.gameObject);
     }
 

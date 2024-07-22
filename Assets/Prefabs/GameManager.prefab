@@ -1,5 +1,52 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8137934961208516051
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1937791483316935003}
+  - component: {fileID: 1371408785687781674}
+  m_Layer: 0
+  m_Name: BulletPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1937791483316935003
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8137934961208516051}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6409290030614530685}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1371408785687781674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8137934961208516051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46364aa5f1929464ea5596e5d009573f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bulletPrefab: {fileID: 8984501566734356877, guid: edc555170136714468e06ae43a7e0c86,
+    type: 3}
+  _poolSize: 200
 --- !u!1 &8973980964489328869
 GameObject:
   m_ObjectHideFlags: 0
@@ -31,7 +78,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1937791483316935003}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &207438960156835787
@@ -50,12 +98,20 @@ MonoBehaviour:
   ShadeLayerMask:
     serializedVersion: 2
     m_Bits: 1
+  <SelectionMarker>k__BackingField: {fileID: 0}
   ActiveLevel: {fileID: 0}
   Levels:
   - {fileID: 9205318219109115339, guid: 7e4c144cfa72dab419c33f86e91d3b88, type: 3}
   _liberatedPrefab: {fileID: 4856073037475929663, guid: 39d9b093cdef5da4583262e842159388,
     type: 3}
+  _waypointPrefab: {fileID: 5468352185981451129, guid: 30bc4a42a61d79e4bb372657023d13e3,
+    type: 3}
   ActiveLiberated: []
+  ActiveWaypoints:
+  - {fileID: 0}
+  LiberatedScore: 0
+  KillZone: {fileID: 0}
+  <BulletStash>k__BackingField: {fileID: 1371408785687781674}
 --- !u!114 &850728086960533594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,16 +142,16 @@ MonoBehaviour:
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
-  m_UseGeometry: 0
+    m_Bits: 1
+  m_UseGeometry: 1
   m_DefaultArea: 0
   m_GenerateLinks: 0
   m_IgnoreNavMeshAgent: 1
   m_IgnoreNavMeshObstacle: 1
   m_OverrideTileSize: 0
   m_TileSize: 256
-  m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
+  m_OverrideVoxelSize: 1
+  m_VoxelSize: 0.08333335
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: c6505b65deea0dd4ca49ee72e4e67b0e, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 0bfb03327ec0b2b46a510833029a9f94, type: 2}
   m_BuildHeightMesh: 0

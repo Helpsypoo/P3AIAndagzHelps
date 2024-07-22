@@ -19,13 +19,16 @@ public class Unit : MonoBehaviour {
 
     public Unit FollowTarget { get; private set; }
     public Unit AttackTarget { get; private set; }
+
+    protected int _abilityCharges = 0;     // The remaining of times this unit can perform their special action.
+    public int AbilityCharges => _abilityCharges;
     
 
     Rigidbody _looseGun;
 
     [SerializeField] private Animator _anim;
   
-    public UnitState State { get; private set; }
+    [field: SerializeField] public UnitState State { get; private set; }
     protected NavMeshAgent _navAgent;
     private TickEntity _tickEntity;
     
@@ -33,6 +36,7 @@ public class Unit : MonoBehaviour {
     private float _timeAtLastCheck;
     private float _timeInShade;
     private bool _attacking;
+    private float _attackCooldown;
 
     [field: SerializeField] public bool AtDestination { get; private set; }
 
@@ -45,6 +49,7 @@ public class Unit : MonoBehaviour {
 
     private static readonly int speed = Animator.StringToHash("Speed");
     private static readonly int hasAttackTargetInRange = Animator.StringToHash("HasAttackTargetInRange");
+    private static readonly int attackTrigger = Animator.StringToHash("Attack");
     public int SquadNumber => _squadNumber;
     public void UpdateSquadNumber(int number) {
         _squadNumber = number;
@@ -59,7 +64,7 @@ public class Unit : MonoBehaviour {
         _tickEntity = GetComponent<TickEntity>();
     }
 
-    public void Start() {
+    public virtual void Start() {
         _tickEntity?.AddToTickEventManager();
         ChangeHealth(UnitStats.MaxHealth - Health, true);
         SetColors();
@@ -72,6 +77,11 @@ public class Unit : MonoBehaviour {
         }
         LookWhereYoureGoing();
         if(_anim && _navAgent){ _anim.SetFloat(speed, _navAgent.velocity.magnitude);}
+
+        if (_attackCooldown > 0f) {
+            _attackCooldown -= Time.deltaTime;
+        }
+
     }
 
     private void SetColors() {
@@ -125,6 +135,7 @@ public class Unit : MonoBehaviour {
     /// <param name="destination">The location the unit will attempt to move to.</param>
     public void MoveTo(Vector3 destination) {
         _navAgent.SetDestination(destination);
+        _navAgent.isStopped = false;
     }
 
     /// <summary>
@@ -292,6 +303,12 @@ public class Unit : MonoBehaviour {
         }
     }
 
+    public void ClearTarget() {
+        AttackTarget = null;
+        ClearFollowTarget();
+        _navAgent.isStopped = true;
+    }
+
     public void ClearFollowTarget() {
         FollowTarget = null;
         StandDown();
@@ -300,6 +317,12 @@ public class Unit : MonoBehaviour {
     [ContextMenu("Toggle Shoot")]
     public void ToggleShoot() {
         _anim?.SetBool(hasAttackTargetInRange, !_anim.GetBool(hasAttackTargetInRange)); //this calls the Fire() function at a specific frame of the anim
+    }
+
+    public virtual void TakeAim() {
+        if (_attackCooldown > 0f) return;
+        _anim?.SetTrigger(attackTrigger);
+        _attackCooldown = UnitStats.AttackRate;
     }
 
     public void Fire() {
@@ -315,7 +338,6 @@ public class Unit : MonoBehaviour {
         
         FollowTarget = null;
         StandDown();
-
 
         if (_navAgent) {
             _navAgent.isStopped = true;
@@ -355,7 +377,7 @@ public class Unit : MonoBehaviour {
         _navAgent.stoppingDistance = _value;
     }
 
-    private void ProcessAttack() {
+    protected virtual void ProcessAttack() {
         //Debug.Log($"$Processing attack for {UnitStats.name}");
         if (AttackTarget.Health <= 0 || Health <= 0) { 
             //If the thing we're following cannot be attacked exit
@@ -369,10 +391,12 @@ public class Unit : MonoBehaviour {
         }
 
         bool _isInAttackRange = Vector3.Distance(AttackTarget.transform.position, transform.position) <= UnitStats.AttackRange;
-        _anim?.SetBool(hasAttackTargetInRange, _isInAttackRange);
+        //_anim?.SetBool(hasAttackTargetInRange, _isInAttackRange);
         
         if (!_isInAttackRange) {
             MoveTo(AttackTarget.transform.position);
+        } else {
+            TakeAim();
         }
     }
     

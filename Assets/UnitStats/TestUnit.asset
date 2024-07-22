@@ -12,9 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d42557186a5752f4bbcdf53c864ab728, type: 3}
   m_Name: TestUnit
   m_EditorClassIdentifier: 
+  Name: 
+  Colour: {r: 0, g: 0, b: 0, a: 0}
   MaxHealth: 100
   HealthRegenRate: 5
   HealthRegenDelay: 3
   Speed: 3.5
   AttackDamage: -3
-  AttackRate: 0.5
+  AttackRate: 1
+  AttackRange: 0
+  IsEnemy: 0
+  ActionRange: 0

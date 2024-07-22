@@ -13,7 +13,8 @@ public class Weapon : MonoBehaviour {
     public void Fire() {
         //Debug.Log($"Running fire on weapon");
         _muzzleFlashFX?.Play();
-        Bullet _bullet = Instantiate(_tracerPrefab, _muzzleFlashFX.transform.position, _muzzleFlashFX.transform.rotation);
+        //Bullet _bullet = Instantiate(_tracerPrefab, _muzzleFlashFX.transform.position, _muzzleFlashFX.transform.rotation);
+        Bullet _bullet = GameManager.Instance.BulletStash.GetBullet(_muzzleFlashFX.transform.position, _muzzleFlashFX.transform.rotation);
         //_rb.transform.localScale = _muzzleFlashFX.transform.localScale * 3f;
         if (!unit.AttackTarget) {
             _bullet.gameObject.SetActive(false);
@@ -31,6 +32,6 @@ public class Weapon : MonoBehaviour {
         _lookAtLocation.y = _muzzleFlashFX.transform.position.y;
         _bullet.Rb.transform.LookAt(_lookAtLocation);
         
-        _bullet.Rb.AddForce(_attackDir * 4000f);
+        _bullet.Rb.AddForce(_attackDir * Globals.BULLET_SPEED);
     }
 }

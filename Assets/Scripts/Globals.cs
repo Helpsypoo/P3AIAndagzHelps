@@ -30,5 +30,7 @@ public static class Globals {
     /// </summary>
     public const float FOLLOW_DIST = 1.75f;
 
+    public const float BULLET_SPEED = 4000f;
+
 
 }

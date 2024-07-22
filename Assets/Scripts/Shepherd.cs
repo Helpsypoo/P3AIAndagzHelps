@@ -17,6 +17,9 @@ public class Shepherd : Unit {
         // If we don't have a waypoint to remove, we don't need to check that either.
         else if (_wayPointToRemove != null) CheckWayPointToRemove();
 
+        // Update the number of waypoints we have remaining.
+        _abilityCharges = SquadManager.Instance.WaypointStash;
+
     }
 
     public override void PerformAction(Vector3 position, Transform target = null) {
