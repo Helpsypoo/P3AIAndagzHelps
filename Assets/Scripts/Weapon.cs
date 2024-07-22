@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour {
@@ -18,19 +15,19 @@ public class Weapon : MonoBehaviour {
         _muzzleFlashFX?.Play();
         Bullet _bullet = Instantiate(_tracerPrefab, _muzzleFlashFX.transform.position, _muzzleFlashFX.transform.rotation);
         //_rb.transform.localScale = _muzzleFlashFX.transform.localScale * 3f;
-        if (!unit.FollowTarget) {
+        if (!unit.AttackTarget) {
             _bullet.gameObject.SetActive(false);
             return;
         }
 
         _bullet.Shooter = unit;
-        _bullet.Target = unit.FollowTarget;
+        _bullet.Target = unit.AttackTarget;
         _bullet.ShotLocation = unit.transform.position;
         
-        Vector3 _attackDir = unit.FollowTarget.transform.position - _muzzleFlashFX.transform.position;
+        Vector3 _attackDir = unit.AttackTarget.transform.position - _muzzleFlashFX.transform.position;
         _attackDir = _attackDir.normalized;
 
-        Vector3 _lookAtLocation = unit.FollowTarget.transform.position;
+        Vector3 _lookAtLocation = unit.AttackTarget.transform.position;
         _lookAtLocation.y = _muzzleFlashFX.transform.position.y;
         _bullet.Rb.transform.LookAt(_lookAtLocation);
         

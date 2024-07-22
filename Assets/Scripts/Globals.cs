@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public static class Globals {
 
     #region Tags
@@ -12,6 +14,10 @@ public static class Globals {
 
     #region Layers
     public const int ENTITIES_LAYER = 7;
+    #endregion
+    
+    #region LayerMasks
+    public static readonly LayerMask SELECTION_LAYERMASK = LayerMask.GetMask("Entities", "Default", "Hitbox");
     #endregion
 
     /// <summary>

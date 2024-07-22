@@ -1931,7 +1931,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &824258407423054815
 Transform:
   m_ObjectHideFlags: 0
@@ -2233,6 +2233,7 @@ GameObject:
   - component: {fileID: 417735457569587794}
   - component: {fileID: 2616360468254000453}
   - component: {fileID: 3447121892483940033}
+  - component: {fileID: 3342617957670131098}
   m_Layer: 7
   m_Name: Unit
   m_TagString: Untagged
@@ -2291,6 +2292,7 @@ MonoBehaviour:
   _weapon: {fileID: 7474278614370916259}
   _weaponPrefab: {fileID: 920266114437748004, guid: 4f55b7ee73ca6254eb645abb952dc4be,
     type: 3}
+  _anim: {fileID: 365871210043742659}
   <AtDestination>k__BackingField: 0
 --- !u!114 &417735457569587794
 MonoBehaviour:
@@ -2356,7 +2358,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -2364,6 +2366,33 @@ CapsuleCollider:
   m_Height: 2.72
   m_Direction: 1
   m_Center: {x: 0, y: 0.96, z: 0}
+--- !u!54 &3342617957670131098
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5344825663267763069}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 0
 --- !u!1 &8002138055540163356
 GameObject:
   m_ObjectHideFlags: 0

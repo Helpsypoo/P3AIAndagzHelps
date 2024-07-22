@@ -129,7 +129,7 @@ public class SquadManager : MonoBehaviour {
                 if (unit.transform.CompareTag(Globals.UNIT_TAG) && unit != SelectedUnit) {
                     
                     SelectedUnit.StandDown();
-                    SelectedUnit.SetFollowTarget(unit);
+                    SelectedUnit.SetTarget(unit);
                     SelectUnit(_highlightedEntity);
                     
                 } else if (_highlightedEntity.CompareTag(Globals.DOWNED_UNIT_TAG)) {
@@ -140,7 +140,7 @@ public class SquadManager : MonoBehaviour {
                 } else if (_highlightedEntity.CompareTag(Globals.LIBERATED_TAG)) {
                     
                     SelectedUnit.StandDown();
-                    SelectedUnit.SetFollowTarget(unit);
+                    SelectedUnit.SetTarget(unit);
 
                     // If the highlighted entity is an enemy, attack them.
                 } else if (_highlightedEntity.CompareTag(Globals.ENEMY_TAG)) {
@@ -162,7 +162,7 @@ public class SquadManager : MonoBehaviour {
 
         Vector2 mousePosition = _input.Player.Mouse.ReadValue<Vector2>();
         Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hitInfo)) {
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, 1000f, Globals.SELECTION_LAYERMASK, QueryTriggerInteraction.Ignore)) {
 
             Vector3 newPos = hitInfo.point;
             Vector3 newUp = hitInfo.normal;

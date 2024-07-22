@@ -18,17 +18,18 @@ public class Unit : MonoBehaviour {
     [SerializeField] Rigidbody _weaponPrefab;
 
     public Unit FollowTarget { get; private set; }
+    public Unit AttackTarget { get; private set; }
     
 
     Rigidbody _looseGun;
 
-    private Animator _anim;
+    [SerializeField] private Animator _anim;
   
     public UnitState State { get; private set; }
     protected NavMeshAgent _navAgent;
     private TickEntity _tickEntity;
     
-    public float _health { get; private set; }
+    public float Health { get; private set; }
     private float _timeAtLastCheck;
     private float _timeInShade;
     private bool _attacking;
@@ -56,19 +57,21 @@ public class Unit : MonoBehaviour {
         }
 
         _tickEntity = GetComponent<TickEntity>();
-        _anim = GetComponentInChildren<Animator>();
     }
 
     public void Start() {
         _tickEntity?.AddToTickEventManager();
-        ChangeHealth(UnitStats.MaxHealth - _health, true);
+        ChangeHealth(UnitStats.MaxHealth - Health, true);
         SetColors();
-        _navAgent.speed = UnitStats.Speed;
+        if (_navAgent) { _navAgent.speed = UnitStats.Speed;}
     }
 
     public virtual void Update() {
+        if (Health <= 0) {
+            return;
+        }
         LookWhereYoureGoing();
-        if(_anim){ _anim.SetFloat(speed, _navAgent.velocity.magnitude);}
+        if(_anim && _navAgent){ _anim.SetFloat(speed, _navAgent.velocity.magnitude);}
     }
 
     private void SetColors() {
@@ -83,11 +86,17 @@ public class Unit : MonoBehaviour {
     /// If we have path, turn the unit to face the direction they are going.
     /// </summary>
     public void LookWhereYoureGoing() {
-        if (!FollowTarget && (!_navAgent.hasPath || State == UnitState.Dead)) {
+        if (!_navAgent || (!FollowTarget && !AttackTarget && (!_navAgent.hasPath || State == UnitState.Dead))) {
             return;
         }
 
-        Vector3 lookTarget = FollowTarget ? FollowTarget.transform.position : _navAgent.nextPosition;
+        Vector3 lookTarget = _navAgent.nextPosition;
+        if (AttackTarget) {
+            lookTarget = AttackTarget.transform.position;
+        } else if (FollowTarget) {
+            lookTarget = FollowTarget.transform.position;
+        }
+
         lookTarget.y = transform.position.y;
         transform.LookAt(lookTarget);
     }
@@ -147,11 +156,20 @@ public class Unit : MonoBehaviour {
     /// Called via the TickEntity system. A periodic check
     /// </summary>
     public void PeriodicUpdate() {
+        if (_anim) { _anim.transform.localPosition = Vector3.zero; } //stop the animator drifting from the collider
         float _timeSinceLastCheck = Time.time - _timeAtLastCheck;
         CheckLightingStatus(_timeSinceLastCheck);
         UpdateDestinationStatus();
-        if (FollowTarget){
+
+        if (AttackTarget) {
             ProcessAttack();
+        } else if (FollowTarget){ //Mirror the attack target of the unit we're following
+            if (FollowTarget.AttackTarget) {
+                SetTarget(FollowTarget.AttackTarget);
+            } else {
+                FollowTarget.AttackTarget = null;
+                SetTarget(FollowTarget);
+            }
             ProcessFriendlyFollow();
         }
         
@@ -165,7 +183,7 @@ public class Unit : MonoBehaviour {
         Light mainLight = RenderSettings.sun;
         Vector3 lightDir = -mainLight.transform.forward;
         //Debug.DrawLine(transform.position, transform.position + lightDir * 100f, Color.red, 1f);
-        bool isInShadow = Physics.Raycast(transform.position, lightDir, out RaycastHit _hitInfo, 100f, GameManager.Instance.ShadeLayerMask);
+        bool isInShadow = Physics.Raycast(transform.position, lightDir, out RaycastHit _hitInfo, 2000f, GameManager.Instance.ShadeLayerMask);
        
         if (isInShadow) {
             //Debug.Log(gameObject.name + $" is shaded by {_hitInfo.transform.gameObject.name}.");
@@ -202,15 +220,15 @@ public class Unit : MonoBehaviour {
     }
 
     public void ChangeHealth(float _amount, bool _hiddenDisplayUpdate = false) {
-        _health = Mathf.Clamp(_health + _amount, 0, UnitStats.MaxHealth);
+        Health = Mathf.Clamp(Health + _amount, 0, UnitStats.MaxHealth);
         
         if (_hiddenDisplayUpdate) {
-            _healthDisplay.HiddenHealthDisplayUpdate(_health, UnitStats.MaxHealth);
+            _healthDisplay.HiddenHealthDisplayUpdate(Health, UnitStats.MaxHealth);
         } else {
-            _healthDisplay.UpdateHealthDisplay(_health, UnitStats.MaxHealth);
+            _healthDisplay.UpdateHealthDisplay(Health, UnitStats.MaxHealth);
         }
         
-        if (_health <= 0) {
+        if (Health <= 0) {
             SetState(UnitState.Dead);
             _healthDisplay.ForceHealthDisplay(false);
             return;
@@ -233,7 +251,7 @@ public class Unit : MonoBehaviour {
     IEnumerator StartRegen() {
         yield return new WaitForSeconds(UnitStats.HealthRegenDelay);
         
-        while (_health < UnitStats.MaxHealth) {
+        while (Health < UnitStats.MaxHealth) {
             ChangeHealth(UnitStats.HealthRegenRate * Time.deltaTime);
             yield return new WaitForEndOfFrame();
         }
@@ -241,9 +259,14 @@ public class Unit : MonoBehaviour {
     
     [ContextMenu("Revive")]
     public void Revive() {
-        ChangeHealth(UnitStats.MaxHealth - _health);
+        ChangeHealth(UnitStats.MaxHealth - Health);
         SetState(UnitState.Idle);
-        _navAgent.isStopped = false;
+        
+        if (_navAgent) {
+            _navAgent.enabled = true;
+            _navAgent.isStopped = false;
+        }
+
         transform.tag = Globals.UNIT_TAG;
         _tickEntity?.AddToTickEventManager();
         
@@ -257,10 +280,16 @@ public class Unit : MonoBehaviour {
         }
     }
 
-    public void SetFollowTarget(Unit followTarget) {
-        Debug.Log($"Set follow target to {followTarget.UnitStats.Name}");
-        this.FollowTarget = followTarget;
-        SetStopDistance(FollowTarget.UnitStats.IsEnemy ? UnitStats.AttackRange : Globals.FOLLOW_DIST);
+    public void SetTarget(Unit target) {
+        if (target.UnitStats && !AreAllyUnits(target)) {
+            this.AttackTarget = target;
+            SetStopDistance(UnitStats.AttackRange);
+            //Debug.Log($"{UnitStats.Name} attack target set to {target.UnitStats.Name}");
+        } else {
+            this.FollowTarget = target;
+            //Debug.Log($"Set follow target to {target.UnitStats.Name}");
+            SetStopDistance(Globals.FOLLOW_DIST);
+        }
     }
 
     public void ClearFollowTarget() {
@@ -277,15 +306,27 @@ public class Unit : MonoBehaviour {
         _weapon.Fire();
     }
 
-    private void Die() {
+    public virtual void Die() {
+        _tickEntity?.RemoveFromTickEventManager();
         //Stop any current health regen
         if (healthRegen != null) {
             StopCoroutine(healthRegen);
         }
-
-        _navAgent.isStopped = true;
         
-        if(_anim){_anim.Play("Death", 0);}
+        FollowTarget = null;
+        StandDown();
+
+
+        if (_navAgent) {
+            _navAgent.isStopped = true;
+            _navAgent.enabled = false;
+        }
+        
+
+        if (_anim) {
+            _anim.SetBool(hasAttackTargetInRange, false);
+            _anim.Play("Death", 0);
+        }
         _weapon?.gameObject.SetActive(false);
         if (!_looseGun && _weaponPrefab) {
             _looseGun = Instantiate(_weaponPrefab, _weapon.transform.position, _weapon.transform.rotation);
@@ -300,7 +341,7 @@ public class Unit : MonoBehaviour {
         _looseGun?.AddTorque(Random.rotation.eulerAngles * Random.Range(-2f, 2f));
 
         transform.tag = Globals.DOWNED_UNIT_TAG;
-        _tickEntity?.RemoveFromTickEventManager();
+
 
         // If we are the currently selected unit, tell the squadmanager to select another unit.
         if (SquadManager.Instance.SelectedUnit == this) {
@@ -315,20 +356,29 @@ public class Unit : MonoBehaviour {
     }
 
     private void ProcessAttack() {
-        if (!FollowTarget.UnitStats || !FollowTarget.UnitStats.IsEnemy || FollowTarget._health <= 0 || !UnitStats) {
+        //Debug.Log($"$Processing attack for {UnitStats.name}");
+        if (AttackTarget.Health <= 0 || Health <= 0) { 
+            //If the thing we're following cannot be attacked exit
+            AttackTarget = null;
             _anim?.SetBool(hasAttackTargetInRange, false);
+            
+            if (FollowTarget) {
+                SetTarget(FollowTarget);
+            }
             return;
         }
-        
-        bool _isInAttackRange = Vector3.Distance(FollowTarget.transform.position, transform.position) <= UnitStats.AttackRange;
+
+        bool _isInAttackRange = Vector3.Distance(AttackTarget.transform.position, transform.position) <= UnitStats.AttackRange;
         _anim?.SetBool(hasAttackTargetInRange, _isInAttackRange);
+        
         if (!_isInAttackRange) {
-            MoveTo(FollowTarget.transform.position);
+            MoveTo(AttackTarget.transform.position);
         }
     }
     
     private void ProcessFriendlyFollow() {
-        if (FollowTarget.UnitStats.IsEnemy || FollowTarget._health <= 0) {
+        if (FollowTarget.Health <= 0) {
+            FollowTarget = null;
             return;
         }
 
@@ -344,7 +394,7 @@ public class Unit : MonoBehaviour {
     public void Attack(Unit unit) {
         if (_weapon != null) {
             _attacking = true;
-            SetFollowTarget(unit);
+            SetTarget(unit);
         }
     }
 
@@ -353,10 +403,13 @@ public class Unit : MonoBehaviour {
     /// </summary>
     public void StandDown() {
         _attacking = false;
-        FollowTarget = null;
+        AttackTarget = null;
         SetStopDistance(0);
     }
 
+    private bool AreAllyUnits(Unit _otherUnit) {
+        return UnitStats.IsEnemy == _otherUnit.UnitStats.IsEnemy;
+    }
 }
 
 

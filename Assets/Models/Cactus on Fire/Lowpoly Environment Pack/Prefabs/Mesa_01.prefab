@@ -12,12 +12,13 @@ GameObject:
   - component: {fileID: 33535287020734004}
   - component: {fileID: 23499703645984930}
   - component: {fileID: 64889340344056534}
+  - component: {fileID: 8290647517670275239}
   m_Layer: 0
   m_Name: Mesa_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4971051822225322
 Transform:
@@ -106,3 +107,19 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 7adbf72906f848742ac39a38eac3f56c, type: 3}
+--- !u!208 &8290647517670275239
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1303857588373512}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.703, y: 1.373, z: 0.9850001}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.133, y: 0.085, z: 0.9850001}
+  m_TimeToStationary: 0.5

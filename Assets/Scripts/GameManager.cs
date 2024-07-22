@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using Unity.AI.Navigation;
+using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour {
 
@@ -23,6 +24,9 @@ public class GameManager : MonoBehaviour {
     private List<Liberated> _liberatedPool = new List<Liberated>();
     [HideInInspector] public List<Liberated> ActiveLiberated = new List<Liberated>();
     public List<Waypoint> ActiveWaypoints = new List<Waypoint>();
+    [FormerlySerializedAs("TotalLiberated")] [HideInInspector] public int LiberatedScore;
+    public Transform KillZone;
+    public bool IsProcessing { get; private set; }
 
     private void Awake() {
         if (Instance) {
@@ -88,10 +92,23 @@ public class GameManager : MonoBehaviour {
     public void ProcessLiberatedDeath(Liberated _liberated) {
         ActiveLiberated.Remove(_liberated);
         if (ActiveLiberated.Count == 0) {
+            if (IsProcessing) {
+                Win();
+            } else {
+                Lose();
+            }
             return;
         }
         ActiveLiberated[0].IsLeader = true;
         ActiveLiberated[0].SetStopDistance( 0);
+    }
+
+    public void Win() {
+        Debug.Log($"You win! You liberated {LiberatedScore} helpless souls");
+    }
+    
+    public void Lose() {
+        Debug.Log($"You lose!");
     }
 
     public Vector3 GetFollowingPosition(Liberated _liberated) {
@@ -115,5 +132,9 @@ public class GameManager : MonoBehaviour {
 
     public void AddWaypoint(Waypoint _waypoint) {
         ActiveWaypoints.Add(_waypoint);
+    }
+
+    public void SetIsProcessing(bool _enabled) {
+        IsProcessing = _enabled;
     }
 }
