@@ -242,6 +242,7 @@ public class SquadManager : MonoBehaviour {
             // Loop until we either encounter a unit that is not following anyone, or we encounter the leader.
             do {
 
+                if (!nextUnit.transform.CompareTag(Globals.UNIT_TAG)) break;
                 train.Add(nextUnit);
                 if (nextUnit.IsLeader) break;
                 nextUnit = nextUnit.FollowTarget;
