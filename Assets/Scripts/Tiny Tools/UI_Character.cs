@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
-public class UI_Character : MonoBehaviour {
+public class UI_Character : MonoBehaviour, IPointerClickHandler {
+
+    [SerializeField] private float _deselectedAlpha = 0.65f;
 
     private Unit _unit;
     [SerializeField] private Image _selectionBorder;
@@ -12,9 +15,10 @@ public class UI_Character : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI _characterName;
     [SerializeField] private TextMeshProUGUI _abilityCharge;
 
+
+
     public void Init(Unit unit) {
         _unit = unit;
-        _selectionBorder.color = Utilities.MakeTransparent(unit.UnitStats.Colour);
         _characterName.text = _unit.UnitStats.Name;
         _abilityCharge.text = unit.AbilityCharges.ToString();
     }
@@ -24,11 +28,19 @@ public class UI_Character : MonoBehaviour {
     }
 
     public void Select() {
-        _selectionBorder.color = Utilities.MakeOpaque(_unit.UnitStats.Colour);
+        _characterImage.color = Utilities.SetAlpha(_characterImage.color, 1f);
     }
 
     public void Deselect() {
-        _selectionBorder.color = Utilities.MakeTransparent(_unit.UnitStats.Colour);
+        _characterImage.color = Utilities.SetAlpha(_characterImage.color, _deselectedAlpha);
     }
 
+    public void OnPointerClick(PointerEventData eventData) {
+
+        if (eventData.button == PointerEventData.InputButton.Left) {
+            SquadManager.Instance.SelectUnit(_unit);
+        } else if (eventData.button == PointerEventData.InputButton.Right) {
+            SquadManager.Instance.FollowUnit(_unit);
+        }
+    }
 }

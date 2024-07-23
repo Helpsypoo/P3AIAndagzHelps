@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 using Cinemachine;
 
 public class SquadManager : MonoBehaviour {
@@ -21,7 +22,7 @@ public class SquadManager : MonoBehaviour {
     [SerializeField] private CinemachineVirtualCamera _cinemachineCamera;
 
     // Any unit the cursor is currently hovering over.
-    private Transform _highlightedEntity;
+    [SerializeField] private Transform _highlightedEntity;
 
     private BaseInput _input;
 
@@ -69,6 +70,8 @@ public class SquadManager : MonoBehaviour {
     /// <param name="obj"></param>
     private void SelectClick(InputAction.CallbackContext obj) {
 
+        if (EventSystem.current.IsPointerOverGameObject()) return;
+
         // Move the selection marker to the current mouse position and update _highlightedEntity. Since we're either selecting a
         // comrade or doing nothing, deactivate the marker.
         UpdateSelectionMarker();
@@ -80,14 +83,19 @@ public class SquadManager : MonoBehaviour {
 
         // Same if we do have a highlighted entity but it's not tagged as one of our comrades.
         if (!_highlightedEntity.CompareTag(Globals.UNIT_TAG)) return;
-        
+
         // Attempt to get the Unit component (or component that inherits from Unit). Throw exception if we fail.
         Unit unit = _highlightedEntity.GetComponent<Unit>();
         if (unit == null) {
             throw new System.Exception($"Attempted to get Unit component from object object {_highlightedEntity.name}. Object is tagged as Unit but no Unit componnent was found.");
         }
-        
-        SelectUnit(_highlightedEntity);
+
+        if (_input.Player.SelectionModifier.IsPressed()) {
+            FollowUnit(unit);
+        } else {
+            SelectUnit(_highlightedEntity);
+        }
+
         GameManager.Instance.SelectionMarker.Deactivate();
 
     }
@@ -97,6 +105,8 @@ public class SquadManager : MonoBehaviour {
     /// </summary>
     /// <param name="obj"></param>
     private void ActionClick(InputAction.CallbackContext obj) {
+
+        if (EventSystem.current.IsPointerOverGameObject()) return;
 
         // Move the selection marker to the current mouse position and update _highlightedEntity.
         UpdateSelectionMarker();
@@ -126,14 +136,26 @@ public class SquadManager : MonoBehaviour {
 
                 // If the highlighted entity is a comrade, set the currently selected unit to follow them and switch to that unit.
                 if (unit.transform.CompareTag(Globals.UNIT_TAG) && unit != SelectedUnit) {
-                    
-                    SelectedUnit.StandDown();
-                    SelectedUnit.SetTarget(unit);
-                    SelectUnit(_highlightedEntity);
-                    
-                } else if (_highlightedEntity.CompareTag(Globals.DOWNED_UNIT_TAG)) {
 
-                    // TODO walk to unit and revive them.
+                    // If this unit is down, we need to revive them.
+                    if (unit.State == UnitState.Dead) {
+                        Debug.Log("Attempted to select fallen unit");
+                        unit.Select();
+                        SelectedUnit.StandDown();
+                        SelectedUnit.SetReviveTarget(unit);
+
+                    } else {
+
+                        Unit thisUnit = SelectedUnit;
+                        thisUnit.StandDown();
+                        thisUnit.SetTarget(unit);
+                        SelectUnit(_highlightedEntity);
+
+                    }
+
+                    GameManager.Instance.SelectionMarker.Deactivate();
+                    // REVIVE POSSIBLY GOES IN HERE
+
 
                 // If the highlighted entity is a liberated, follow them.
                 } else if (_highlightedEntity.CompareTag(Globals.LIBERATED_TAG)) {
@@ -145,6 +167,8 @@ public class SquadManager : MonoBehaviour {
                 } else if (_highlightedEntity.CompareTag(Globals.ENEMY_TAG)) {
 
                     SelectedUnit.Attack(unit);
+                    unit.Select();
+                    GameManager.Instance.SelectionMarker.Deactivate();
 
                 }
 
@@ -161,11 +185,12 @@ public class SquadManager : MonoBehaviour {
 
         Vector2 mousePosition = _input.Player.Mouse.ReadValue<Vector2>();
         Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hitInfo, 1000f, Globals.SELECTION_LAYERMASK, QueryTriggerInteraction.Ignore)) {
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, 1000f, Globals.SELECTION_LAYERMASK)) {
 
             Vector3 newPos = hitInfo.point;
             Vector3 newUp = hitInfo.normal;
 
+            // If the object we have hit is a entity, set our highlighted entity to it.
             if (hitInfo.transform.gameObject.layer == Globals.ENTITIES_LAYER) {
 
                 _highlightedEntity = hitInfo.transform;
@@ -200,9 +225,62 @@ public class SquadManager : MonoBehaviour {
 
         UnitIndex = index;
         for (int i = 0; i < Units.Length; i++) {
-            if (i == UnitIndex) Units[i].Select();
-            else Units[i].Deselect();
+            //if (i == UnitIndex) Units[i].Select();
+            //else Units[i].Deselect();
+            Units[i].Deselect();
         }
+
+        // Loop through each unit.
+        foreach (Unit u in Units) {
+
+            // If the current unit is not dead we can move on.
+            if (u.State == UnitState.Dead) continue;
+
+            Unit nextUnit = u;
+            List<Unit> train = new();
+
+            // Loop until we either encounter a unit that is not following anyone, or we encounter the leader.
+            do {
+
+                train.Add(nextUnit);
+                if (nextUnit.IsLeader) break;
+                nextUnit = nextUnit.FollowTarget;
+                
+            } while (nextUnit != null);
+
+
+            // If we have anybody in the train, and the train ends with a leader, activate all units in the train.
+            if (train.Count > 0 && train[train.Count - 1].IsLeader) {
+                foreach(Unit activeUnit in train) {
+                    activeUnit.Select();
+                }
+            }
+
+
+        }
+
+        //foreach (var unit in Units) {
+        //    if (unit.FollowTarget is null || unit.IsLeader)
+        //        continue;
+
+        //    var target = unit.FollowTarget;
+        //    if (target.IsLeader)
+        //        return new List<Unit> { unit, target };
+
+        //    var targetsTarget = target.FollowTarget;
+        //    if (targetsTarget is not null && targetsTarget.IsLeader)
+        //        return new List<Unit> { unit, target, targetsTarget };
+
+        //    var last = targetsTarget.FollowTarget;
+        //    if (last is not null && last.IsLeader)
+        //        return new List<uint> { unit, target, targetsTarget, last };
+        //}
+
+
+        // If a unit is following another unit, make sure it is highlighted so we know it is active.
+        //if (Units[i].FollowTarget != null && Units[i].FollowTarget.transform.CompareTag(Globals.UNIT_TAG) && Units[i].FollowTarget.State != UnitState.Dead) {
+        //    Units[i].Select();
+        //}
 
         _cinemachineCamera.Follow = SelectedUnit.transform;
         _cinemachineCamera.LookAt = SelectedUnit.transform;
@@ -218,6 +296,20 @@ public class SquadManager : MonoBehaviour {
         Unit unit = unitTransform.GetComponent<Unit>();
         if (unit == null) return;
         SelectUnit(unit.SquadNumber);
+
+    }
+
+    public void SelectUnit(Unit unit) {
+        SelectUnit(unit.SquadNumber);
+    }
+
+    public void FollowUnit(Unit unit) {
+
+        if (SelectedUnit == unit) return;
+
+        SelectedUnit.SetTarget(unit);
+        unit.StandDown();
+        SelectUnit(unit);
 
     }
 

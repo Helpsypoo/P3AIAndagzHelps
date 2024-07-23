@@ -11,8 +11,11 @@ public class Unit : MonoBehaviour {
     public UnitStats UnitStats;
 
     [SerializeField] private HealthDisplay _healthDisplay;
+    [SerializeField] private HealthDisplay _reviveDisplay;
 
-    [SerializeField] MeshRenderer _selectionIndicator;
+    [SerializeField] GameObject _selectionIndicator;
+    [SerializeField] GameObject _reviveSelectionIndicator;
+    [SerializeField] GameObject _leaderSelectionIndicator;
     [SerializeField] Renderer[] _renderers;
     [SerializeField] Weapon _weapon;
     [SerializeField] Rigidbody _weaponPrefab;
@@ -22,6 +25,9 @@ public class Unit : MonoBehaviour {
 
     protected int _abilityCharges = 0;     // The remaining of times this unit can perform their special action.
     public int AbilityCharges => _abilityCharges;
+
+    // Is true if this unit is the currently selected/active unit.
+    public bool IsLeader => SquadNumber == SquadManager.Instance.UnitIndex;
     
 
     Rigidbody _looseGun;
@@ -37,6 +43,8 @@ public class Unit : MonoBehaviour {
     private float _timeInShade;
     private bool _attacking;
     private float _attackCooldown;
+    [SerializeField] private float _reviveTimer;
+    private bool _isReviving => _reviveTimer > 0f;
 
     [field: SerializeField] public bool AtDestination { get; private set; }
 
@@ -82,6 +90,18 @@ public class Unit : MonoBehaviour {
             _attackCooldown -= Time.deltaTime;
         }
 
+        if (AtDestination && _reviveTimer > 0f) {
+            _reviveTimer -= Time.deltaTime;
+            if (_reviveTimer <= 0f) {
+                FollowTarget.Revive();
+                _reviveDisplay.ForceHealthDisplay(false);
+            }
+        }
+
+        if (_reviveTimer > 0f && _reviveTimer < Globals.REVIVE_TIMER) {
+            _reviveDisplay.UpdateHealthDisplay(Globals.REVIVE_TIMER - _reviveTimer, Globals.REVIVE_TIMER);
+        }
+
     }
 
     private void SetColors() {
@@ -125,6 +145,11 @@ public class Unit : MonoBehaviour {
         // If we are now at our destination and we weren't before, throw a call to SelectionCursor to see if it needs to deactivate.
         if (AtDestination && prevDestination != AtDestination) {
             GameManager.Instance.SelectionMarker.CheckAction(transform.position);
+
+            //if (FollowTarget != null && FollowTarget.State == UnitState.Dead) {
+            //    FollowTarget.Revive();
+            //}
+
         }
 
     }
@@ -153,14 +178,35 @@ public class Unit : MonoBehaviour {
     /// Called when this unit is selected by the player.
     /// </summary>
     public void Select() {
-        _selectionIndicator.gameObject.SetActive(true);
+
+        if (transform.CompareTag(Globals.UNIT_TAG) && State == UnitState.Dead) {
+            _reviveSelectionIndicator.SetActive(true);
+        } else {
+            if (IsLeader) {
+                _leaderSelectionIndicator.SetActive(true);
+            } else {
+                _selectionIndicator.SetActive(true);
+            }
+        }
     }
 
     /// <summary>
     /// Called when this unit becomes deselected.
     /// </summary>
     public void Deselect() {
-        _selectionIndicator.gameObject.SetActive(false);
+        // CHECK IF PLAYER UNIT FIRST
+        _selectionIndicator.SetActive(false);
+        _leaderSelectionIndicator.SetActive(false);
+        if (transform.CompareTag(Globals.UNIT_TAG)) {
+            _reviveSelectionIndicator.SetActive(false);
+        }
+    }
+
+    /// <summary>
+    /// Toggles selection from its current state (whatever that is).
+    /// </summary>
+    public void ToggleSelect() {
+        _selectionIndicator.SetActive(!_selectionIndicator.activeSelf);
     }
 
     /// <summary>
@@ -289,6 +335,8 @@ public class Unit : MonoBehaviour {
             _anim.transform.localPosition = Vector3.zero;
             _anim.transform.rotation = Quaternion.identity;
         }
+        _reviveSelectionIndicator.SetActive(false);
+
     }
 
     public void SetTarget(Unit target) {
@@ -301,6 +349,16 @@ public class Unit : MonoBehaviour {
             //Debug.Log($"Set follow target to {target.UnitStats.Name}");
             SetStopDistance(Globals.FOLLOW_DIST);
         }
+    }
+
+    public void SetReviveTarget(Unit target) {
+
+        _reviveTimer = Globals.REVIVE_TIMER;
+        FollowTarget = target;
+        _reviveDisplay.HiddenHealthDisplayUpdate(Globals.REVIVE_TIMER - _reviveTimer, Globals.REVIVE_TIMER);
+        SetStopDistance(Globals.FOLLOW_DIST);
+
+
     }
 
     public void ClearTarget() {
@@ -338,6 +396,7 @@ public class Unit : MonoBehaviour {
         
         FollowTarget = null;
         StandDown();
+        Deselect();
 
         if (_navAgent) {
             _navAgent.isStopped = true;
@@ -361,8 +420,6 @@ public class Unit : MonoBehaviour {
         Vector3 _randomUpwardForce = new Vector3(Random.Range(-1f, 1f), Random.Range(3f, 6f), Random.Range(-1f, 1f));
         _looseGun?.AddForce(_randomUpwardForce);
         _looseGun?.AddTorque(Random.rotation.eulerAngles * Random.Range(-2f, 2f));
-
-        transform.tag = Globals.DOWNED_UNIT_TAG;
 
 
         // If we are the currently selected unit, tell the squadmanager to select another unit.
@@ -401,7 +458,8 @@ public class Unit : MonoBehaviour {
     }
     
     private void ProcessFriendlyFollow() {
-        if (FollowTarget.Health <= 0) {
+
+        if (FollowTarget.Health <= 0 && !_isReviving) {
             FollowTarget = null;
             return;
         }
@@ -427,7 +485,10 @@ public class Unit : MonoBehaviour {
     /// </summary>
     public void StandDown() {
         _attacking = false;
-        AttackTarget = null;
+        if (AttackTarget != null) {
+            AttackTarget.Deselect();
+            AttackTarget = null;
+        }
         SetStopDistance(0);
     }
 

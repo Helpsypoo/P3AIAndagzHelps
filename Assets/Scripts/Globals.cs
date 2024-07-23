@@ -32,5 +32,7 @@ public static class Globals {
 
     public const float BULLET_SPEED = 4000f;
 
+    public const float REVIVE_TIMER = 3f;
+
 
 }

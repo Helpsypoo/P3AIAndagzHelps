@@ -107,6 +107,15 @@ public partial class @BaseInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SelectionModifier"",
+                    ""type"": ""Button"",
+                    ""id"": ""8d3dd3a0-6e18-4165-8d9b-33b401d0f043"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -208,6 +217,17 @@ public partial class @BaseInput: IInputActionCollection2, IDisposable
                     ""action"": ""ActionModifier"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9977c085-5194-49b2-bbb5-38d9a45b6c6f"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectionModifier"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -225,6 +245,7 @@ public partial class @BaseInput: IInputActionCollection2, IDisposable
         m_Player_Unit3 = m_Player.FindAction("Unit3", throwIfNotFound: true);
         m_Player_Unit4 = m_Player.FindAction("Unit4", throwIfNotFound: true);
         m_Player_ActionModifier = m_Player.FindAction("ActionModifier", throwIfNotFound: true);
+        m_Player_SelectionModifier = m_Player.FindAction("SelectionModifier", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -295,6 +316,7 @@ public partial class @BaseInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Unit3;
     private readonly InputAction m_Player_Unit4;
     private readonly InputAction m_Player_ActionModifier;
+    private readonly InputAction m_Player_SelectionModifier;
     public struct PlayerActions
     {
         private @BaseInput m_Wrapper;
@@ -308,6 +330,7 @@ public partial class @BaseInput: IInputActionCollection2, IDisposable
         public InputAction @Unit3 => m_Wrapper.m_Player_Unit3;
         public InputAction @Unit4 => m_Wrapper.m_Player_Unit4;
         public InputAction @ActionModifier => m_Wrapper.m_Player_ActionModifier;
+        public InputAction @SelectionModifier => m_Wrapper.m_Player_SelectionModifier;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -344,6 +367,9 @@ public partial class @BaseInput: IInputActionCollection2, IDisposable
             @ActionModifier.started += instance.OnActionModifier;
             @ActionModifier.performed += instance.OnActionModifier;
             @ActionModifier.canceled += instance.OnActionModifier;
+            @SelectionModifier.started += instance.OnSelectionModifier;
+            @SelectionModifier.performed += instance.OnSelectionModifier;
+            @SelectionModifier.canceled += instance.OnSelectionModifier;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -375,6 +401,9 @@ public partial class @BaseInput: IInputActionCollection2, IDisposable
             @ActionModifier.started -= instance.OnActionModifier;
             @ActionModifier.performed -= instance.OnActionModifier;
             @ActionModifier.canceled -= instance.OnActionModifier;
+            @SelectionModifier.started -= instance.OnSelectionModifier;
+            @SelectionModifier.performed -= instance.OnSelectionModifier;
+            @SelectionModifier.canceled -= instance.OnSelectionModifier;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -403,5 +432,6 @@ public partial class @BaseInput: IInputActionCollection2, IDisposable
         void OnUnit3(InputAction.CallbackContext context);
         void OnUnit4(InputAction.CallbackContext context);
         void OnActionModifier(InputAction.CallbackContext context);
+        void OnSelectionModifier(InputAction.CallbackContext context);
     }
 }
