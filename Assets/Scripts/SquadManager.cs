@@ -185,7 +185,7 @@ public class SquadManager : MonoBehaviour {
 
         Vector2 mousePosition = _input.Player.Mouse.ReadValue<Vector2>();
         Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hitInfo, 1000f, Globals.SELECTION_LAYERMASK)) {
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, 1000f, Globals.SELECTION_LAYERMASK, QueryTriggerInteraction.Ignore)) {
 
             Vector3 newPos = hitInfo.point;
             Vector3 newUp = hitInfo.normal;
