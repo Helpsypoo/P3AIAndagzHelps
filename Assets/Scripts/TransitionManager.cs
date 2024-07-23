@@ -1,13 +1,18 @@
 using System.Collections;
-using TMPro;
+using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class TransitionManager : MonoBehaviour {
     public static TransitionManager Instance;
-    [SerializeField] private Animator _anim;
+    [SerializeField] private Transform _transitionBarContainer;
 
-    private Coroutine transitionCoroutine;
+    private Tween _transitionFX;
+    private Coroutine _transitionCoroutine;
+
+    private RectTransform _canvas;
+    private List<RectTransform> _transitionBars = new List<RectTransform>();
     private void Awake() {
         if (Instance != null) {
             Destroy(gameObject);
@@ -15,26 +20,70 @@ public class TransitionManager : MonoBehaviour {
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
+
+        _canvas = GetComponent<RectTransform>();
+
+        foreach (RectTransform _child in _transitionBarContainer) {
+            _transitionBars.Add(_child);
+            //Debug.Log($"found {_transitionBars.Count}");
+        }
     }
 
     public void TransitionToScene(string _scene) {
-        if (transitionCoroutine != null) {
-            StopCoroutine(transitionCoroutine);
+        if (_transitionCoroutine != null) {
+            StopCoroutine(_transitionCoroutine);
         }
 
-        transitionCoroutine = StartCoroutine(ChangeSceneAfterTransition(_scene));
+        _transitionCoroutine = StartCoroutine(ChangeSceneAfterTransition(_scene));
     }
 
     IEnumerator ChangeSceneAfterTransition(string _sceneName) {
-        _anim.Play("TransitionOn");
-        yield return new WaitUntil(() => IsAnimationFinished(_anim, "TransitionOn"));
+        TransitionOnEffect();
+        yield return new WaitUntil(() => !_transitionFX.IsActive());
         yield return SceneManager.LoadSceneAsync(_sceneName);
         yield return new WaitForSeconds(1f);
-        _anim.Play("TransitionOff");
+        TransitionOffEffect();
     }
+    
+    private void TransitionOnEffect() {
+        float _delay = .3f;
+        
+        if (_transitionFX != null) {
+            _transitionFX.Kill();
+        }
+        
+        float initialWidth = 0f;
+        float targetWidth = _canvas.rect.width;
+        
+        foreach (RectTransform bar in _transitionBars) {
+            bar.sizeDelta = new Vector2(initialWidth, bar.sizeDelta.y);
+            
+            _transitionFX = bar.DOSizeDelta(new Vector2(targetWidth, bar.sizeDelta.y), _delay)
+                .SetEase(Ease.OutCubic)
+                .SetUpdate(true);
 
-    private bool IsAnimationFinished(Animator animator, string animationName) {
-        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        return stateInfo.IsName(animationName) && stateInfo.normalizedTime >= 1;
+            _delay += 0.2f;
+        }
+    }
+    
+    private void TransitionOffEffect() {
+        float _delay = .3f;
+        
+        if (_transitionFX != null) {
+            _transitionFX.Kill();
+        }
+    
+        float initialWidth = _canvas.rect.width;
+        float targetWidth = 0;
+
+        foreach (RectTransform bar in _transitionBars) {
+            bar.sizeDelta = new Vector2(initialWidth, bar.sizeDelta.y);
+        
+            _transitionFX = bar.DOSizeDelta(new Vector2(targetWidth, bar.sizeDelta.y), _delay)
+                .SetEase(Ease.OutCubic)
+                .SetUpdate(true);
+
+            _delay += 0.2f;
+        }
     }
 }
