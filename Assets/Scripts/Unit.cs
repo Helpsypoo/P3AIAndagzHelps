@@ -182,7 +182,7 @@ public class Unit : MonoBehaviour {
         if (transform.CompareTag(Globals.UNIT_TAG) && State == UnitState.Dead) {
             _reviveSelectionIndicator.SetActive(true);
         } else {
-            if (IsLeader) {
+            if (transform.CompareTag(Globals.UNIT_TAG) && IsLeader) {
                 _leaderSelectionIndicator.SetActive(true);
             } else {
                 _selectionIndicator.SetActive(true);
@@ -196,7 +196,9 @@ public class Unit : MonoBehaviour {
     public void Deselect() {
         // CHECK IF PLAYER UNIT FIRST
         _selectionIndicator.SetActive(false);
-        _leaderSelectionIndicator.SetActive(false);
+        if (_leaderSelectionIndicator != null) {
+            _leaderSelectionIndicator.SetActive(false);
+        }
         if (transform.CompareTag(Globals.UNIT_TAG)) {
             _reviveSelectionIndicator.SetActive(false);
         }
