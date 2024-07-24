@@ -166,6 +166,7 @@ MonoBehaviour:
   _muzzleFlashFX: {fileID: 7283333655816500255}
   _tracerPrefab: {fileID: 8984501566734356877, guid: edc555170136714468e06ae43a7e0c86,
     type: 3}
+  _fireSound: {fileID: 8300000, guid: f30349632c64e414dbc862c140582dfd, type: 3}
 --- !u!54 &920266114437748004
 Rigidbody:
   m_ObjectHideFlags: 0

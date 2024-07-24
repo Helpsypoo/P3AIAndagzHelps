@@ -49,7 +49,7 @@ public class AudioManager : MonoBehaviour {
         }
         source.volume = volume;
         source.clip = audioClip;
-        source.spatialBlend = _location.HasValue ? 1f : 0f;
+        source.spatialBlend = _location.HasValue ? 0.95f : 0f;
         source.pitch = pitchRange == default ? 1f : Random.Range(pitchRange.x, pitchRange.y);
         source.Play();
     }

@@ -12,6 +12,7 @@ TagManager:
   - Walkable
   - Enemy
   - FX
+  - MissionMarker
   layers:
   - Default
   - TransparentFX

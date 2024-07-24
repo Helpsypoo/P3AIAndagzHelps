@@ -24,6 +24,8 @@ public class SquadManager : MonoBehaviour {
     // Any unit the cursor is currently hovering over.
     [SerializeField] private Transform _highlightedEntity;
 
+    private bool _mouseOverUI;
+
     private BaseInput _input;
 
     private void Awake() {
@@ -62,6 +64,7 @@ public class SquadManager : MonoBehaviour {
 
     private void Update() {
         //UpdateSelectionMarker();
+        _mouseOverUI = EventSystem.current.IsPointerOverGameObject();
     }
 
     /// <summary>
@@ -106,7 +109,7 @@ public class SquadManager : MonoBehaviour {
     /// <param name="obj"></param>
     private void ActionClick(InputAction.CallbackContext obj) {
 
-        if (EventSystem.current.IsPointerOverGameObject()) return;
+        if (_mouseOverUI) return;
 
         // Move the selection marker to the current mouse position and update _highlightedEntity.
         UpdateSelectionMarker();

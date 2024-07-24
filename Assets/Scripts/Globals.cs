@@ -10,6 +10,7 @@ public static class Globals {
     public const string DOWNED_UNIT_TAG = "DownedUnit";
     public const string WAYPOINT_TAG = "Waypoint";
     public const string LIBERATED_TAG = "Liberated";
+    public const string MISSION_MARKER_TAG = "MissionMarker";
     #endregion
 
     #region Layers

@@ -3,6 +3,7 @@ using UnityEngine;
 public class Weapon : MonoBehaviour {
     [SerializeField] private ParticleSystem _muzzleFlashFX;
     [SerializeField] private Bullet _tracerPrefab;
+    [SerializeField] private AudioClip _fireSound;
 
     private Unit unit;
 
@@ -33,5 +34,10 @@ public class Weapon : MonoBehaviour {
         _bullet.Rb.transform.LookAt(_lookAtLocation);
         
         _bullet.Rb.AddForce(_attackDir * Globals.BULLET_SPEED);
+
+        if (_fireSound != null) {
+            AudioManager.Instance.Play(_fireSound, MixerGroups.SFX, default, 1f, transform.position);
+        }
+
     }
 }
