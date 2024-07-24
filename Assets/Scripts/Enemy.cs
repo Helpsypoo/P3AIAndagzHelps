@@ -6,8 +6,13 @@ public class Enemy : Unit {
 
 	[SerializeField] private List<Unit> _targets = new();
 
+	public override void Awake() {
+		transform.SetParent(null);
+		base.Awake();
+	}
 	public override void Start() {
 		base.Start();
+		
 		//Debug.Log($"Running Start on Enemy");
 		if (!UnitStats) {
 			//Debug.Log($"No UnitStats on Enemy");

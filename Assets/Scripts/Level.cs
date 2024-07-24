@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Level : MonoBehaviour {
-    public Transform[] LiberatedSpawns;
+    public Transform LiberatedSpawnContainer;
     public Transform[] UnitSpawns;
     public float DaylightIntensity;
 

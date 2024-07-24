@@ -23,9 +23,11 @@ public class GameManager : MonoBehaviour {
     [SerializeField] private Waypoint _waypointPrefab;
     private List<Liberated> _liberatedPool = new List<Liberated>();
     [HideInInspector] public List<Liberated> ActiveLiberated = new List<Liberated>();
+    [HideInInspector] public List<Liberated> DeadLiberated = new List<Liberated>();
     public List<Waypoint> ActiveWaypoints = new List<Waypoint>();
-    [FormerlySerializedAs("TotalLiberated")] [HideInInspector] public int LiberatedScore;
+    [HideInInspector] public int LiberatedScore;
     public Transform KillZone;
+    public List<Unit> PlayerUnits { get; private set; } = new List<Unit>();
     public bool IsProcessing { get; private set; }
 
     [field: SerializeField] public BulletPool BulletStash { get; private set; }
@@ -61,7 +63,7 @@ public class GameManager : MonoBehaviour {
         
         yield return new WaitUntil(() => ActiveLevel);
 
-        SpawnOrRelocatedLiberated(ActiveLevel.LiberatedSpawns);
+        SpawnOrRelocatedLiberated(ActiveLevel.LiberatedSpawnContainer);
         //TODO: spawn/move units to ActiveLevel.UnitSpawns
         
         yield return new WaitForSeconds(2f);
@@ -69,18 +71,18 @@ public class GameManager : MonoBehaviour {
     }
 
 
-    private void SpawnOrRelocatedLiberated(Transform[] _spawnPoints) {
+    private void SpawnOrRelocatedLiberated(Transform _spawnPointContainer) {
         ActiveLiberated.Clear();
         
-        for (int i = 0; i < _spawnPoints.Length; i++) {
+        for (int i = 0; i < _spawnPointContainer.childCount; i++) {
             Liberated _liberated;
             if (i > _liberatedPool.Count) {
                 _liberated = _liberatedPool[i];
-                _liberated.transform.position = _spawnPoints[i].position;
-                _liberated.transform.rotation = _spawnPoints[i].rotation;
+                _liberated.transform.position = _spawnPointContainer.GetChild(i).position;
+                _liberated.transform.rotation = _spawnPointContainer.GetChild(i).rotation;
                 _liberated.Revive();
             } else {
-                _liberated = Instantiate(_liberatedPrefab, _spawnPoints[i].position, _spawnPoints[i].rotation);
+                _liberated = Instantiate(_liberatedPrefab, _spawnPointContainer.GetChild(i).position, _spawnPointContainer.GetChild(i).rotation);
                 _liberatedPool.Add(_liberated);
             }
 
@@ -93,24 +95,34 @@ public class GameManager : MonoBehaviour {
 
     public void ProcessLiberatedDeath(Liberated _liberated) {
         ActiveLiberated.Remove(_liberated);
+        DeadLiberated.Add(_liberated);
         if (ActiveLiberated.Count == 0) {
             if (IsProcessing) {
-                Win();
+                MissionStateManager.Instance.MissionEvent(MissionCondition.Complete);
             } else {
-                Lose();
+                MissionStateManager.Instance.MissionEvent(MissionCondition.FailMininumLiberated);
             }
             return;
         }
         ActiveLiberated[0].IsLeader = true;
         ActiveLiberated[0].SetStopDistance( 0);
     }
-
-    public void Win() {
-        Debug.Log($"You win! You liberated {LiberatedScore} helpless souls");
-    }
     
-    public void Lose() {
-        Debug.Log($"You lose!");
+    public void ProcessUnitLife(Unit _unit) {
+        if (!PlayerUnits.Contains(_unit)) {
+            PlayerUnits.Add(_unit);
+        }
+
+        int _deadUnits = 0;
+        for (int i = 0; i < PlayerUnits.Count; i++) {
+            if (PlayerUnits[i].Health <= 0) {
+                _deadUnits++;
+            }
+        }
+        
+        if (_deadUnits >= PlayerUnits.Count) {
+            MissionStateManager.Instance.MissionEvent(MissionCondition.FailUnitsLost);
+        }
     }
 
     public Vector3 GetFollowingPosition(Liberated _liberated) {

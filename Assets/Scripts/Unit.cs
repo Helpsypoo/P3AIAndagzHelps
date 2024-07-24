@@ -20,6 +20,8 @@ public class Unit : MonoBehaviour {
     [SerializeField] Weapon _weapon;
     [SerializeField] Rigidbody _weaponPrefab;
 
+    private CapsuleCollider _hitbox;
+
     public Unit FollowTarget { get; private set; }
     public Unit AttackTarget { get; private set; }
 
@@ -63,13 +65,14 @@ public class Unit : MonoBehaviour {
         _squadNumber = number;
     }
     
-    public void Awake() {
+    public virtual void Awake() {
         _navAgent = GetComponent<NavMeshAgent>();
         if (_navAgent == null) {
             throw new System.Exception($"Cannot find NavMeshAgent on unit {transform.name}.");
         }
 
         _tickEntity = GetComponent<TickEntity>();
+        _hitbox = GetComponent<CapsuleCollider>();
     }
 
     public virtual void Start() {
@@ -77,6 +80,10 @@ public class Unit : MonoBehaviour {
         ChangeHealth(UnitStats.MaxHealth - Health, true);
         SetColors();
         if (_navAgent) { _navAgent.speed = UnitStats.Speed;}
+
+        if (CompareTag(Globals.UNIT_TAG)) {
+            GameManager.Instance.ProcessUnitLife(this);
+        }
     }
 
     public virtual void Update() {
@@ -159,6 +166,9 @@ public class Unit : MonoBehaviour {
     /// </summary>
     /// <param name="destination">The location the unit will attempt to move to.</param>
     public void MoveTo(Vector3 destination) {
+        if (!_navAgent.enabled || !_navAgent.isOnNavMesh) {
+            return;
+        }
         _navAgent.SetDestination(destination);
         _navAgent.isStopped = false;
     }
@@ -195,7 +205,9 @@ public class Unit : MonoBehaviour {
     /// </summary>
     public void Deselect() {
         // CHECK IF PLAYER UNIT FIRST
-        _selectionIndicator.SetActive(false);
+        if (_selectionIndicator != null) {
+            _selectionIndicator.SetActive(false);
+        }
         if (_leaderSelectionIndicator != null) {
             _leaderSelectionIndicator.SetActive(false);
         }
@@ -208,7 +220,7 @@ public class Unit : MonoBehaviour {
     /// Toggles selection from its current state (whatever that is).
     /// </summary>
     public void ToggleSelect() {
-        _selectionIndicator.SetActive(!_selectionIndicator.activeSelf);
+        if(_selectionIndicator){_selectionIndicator.SetActive(!_selectionIndicator.activeSelf);}
     }
 
     /// <summary>
@@ -318,6 +330,7 @@ public class Unit : MonoBehaviour {
     
     [ContextMenu("Revive")]
     public void Revive() {
+        _hitbox.enabled = true;
         ChangeHealth(UnitStats.MaxHealth - Health);
         SetState(UnitState.Idle);
         
@@ -338,6 +351,10 @@ public class Unit : MonoBehaviour {
             _anim.transform.rotation = Quaternion.identity;
         }
         _reviveSelectionIndicator.SetActive(false);
+        
+        if (CompareTag(Globals.UNIT_TAG)) {
+            GameManager.Instance.ProcessUnitLife(this);
+        }
 
     }
 
@@ -366,7 +383,7 @@ public class Unit : MonoBehaviour {
     public void ClearTarget() {
         AttackTarget = null;
         ClearFollowTarget();
-        _navAgent.isStopped = true;
+        if(_navAgent && _navAgent.enabled &&  _navAgent.isOnNavMesh) {_navAgent.isStopped = true;}
     }
 
     public void ClearFollowTarget() {
@@ -391,20 +408,24 @@ public class Unit : MonoBehaviour {
 
     public virtual void Die() {
         _tickEntity?.RemoveFromTickEventManager();
+        _hitbox.enabled = false;
         //Stop any current health regen
         if (healthRegen != null) {
             StopCoroutine(healthRegen);
         }
-        
+
         FollowTarget = null;
         StandDown();
         Deselect();
 
-        if (_navAgent) {
+        if (_navAgent & _navAgent.enabled && _navAgent.isOnNavMesh) {
             _navAgent.isStopped = true;
             _navAgent.enabled = false;
         }
         
+        if (CompareTag(Globals.UNIT_TAG)) {
+            GameManager.Instance.ProcessUnitLife(this);
+        }
 
         if (_anim) {
             _anim.SetBool(hasAttackTargetInRange, false);

@@ -7,6 +7,8 @@ public class TickEventManager : MonoBehaviour {
     private List<TickEntity> tickEntities = new List<TickEntity>();
     private int currentEntityIndex;
 
+    [SerializeField] private int _amountPerUpdate = 1;
+
     private void Awake() {
         if (Instance != null && Instance != this) {
             Destroy(this);
@@ -17,13 +19,21 @@ public class TickEventManager : MonoBehaviour {
 
     private void Update() {
         if (tickEntities.Count == 0) return;
-        
-       tickEntities[currentEntityIndex].InvokeUpdateEvent();
-       currentEntityIndex++;
-        
-        if (currentEntityIndex >= tickEntities.Count) {
-            currentEntityIndex = 0;
+
+        // Calculate the end index of the loop
+        int endIndex = currentEntityIndex + _amountPerUpdate;
+        if (endIndex > tickEntities.Count) {
+            endIndex -= tickEntities.Count;
         }
+
+        // Loop through entities and invoke update event
+        for (int i = currentEntityIndex; i < endIndex; i++) {
+            int index = i % tickEntities.Count;
+            tickEntities[index].InvokeUpdateEvent();
+        }
+
+        // Update currentEntityIndex for the next frame
+        currentEntityIndex = endIndex % tickEntities.Count;
     }
 
     public void AddTickEntity(TickEntity _tickEntity) {

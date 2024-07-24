@@ -13,4 +13,8 @@ public class KillZone : MonoBehaviour {
             }
         }
     }
+
+    private void OnTriggerStay(Collider other) {
+        OnTriggerEnter(other);
+    }
 }
