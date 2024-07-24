@@ -15,4 +15,5 @@ public class UnitStats : ScriptableObject {
 	public float AttackRange;
 	public bool IsEnemy;
 	public float ActionRange; // How close unit needs to be to target to perform their skill action thingie.
+	public AudioClip[] Footsteps;
 }

@@ -55,6 +55,8 @@ public class TransitionManager : MonoBehaviour {
         float initialWidth = 0f;
         float targetWidth = _canvas.rect.width;
         
+        AudioManager.Instance.Play(AudioManager.Instance.TransitionOn, MixerGroups.SFX);
+        
         foreach (RectTransform bar in _transitionBars) {
             bar.sizeDelta = new Vector2(initialWidth, bar.sizeDelta.y);
             
@@ -75,7 +77,9 @@ public class TransitionManager : MonoBehaviour {
     
         float initialWidth = _canvas.rect.width;
         float targetWidth = 0;
-
+        
+        AudioManager.Instance.Play(AudioManager.Instance.TransitionOff, MixerGroups.SFX);
+        
         foreach (RectTransform bar in _transitionBars) {
             bar.sizeDelta = new Vector2(initialWidth, bar.sizeDelta.y);
         

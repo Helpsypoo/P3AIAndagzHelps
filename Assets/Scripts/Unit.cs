@@ -19,6 +19,8 @@ public class Unit : MonoBehaviour {
     [SerializeField] Renderer[] _renderers;
     [SerializeField] Weapon _weapon;
     [SerializeField] Rigidbody _weaponPrefab;
+    public Transform LeftFoot;
+    public Transform RightFoot;
 
     private CapsuleCollider _hitbox;
 
@@ -408,7 +410,6 @@ public class Unit : MonoBehaviour {
 
     public virtual void Die() {
         _tickEntity?.RemoveFromTickEventManager();
-        _hitbox.enabled = false;
         //Stop any current health regen
         if (healthRegen != null) {
             StopCoroutine(healthRegen);
@@ -422,10 +423,22 @@ public class Unit : MonoBehaviour {
             _navAgent.isStopped = true;
             _navAgent.enabled = false;
         }
-        
+
+        AudioClip[] _deathSFX;
         if (CompareTag(Globals.UNIT_TAG)) {
             GameManager.Instance.ProcessUnitLife(this);
+            _deathSFX = AudioManager.Instance.UnitDeath;
+            
+        } else if(CompareTag(Globals.ENEMY_TAG)){
+            _deathSFX = AudioManager.Instance.EnemyDeath;
+            _hitbox.enabled = false;
+            
+        } else {
+            _deathSFX = AudioManager.Instance.LiberatedDeath;
+            _hitbox.enabled = false;
         }
+        
+        AudioManager.Instance.Play(_deathSFX, MixerGroups.SFX, new Vector2(.9f,1.1f), 2f, transform.position);
 
         if (_anim) {
             _anim.SetBool(hasAttackTargetInRange, false);

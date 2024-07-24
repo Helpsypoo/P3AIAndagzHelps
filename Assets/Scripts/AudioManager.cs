@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Serialization;
 
 public class AudioManager : MonoBehaviour {
     public static AudioManager Instance;
@@ -19,13 +20,33 @@ public class AudioManager : MonoBehaviour {
     private List<AudioSource> sfxSources = new List<AudioSource>();
     private List<AudioSource> ambianceSources = new List<AudioSource>();
     private List<AudioSource> musicSources = new List<AudioSource>();
-    private List<AudioSource> speechSources = new List<AudioSource>();
 
     [Header("Sounds")] 
     [SerializeField] private AudioClip _uiClick;
-    [SerializeField] private AudioClip uiHover;
+    [FormerlySerializedAs("uiHover")] [SerializeField] private AudioClip _uiHover;
+    [SerializeField] private AudioClip _menuAmbiance;
+    [FormerlySerializedAs("_winJingle")] [SerializeField] private AudioClip completedJingle;
+    [FormerlySerializedAs("_loseJingle")] [SerializeField] private AudioClip failJingle;
+    [SerializeField] private AudioClip _transitionOn;
+    [SerializeField] private AudioClip _transitionOff;
+    [SerializeField] private AudioClip _meatGrinder;
+    [SerializeField] private AudioClip[] _pointTick;
+    [SerializeField] private AudioClip[] _enemyDeath;
+    [SerializeField] private AudioClip[] _unitDeath;
+    [SerializeField] private AudioClip[] _liberatedDeath;
+
     public AudioClip UIClick => _uiClick;
-    public AudioClip UIHover => uiHover;
+    public AudioClip UIHover => _uiHover;
+    public AudioClip CompletedJingle => completedJingle;
+    public AudioClip FailJingle => failJingle;
+    public AudioClip TransitionOn => _transitionOn;
+    public AudioClip TransitionOff => _transitionOff;
+    public AudioClip MeatGrinder => _meatGrinder;
+    public AudioClip[] PointTick => _pointTick;
+    public AudioClip[] EnemyDeath => _enemyDeath;
+    public AudioClip[] UnitDeath => _unitDeath;
+    public AudioClip[] LiberatedDeath => _liberatedDeath;
+
 
     private void Awake() {
         if (Instance != null) {
@@ -35,11 +56,12 @@ public class AudioManager : MonoBehaviour {
             DontDestroyOnLoad(gameObject);
         }
     }
-    
 
-    Vector3 zero = Vector3.zero;
-    
-    public void Play(AudioClip _clip, MixerGroups mixerGroup, Vector2 pitchRange = default, float volume = 1f, Vector3? _location = null) {
+    private void Start() {
+        PlayAmbiance(_menuAmbiance, 1f);
+    }
+
+    public void Play(AudioClip _clip, MixerGroups mixerGroup, Vector2 pitchRange = default, float volume = 1f, Vector3? _location = null, float _spatial = -1f, int _priority = 128, bool _loop = false) {
         AudioClip audioClip = _clip;
         if (audioClip == null) return;
 
@@ -47,11 +69,21 @@ public class AudioManager : MonoBehaviour {
         if (_location.HasValue) {
             source.gameObject.transform.position = _location.Value;
         }
+
+        source.priority = _priority;
+        source.loop = _loop;
         source.volume = volume;
         source.clip = audioClip;
-        source.spatialBlend = _location.HasValue ? 0.95f : 0f;
+        
+        float _spatialBlend = _spatial < 0f ? (_location.HasValue ? 1f : 0f) : _spatial;
+        source.spatialBlend = _spatialBlend;
         source.pitch = pitchRange == default ? 1f : Random.Range(pitchRange.x, pitchRange.y);
         source.Play();
+    }
+    
+    public void Play(AudioClip[] _clip, MixerGroups mixerGroup, Vector2 pitchRange = default, float volume = 1f, Vector3? _location = null, int _priority = 128) {
+        AudioClip audioClip = _clip[Random.Range(0, _clip.Length)];
+        Play(audioClip, mixerGroup, pitchRange, volume, _location);
     }
 
     public AudioSource PlayAmbiance(AudioClip _clip, float fadeDuration, float pitch = 1f, bool solo = true) {
@@ -172,7 +204,6 @@ public class AudioManager : MonoBehaviour {
             MixerGroups.Ambiance => ambianceSources,
             MixerGroups.UI => uiSources,
             MixerGroups.Music => musicSources,
-            MixerGroups.Speech => speechSources,
             _ => new List<AudioSource>()
         };
     }
@@ -237,6 +268,5 @@ public enum MixerGroups {
     UI,
     SFX,
     Music,
-    Speech,
     Ambiance
 }

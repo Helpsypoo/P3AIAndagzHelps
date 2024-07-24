@@ -1,17 +1,19 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class KillZone : MonoBehaviour {
     private void OnTriggerEnter(Collider other) {
-        if (other.CompareTag(Globals.LIBERATED_TAG)) {
-            Unit _unit = other.GetComponent<Unit>();
-            if (_unit) {
-                GameManager.Instance.LiberatedScore++;
-                _unit.Die();
-            }
+        Unit _unit = other.GetComponent<Unit>();
+        if (!_unit) {
+            return;
         }
+        
+        _unit.Die();
+        
+        if (_unit.CompareTag(Globals.LIBERATED_TAG)) {
+            GameManager.Instance.ProcessLiberatedScore();
+        }
+        
+
     }
 
     private void OnTriggerStay(Collider other) {

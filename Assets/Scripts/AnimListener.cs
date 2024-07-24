@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AnimListener : MonoBehaviour {
@@ -9,10 +6,37 @@ public class AnimListener : MonoBehaviour {
 
     private void Awake() {
         unit = GetComponentInParent<Unit>();
+        if (unit == null) {
+            unit = transform.root.GetComponent<Unit>();
+        }
+
     }
 
     public void Fire() {
         unit?.Fire();
+    }
+    
+    public void LeftFootstep() {
+        if (!unit || !unit.UnitStats || unit.UnitStats.Footsteps.Length == 0 || !unit.LeftFoot) {
+            return;
+        }
+
+        float _volume = .3f;
+        int _priority = 150;
+        
+        if (unit.UnitStats.Name == "Liberated") {
+            _volume = .1f;
+            _priority = 200;
+        }
+        
+        AudioManager.Instance.Play(unit.UnitStats.Footsteps, MixerGroups.SFX, new Vector2(.9f, 1.1f), _volume, unit.LeftFoot.position, _priority);
+    }
+    
+    public void RightFootstep() {
+        if (!unit || !unit.UnitStats || unit.UnitStats.Footsteps.Length == 0 || !unit.RightFoot) {
+            return;
+        }
+        AudioManager.Instance.Play(unit.UnitStats.Footsteps, MixerGroups.SFX, new Vector2(.9f, 1.1f), .1f, unit.RightFoot.position, 200);
     }
 
 }

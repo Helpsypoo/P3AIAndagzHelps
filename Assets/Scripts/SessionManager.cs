@@ -14,4 +14,8 @@ public class SessionManager : MonoBehaviour {
     public void NewGame() {
         TransitionManager.Instance.TransitionToScene("Game");
     }
+    
+    public void ResumeGame() {
+        TransitionManager.Instance.TransitionToScene("MissionSelect");
+    }
 }

@@ -23,3 +23,9 @@ MonoBehaviour:
   AttackRange: 0
   IsEnemy: 0
   ActionRange: 0
+  Footsteps:
+  - {fileID: 8300000, guid: 0594e66ca25fd854f9227919e8364f19, type: 3}
+  - {fileID: 8300000, guid: 1896a68c05632aa4893aaca07ab21ac5, type: 3}
+  - {fileID: 8300000, guid: 49dbff912b1a1aa4bb5a2f4e17e8c9fc, type: 3}
+  - {fileID: 8300000, guid: a4b30b2bdf00aa4488bb2b07f2010f78, type: 3}
+  - {fileID: 8300000, guid: d47c98613f09d304aacca9e9771ccf0a, type: 3}

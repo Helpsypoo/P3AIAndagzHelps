@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using Unity.AI.Navigation;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour {
@@ -25,14 +26,19 @@ public class GameManager : MonoBehaviour {
     [HideInInspector] public List<Liberated> ActiveLiberated = new List<Liberated>();
     [HideInInspector] public List<Liberated> DeadLiberated = new List<Liberated>();
     public List<Waypoint> ActiveWaypoints = new List<Waypoint>();
-    [HideInInspector] public int LiberatedScore;
+    public int LiberatedScore { get; private set; }
     public Transform KillZone;
     public List<Unit> PlayerUnits { get; private set; } = new List<Unit>();
     public bool IsProcessing { get; private set; }
+    [SerializeField] private Animator _enhancementBuildingAnim;
 
     [field: SerializeField] public BulletPool BulletStash { get; private set; }
 
     private void Awake() {
+        if (AudioManager.Instance == null) {
+            SceneManager.LoadScene("Menu");
+        }
+        
         if (Instance) {
             Destroy(this);
         } else {
@@ -96,6 +102,11 @@ public class GameManager : MonoBehaviour {
     public void ProcessLiberatedDeath(Liberated _liberated) {
         ActiveLiberated.Remove(_liberated);
         DeadLiberated.Add(_liberated);
+        
+        if (IsProcessing) {
+            _liberated.gameObject.SetActive(false);
+        }
+
         if (ActiveLiberated.Count == 0) {
             if (IsProcessing) {
                 MissionStateManager.Instance.MissionEvent(MissionCondition.Complete);
@@ -150,6 +161,16 @@ public class GameManager : MonoBehaviour {
     }
 
     public void SetIsProcessing(bool _enabled) {
+        if (_enabled == IsProcessing) {
+            return;
+        }
+
         IsProcessing = _enabled;
+
+    }
+
+    public void ProcessLiberatedScore() {
+        LiberatedScore++;
+        _enhancementBuildingAnim.Play("Process", 0, 0f);
     }
 }

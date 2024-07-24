@@ -27,7 +27,8 @@ public class MissionStateManager : MonoBehaviour {
         _anim = GetComponent<Animator>();
     }
 
-    public void MissionEvent(MissionCondition _condition){
+    public void MissionEvent(MissionCondition _condition) {
+        GameManager.Instance.SetIsProcessing(false);
         switch (_condition) {
             case MissionCondition.Complete:
                 Complete();
@@ -43,6 +44,7 @@ public class MissionStateManager : MonoBehaviour {
     
     public void Complete() {
         _canvas.enabled = true;
+        AudioManager.Instance.Play(AudioManager.Instance.CompletedJingle, MixerGroups.SFX);
         _anim.Play("Complete");
         _completePanel.gameObject.SetActive(true);
         //move units to set base locations
@@ -51,8 +53,13 @@ public class MissionStateManager : MonoBehaviour {
 
     public void Fail(string _failMessage) {
         _canvas.enabled = true;
+        AudioManager.Instance.Play(AudioManager.Instance.FailJingle, MixerGroups.SFX);
         _anim.Play("Fail");
         _failMessageText.text = _failMessage;
         _failPanel.gameObject.SetActive(true);
+    }
+
+    public void GoToMissionSelection() {
+        TransitionManager.Instance.TransitionToScene("MissionSelect");
     }
 }

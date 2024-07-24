@@ -2215,6 +2215,8 @@ MonoBehaviour:
   _weapon: {fileID: 7474278614370916259}
   _weaponPrefab: {fileID: 920266114437748004, guid: 4f55b7ee73ca6254eb645abb952dc4be,
     type: 3}
+  LeftFoot: {fileID: 365871210051270199}
+  RightFoot: {fileID: 365871210051270165}
   _anim: {fileID: 365871210043742659}
   <State>k__BackingField: 0
   _reviveTimer: 0
