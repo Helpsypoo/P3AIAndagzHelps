@@ -14,10 +14,10 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 0
-  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  m_Fog: 1
+  m_FogColor: {r: 0.7169812, g: 0.58404195, b: 0.42274833, a: 1}
   m_FogMode: 3
-  m_FogDensity: 0.01
+  m_FogDensity: 0.3
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
@@ -1467,8 +1467,8 @@ Camera:
   m_GameObject: {fileID: 330585543}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.8901961, g: 0.7372549, b: 0.5647059, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1517,13 +1517,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.13133885, y: 0.8445853, z: -0.25279808, w: -0.453342}
+  m_LocalRotation: {x: 0.013200951, y: 0.9688927, z: 0.10424048, w: -0.22406833}
   m_LocalPosition: {x: 2.3, y: 0.4, z: 4.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 36.423, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 15.139, y: -123.561, z: 0.437}
 --- !u!114 &330585547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5678,14 +5678,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1713278881}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.13133885, y: 0.8445853, z: -0.25279808, w: -0.453342}
+  m_LocalRotation: {x: 0.013200951, y: 0.9688927, z: 0.10424048, w: -0.22406833}
   m_LocalPosition: {x: 2.3, y: 0.4, z: 4.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1424419840}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 33.1, y: 236.6, z: 0.503}
+  m_LocalEulerAnglesHint: {x: -12, y: 206.173, z: -1.238}
 --- !u!1001 &1723056879
 PrefabInstance:
   m_ObjectHideFlags: 0

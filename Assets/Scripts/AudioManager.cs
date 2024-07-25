@@ -73,6 +73,11 @@ public class AudioManager : MonoBehaviour {
         if (audioClip == null) return;
 
         AudioSource source = GetAvailableAudioSource(mixerGroup);
+
+        if (!source) {
+            return;
+        }
+
         if (_location.HasValue) {
             source.gameObject.transform.position = _location.Value;
         }
@@ -218,7 +223,7 @@ public class AudioManager : MonoBehaviour {
     private AudioSource GetAvailableAudioSource(MixerGroups mixerGroup) {
         List<AudioSource> currentAudioSources = GetMixerGroupSources(mixerGroup);
         foreach (AudioSource source in currentAudioSources) {
-            if (!source.clip || !source.isPlaying || source.volume == 0f) return source;
+            if (!source || !source.clip || !source.isPlaying || source.volume == 0f) return source;
         }
 
         GameObject _go = new GameObject(mixerGroup+ " Audio");

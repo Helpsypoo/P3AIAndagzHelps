@@ -166,12 +166,7 @@ public class GameManager : MonoBehaviour {
     public Vector3 GetFollowingPosition(Liberated _liberated) {
         int index = ActiveLiberated.IndexOf(_liberated);
         if (index > 0) {
-            if (ActiveLiberated[index - 1].State == UnitState.Moving) {
-                return ActiveLiberated[index - 1].transform.position + new Vector3(Random.Range(-2f, 2f), 0f, Random.Range(-2f, 2f));
-            } else {
-                return ActiveLiberated[index - 1].transform.position;
-            }
-
+            return ActiveLiberated[index - 1].transform.position;
         } else {
             return _liberated.transform.position;
         }
