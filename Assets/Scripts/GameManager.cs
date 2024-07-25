@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour {
     public List<Unit> PlayerUnits { get; private set; } = new List<Unit>();
     [SerializeField] private List<Unit> _playerUnitPrefabs = new List<Unit>();
     public bool IsProcessing { get; private set; }
+    private AudioSource _meatGrinder;
     [SerializeField] private Animator _enhancementBuildingAnim;
 
 
@@ -196,7 +197,12 @@ public class GameManager : MonoBehaviour {
         if (_enabled == IsProcessing) {
             return;
         }
-
+        if(_meatGrinder) {_meatGrinder.Stop();}
+        
+        if (_enabled) {
+            _meatGrinder = AudioManager.Instance.Play(AudioManager.Instance.MeatGrinder, MixerGroups.SFX, default, 1f, transform.position, .95f, default, true);
+        }
+        
         IsProcessing = _enabled;
 
     }

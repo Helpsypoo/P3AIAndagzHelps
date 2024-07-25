@@ -47,12 +47,11 @@ public class MissionStateManager : MonoBehaviour {
     
     public void Complete() {
         for (int i = 0; i < GameManager.Instance.PlayerUnits.Count; i++) {
-            GameManager.Instance.PlayerUnits[i].transform.position = _missionCompleteUnitLocation[i].position;
-            GameManager.Instance.PlayerUnits[i].transform.rotation = _missionCompleteUnitLocation[i].rotation;
             GameManager.Instance.PlayerUnits[i].Revive(true);
             GameManager.Instance.PlayerUnits[i].SetState(UnitState.Locked);
+            GameManager.Instance.PlayerUnits[i].SetTransform(_missionCompleteUnitLocation[i]);
         }
-
+        
         _missionCompleteCam.Priority = 10;
         
         _canvas.enabled = true;

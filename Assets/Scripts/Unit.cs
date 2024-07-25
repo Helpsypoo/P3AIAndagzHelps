@@ -89,9 +89,10 @@ public class Unit : MonoBehaviour {
     }
 
     public virtual void Update() {
-        if (Health <= 0) {
+        if (Health <= 0 || State == UnitState.Locked) {
             return;
         }
+        
         LookWhereYoureGoing();
         if(_anim && _navAgent){ _anim.SetFloat(speed, _navAgent.velocity.magnitude);}
 
@@ -293,6 +294,12 @@ public class Unit : MonoBehaviour {
         }
         
         State = _newState;
+    }
+
+    public void SetTransform(Transform _target) {
+        gameObject.transform.position = _target.position;
+        gameObject.transform.rotation = _target.rotation;
+        _anim.transform.localRotation = Quaternion.identity;
     }
 
     public void ChangeHealth(float _amount, bool _hiddenDisplayUpdate = false) {

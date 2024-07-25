@@ -68,14 +68,14 @@ public class AudioManager : MonoBehaviour {
         PlayAmbiance(_menuAmbiance, 1f);
     }
 
-    public void Play(AudioClip _clip, MixerGroups mixerGroup, Vector2 pitchRange = default, float volume = 1f, Vector3? _location = null, float _spatial = -1f, int _priority = 128, bool _loop = false) {
+    public AudioSource Play(AudioClip _clip, MixerGroups mixerGroup, Vector2 pitchRange = default, float volume = 1f, Vector3? _location = null, float _spatial = -1f, int _priority = 128, bool _loop = false) {
         AudioClip audioClip = _clip;
-        if (audioClip == null) return;
+        if (audioClip == null) return null;
 
         AudioSource source = GetAvailableAudioSource(mixerGroup);
 
         if (!source) {
-            return;
+            return null;
         }
 
         if (_location.HasValue) {
@@ -91,6 +91,7 @@ public class AudioManager : MonoBehaviour {
         source.spatialBlend = _spatialBlend;
         source.pitch = pitchRange == default ? 1f : Random.Range(pitchRange.x, pitchRange.y);
         source.Play();
+        return source;
     }
     
     public void Play(AudioClip[] _clip, MixerGroups mixerGroup, Vector2 pitchRange = default, float volume = 1f, Vector3? _location = null, int _priority = 128) {

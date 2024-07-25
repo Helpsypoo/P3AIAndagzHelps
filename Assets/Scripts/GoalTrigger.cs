@@ -11,7 +11,6 @@ public class GoalTrigger : MonoBehaviour {
         if (other.CompareTag(Globals.LIBERATED_TAG)) {
             Unit _unit = other.GetComponent<Unit>();
             if (_unit) {
-                AudioManager.Instance.Play(AudioManager.Instance.MeatGrinder, MixerGroups.SFX, default, 1f, transform.position, .95f, default, true);
                 GameManager.Instance.SetIsProcessing(true);
                 gameObject.SetActive(false);
             }

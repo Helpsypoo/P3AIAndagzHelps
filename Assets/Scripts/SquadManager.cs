@@ -125,6 +125,7 @@ public class SquadManager : MonoBehaviour {
         // If Action Mode is toggled on, perform the action.
         if (ActionMode) {
             SelectedUnit.PerformAction(GameManager.Instance.SelectionMarker.transform.position, _highlightedEntity);
+            ActionMode = false;
             return;
         }
         
