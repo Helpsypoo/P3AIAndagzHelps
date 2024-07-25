@@ -14,6 +14,7 @@ public class UI_Character : MonoBehaviour, IPointerClickHandler {
     [SerializeField] private Image _characterImage;
     [SerializeField] private TextMeshProUGUI _characterName;
     [SerializeField] private TextMeshProUGUI _abilityCharge;
+    [SerializeField] private GameObject _actionIcon;
 
 
     public void Init(Unit unit) {
@@ -32,6 +33,10 @@ public class UI_Character : MonoBehaviour, IPointerClickHandler {
 
     public void Deselect() {
         _characterImage.color = Utilities.SetAlpha(_characterImage.color, _deselectedAlpha);
+    }
+
+    public void UpdateActionVisual(bool state) {
+        _actionIcon.SetActive(state);
     }
 
     public void OnPointerClick(PointerEventData eventData) {

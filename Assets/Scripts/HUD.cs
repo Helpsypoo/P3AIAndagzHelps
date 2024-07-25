@@ -34,10 +34,13 @@ public class HUD : MonoBehaviour {
 
             if (i == SquadManager.Instance.UnitIndex) {
                 _squad[i].Select();
+                _squad[i].UpdateActionVisual(SquadManager.Instance.ActionMode);
             } else {
                 _squad[i].Deselect();
+                _squad[i].UpdateActionVisual(false);
             }
             _squad[i].UpdateCharacter();
+
         }
 
     }

@@ -20,6 +20,8 @@ public class SquadManager : MonoBehaviour {
     // Any unit the cursor is currently hovering over.
     [SerializeField] private Transform _highlightedEntity;
 
+    public bool ActionMode { get; private set; }
+
     private bool _mouseOverUI;
 
     private BaseInput _input;
@@ -37,6 +39,7 @@ public class SquadManager : MonoBehaviour {
     private void OnEnable() {
         _input.Player.SelectClick.performed += SelectClick;
         _input.Player.ActionClick.performed += ActionClick;
+        _input.Player.ActionModifier.performed += ActionModifierClick;
         _input.Player.Unit1.performed += SelectUnit1;
         _input.Player.Unit2.performed += SelectUnit2;
         _input.Player.Unit3.performed += SelectUnit3;
@@ -47,6 +50,7 @@ public class SquadManager : MonoBehaviour {
     private void OnDisable() {
         _input.Player.SelectClick.performed -= SelectClick;
         _input.Player.ActionClick.performed -= ActionClick;
+        _input.Player.ActionModifier.performed -= ActionModifierClick;
         _input.Player.Unit1.performed -= SelectUnit1;
         _input.Player.Unit2.performed -= SelectUnit2;
         _input.Player.Unit3.performed -= SelectUnit3;
@@ -100,6 +104,12 @@ public class SquadManager : MonoBehaviour {
 
     }
 
+    private void ActionModifierClick(InputAction.CallbackContext obj) {
+
+        ActionMode = !ActionMode;
+
+    }
+
     /// <summary>
     /// Called when the left mouse button (or equivalent) is clicked.
     /// </summary>
@@ -112,10 +122,8 @@ public class SquadManager : MonoBehaviour {
         // Move the selection marker to the current mouse position and update _highlightedEntity.
         UpdateSelectionMarker();
 
-        // If the action modifier button is being held down, we pass the information over to the selected unit's perform action
-        // function. It's the unit's problem now.
-        bool actionMod = _input.Player.ActionModifier.IsPressed();
-        if (actionMod) {
+        // If Action Mode is toggled on, perform the action.
+        if (ActionMode) {
             SelectedUnit.PerformAction(GameManager.Instance.SelectionMarker.transform.position, _highlightedEntity);
             return;
         }
@@ -164,7 +172,7 @@ public class SquadManager : MonoBehaviour {
 
                     // If the highlighted entity is an enemy, attack them.
                 } else if (_highlightedEntity.CompareTag(Globals.ENEMY_TAG)) {
-
+                    Debug.Log("Attacking Enemy");
                     SelectedUnit.Attack(unit);
                     unit.Select();
                     GameManager.Instance.SelectionMarker.Deactivate();

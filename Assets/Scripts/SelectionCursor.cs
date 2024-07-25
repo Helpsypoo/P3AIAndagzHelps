@@ -11,6 +11,15 @@ public class SelectionCursor : MonoBehaviour {
     public bool CanWalk { get; private set; }
     public Vector3 Position => transform.position;
 
+    [SerializeField] private float _shakeIterations;
+    [SerializeField] private float _shakeDelay;
+    [SerializeField] private float _shakeRadius;
+
+    [SerializeField] private GameObject _validCursor;
+    [SerializeField] private GameObject _invalidCursor;
+
+    [SerializeField] private AudioClip _invalidActionSound;
+
     private Unit _activeUnit;   // The unit whose action the marker is currently representing.
 
     private void Awake() {
@@ -54,6 +63,46 @@ public class SelectionCursor : MonoBehaviour {
             Deactivate();
         }
     }
+
+    public void InvalidAction() {
+
+        if (!gameObject.activeSelf) gameObject.SetActive(true);
+
+        AudioManager.Instance.Play(_invalidActionSound, MixerGroups.SFX);
+
+        if (Shake == null) {
+            Shake = StartCoroutine(ShakeCursor(_shakeIterations, _shakeRadius, _shakeDelay));
+        }
+
+    }
+
+    private Coroutine Shake;
+    private IEnumerator ShakeCursor(float iterations, float radius, float delay) {
+
+        _validCursor.SetActive(false);
+        _invalidCursor.SetActive(true);
+
+        Vector3 startPos = transform.position;
+
+        for (int i = 0; i < iterations; i++) {
+
+            Vector2 rnd = Random.insideUnitCircle * radius;
+            Vector3 newPos = startPos;
+            newPos.x += rnd.x;
+            newPos.z += rnd.y;
+            transform.position = newPos;
+            yield return new WaitForSeconds(delay);
+
+        }
+
+        transform.position = startPos;
+        Shake = null;
+
+        _validCursor.SetActive(true);
+        _invalidCursor.SetActive(false);
+
+    }
+
 
     /// <summary>
     /// Sets the current selection type of the selection marker.

@@ -99,7 +99,7 @@ public class GameManager : MonoBehaviour {
             }
 
             _liberated.IsLeader = ActiveLiberated.Count == 0;
-            _liberated.SetStopDistance(_liberated.IsLeader ? 0 : 1.5f);
+            _liberated.SetStopDistance(_liberated.IsLeader ? 0 : 0.8f);
             //Debug.Log($"Set liberated to: {_liberated.IsLeader}. Count {ActiveLiberated.Count}");
             ActiveLiberated.Add(_liberated);
         }
@@ -181,10 +181,20 @@ public class GameManager : MonoBehaviour {
         ActiveWaypoints.Remove(_waypoint);
         SquadManager.Instance.IncrementWaypoints();
         Destroy(_waypoint.gameObject);
+        UpdateLines();
     }
 
     public void AddWaypoint(Waypoint _waypoint) {
         ActiveWaypoints.Add(_waypoint);
+        UpdateLines();
+    }
+
+    private void UpdateLines() {
+
+        for (int i = 0; i < ActiveWaypoints.Count; i++) {
+            ActiveWaypoints[i].UpdateLine(i);
+        }
+
     }
 
     public void SetIsProcessing(bool _enabled) {

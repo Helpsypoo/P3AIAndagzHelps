@@ -34,7 +34,15 @@ public class Shepherd : Unit {
                 _wayPointPlacement = position;
                 SetStopDistance(UnitStats.ActionRange);
                 MoveTo(_wayPointPlacement.Value);
+            } else {
+                GameManager.Instance.SelectionMarker.InvalidAction();
             }
+        } else if ((target.CompareTag(Globals.UNIT_TAG) || target.CompareTag(Globals.LIBERATED_TAG))) {
+
+            _wayPointPlacement = target.position;
+            SetStopDistance(UnitStats.ActionRange);
+            MoveTo(_wayPointPlacement.Value);
+
         } else if (target.CompareTag(Globals.WAYPOINT_TAG)) {
             _wayPointToRemove = target.GetComponent<Waypoint>();
             if (_wayPointToRemove != null) {
