@@ -29,8 +29,13 @@ public class GameManager : MonoBehaviour {
     public int LiberatedScore { get; private set; }
     public Transform KillZone;
     public List<Unit> PlayerUnits { get; private set; } = new List<Unit>();
+    [SerializeField] private List<Unit> _playerUnitPrefabs = new List<Unit>();
     public bool IsProcessing { get; private set; }
     [SerializeField] private Animator _enhancementBuildingAnim;
+
+
+    [SerializeField] private Transform _blueLiquid;
+    [SerializeField] private Transform _orangeLiquid;
 
     [field: SerializeField] public BulletPool BulletStash { get; private set; }
 
@@ -49,7 +54,9 @@ public class GameManager : MonoBehaviour {
     }
 
     private void Start() {
+        AudioManager.Instance.PlayAmbiance(AudioManager.Instance.MissionAmbiance, 2f, .4f);
         CreateLevel(Levels[0]);
+        UpdateGoop();
     }
 
     public void CreateLevel(Level _level) {
@@ -69,15 +76,14 @@ public class GameManager : MonoBehaviour {
         
         yield return new WaitUntil(() => ActiveLevel);
 
-        SpawnOrRelocatedLiberated(ActiveLevel.LiberatedSpawnContainer);
-        //TODO: spawn/move units to ActiveLevel.UnitSpawns
-        
-        yield return new WaitForSeconds(2f);
-        //TODO: transition out of a loading screen
+        SpawnOrRelocateLiberated(ActiveLevel.LiberatedSpawnContainer);
+        SpawnOrRelocateUnits(ActiveLevel.UnitSpawnsContainer);
+        SquadManager.Instance.Init();
+        HUD.Instance.Init();
     }
 
 
-    private void SpawnOrRelocatedLiberated(Transform _spawnPointContainer) {
+    private void SpawnOrRelocateLiberated(Transform _spawnPointContainer) {
         ActiveLiberated.Clear();
         
         for (int i = 0; i < _spawnPointContainer.childCount; i++) {
@@ -96,6 +102,27 @@ public class GameManager : MonoBehaviour {
             _liberated.SetStopDistance(_liberated.IsLeader ? 0 : 1.5f);
             //Debug.Log($"Set liberated to: {_liberated.IsLeader}. Count {ActiveLiberated.Count}");
             ActiveLiberated.Add(_liberated);
+        }
+    }
+    
+    private void SpawnOrRelocateUnits(Transform _spawnPointContainer) {
+        for (int i = 0; i < _spawnPointContainer.childCount; i++) {
+
+            if (i >= _playerUnitPrefabs.Count) {
+                return;
+            }
+            
+            Unit _unit;
+            if (i > _liberatedPool.Count) {
+                _unit = _liberatedPool[i];
+                _unit.transform.position = _spawnPointContainer.GetChild(i).position;
+                _unit.transform.rotation = _spawnPointContainer.GetChild(i).rotation;
+                _unit.Revive();
+            } else {
+                _unit = Instantiate(_playerUnitPrefabs[i], _spawnPointContainer.GetChild(i).position, _spawnPointContainer.GetChild(i).rotation);
+                PlayerUnits.Add(_unit);
+            }
+            
         }
     }
 
@@ -169,8 +196,29 @@ public class GameManager : MonoBehaviour {
 
     }
 
+    private float maxFull = 2.5f;
+
     public void ProcessLiberatedScore() {
         LiberatedScore++;
+        SessionManager.Instance.BlueGoop += 5;
+        SessionManager.Instance.OrangeGoop += 1;
+
+        UpdateGoop();
+        
+        AudioManager.Instance.Play(AudioManager.Instance.Liquid, MixerGroups.SFX, new Vector2(.8f, 1.1f), 1f, _enhancementBuildingAnim.transform.position);
+
         _enhancementBuildingAnim.Play("Process", 0, 0f);
+        AudioManager.Instance.Play(AudioManager.Instance.Saw, MixerGroups.SFX, new Vector2(.8f, 1.1f), 1f, _enhancementBuildingAnim.transform.position);
+    }
+
+    private void UpdateGoop() {
+        float _blueLerp =
+            Mathf.Lerp(0, maxFull, SessionManager.Instance.BlueGoop / (float)SessionManager.Instance.MaxBlueGoop);
+        float _orangeLerp =
+            Mathf.Lerp(0, maxFull, SessionManager.Instance.OrangeGoop / (float)SessionManager.Instance.MaxOrangeGoop);
+        _blueLiquid.localScale =
+            new Vector3(_blueLiquid.localScale.x, _blueLerp, _blueLiquid.localScale.z);
+        _orangeLiquid.localScale =
+            new Vector3(_orangeLiquid.localScale.x, _orangeLerp, _orangeLiquid.localScale.z);
     }
 }

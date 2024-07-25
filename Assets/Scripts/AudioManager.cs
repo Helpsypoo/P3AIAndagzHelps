@@ -23,13 +23,16 @@ public class AudioManager : MonoBehaviour {
 
     [Header("Sounds")] 
     [SerializeField] private AudioClip _uiClick;
-    [FormerlySerializedAs("uiHover")] [SerializeField] private AudioClip _uiHover;
+    [SerializeField] private AudioClip _uiHover;
     [SerializeField] private AudioClip _menuAmbiance;
-    [FormerlySerializedAs("_winJingle")] [SerializeField] private AudioClip completedJingle;
-    [FormerlySerializedAs("_loseJingle")] [SerializeField] private AudioClip failJingle;
+    [SerializeField] private AudioClip _missionAmbiance;
+    [FormerlySerializedAs("completedJingle")] [SerializeField] private AudioClip _completedJingle;
+    [FormerlySerializedAs("failJingle")] [SerializeField] private AudioClip _failJingle;
     [SerializeField] private AudioClip _transitionOn;
     [SerializeField] private AudioClip _transitionOff;
     [SerializeField] private AudioClip _meatGrinder;
+    [SerializeField] private AudioClip _saw;
+    [SerializeField] private AudioClip _liquid;
     [SerializeField] private AudioClip[] _pointTick;
     [SerializeField] private AudioClip[] _enemyDeath;
     [SerializeField] private AudioClip[] _unitDeath;
@@ -37,11 +40,15 @@ public class AudioManager : MonoBehaviour {
 
     public AudioClip UIClick => _uiClick;
     public AudioClip UIHover => _uiHover;
-    public AudioClip CompletedJingle => completedJingle;
-    public AudioClip FailJingle => failJingle;
+    public AudioClip MenuAmbiance => _menuAmbiance;
+    public AudioClip MissionAmbiance => _missionAmbiance;
+    public AudioClip CompletedJingle => _completedJingle;
+    public AudioClip FailJingle => _failJingle;
     public AudioClip TransitionOn => _transitionOn;
     public AudioClip TransitionOff => _transitionOff;
     public AudioClip MeatGrinder => _meatGrinder;
+    public AudioClip Saw => _saw;
+    public AudioClip Liquid => _liquid;
     public AudioClip[] PointTick => _pointTick;
     public AudioClip[] EnemyDeath => _enemyDeath;
     public AudioClip[] UnitDeath => _unitDeath;
@@ -86,7 +93,7 @@ public class AudioManager : MonoBehaviour {
         Play(audioClip, mixerGroup, pitchRange, volume, _location);
     }
 
-    public AudioSource PlayAmbiance(AudioClip _clip, float fadeDuration, float pitch = 1f, bool solo = true) {
+    public AudioSource PlayAmbiance(AudioClip _clip, float fadeDuration, float volume = 1f, float pitch = 1f, bool solo = true) {
         AudioClip audioClip = _clip;
         if (audioClip == null) return null;
 
@@ -97,7 +104,7 @@ public class AudioManager : MonoBehaviour {
         source.loop = true;
         source.Play();
 
-        StartCoroutine(FadeAudioSource(source, 1f, fadeDuration));
+        StartCoroutine(FadeAudioSource(source, volume, fadeDuration));
 
         if (solo) {
             foreach (AudioSource src in ambianceSources) {
@@ -255,6 +262,12 @@ public class AudioManager : MonoBehaviour {
             if(masterMixer) masterMixer.SetFloat(_reference, Mathf.Log10((_result-1)/100f) * 20);
         } else {
             Debug.LogError($"Unable to set volume for {_reference}. Setting not found or unable to parse value.");
+        }
+    }
+
+    public void ClearGameSounds() {
+        foreach (AudioSource _as in sfxSources) {
+            Destroy(_as.gameObject);
         }
     }
 

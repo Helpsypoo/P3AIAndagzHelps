@@ -3563,6 +3563,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _completePanel: {fileID: 2162610603159574991}
+  _missionCompleteUnitLocation:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _missionCompleteCam: {fileID: 0}
   _failPanel: {fileID: 2193909569369311195}
   _failMessageText: {fileID: 5561647941325192049}
 --- !u!95 &2081901889157003219

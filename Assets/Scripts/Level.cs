@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Level : MonoBehaviour {
     public Transform LiberatedSpawnContainer;
-    public Transform[] UnitSpawns;
+    public Transform UnitSpawnsContainer;
     public float DaylightIntensity;
 
     IEnumerator Start() {

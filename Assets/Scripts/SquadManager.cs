@@ -8,15 +8,11 @@ using Cinemachine;
 public class SquadManager : MonoBehaviour {
 
     public static SquadManager Instance { get; private set; }
-
-
-
-
-    public Unit[] Units;
+    
     public int UnitIndex { get; private set; } = 0;
 
     // The unit that is currently active, and actions will be performed with.
-    public Unit SelectedUnit => Units[UnitIndex];
+    public Unit SelectedUnit => GameManager.Instance.PlayerUnits[UnitIndex];
     [field: SerializeField] public int WaypointStash { get; private set; }
 
     [SerializeField] private CinemachineVirtualCamera _cinemachineCamera;
@@ -57,7 +53,7 @@ public class SquadManager : MonoBehaviour {
         _input.Player.Unit4.performed -= SelectUnit4;
     }
 
-    private void Start() {
+    public void Init() {
         UpdateSquadNumbers();
         SelectUnit(0);
     }
@@ -221,20 +217,20 @@ public class SquadManager : MonoBehaviour {
     private void SelectUnit(int index) {
 
         // Make sure we're not trying to use a unit we don't have.
-        if (index >= Units.Length) return;
+        if (index >= GameManager.Instance.PlayerUnits.Count) return;
 
         // If Unit is dead, we can't select it.
-        if (Units[index].State == UnitState.Dead) return;
+        if (GameManager.Instance.PlayerUnits[index].State == UnitState.Dead) return;
 
         UnitIndex = index;
-        for (int i = 0; i < Units.Length; i++) {
+        for (int i = 0; i < GameManager.Instance.PlayerUnits.Count; i++) {
             //if (i == UnitIndex) Units[i].Select();
             //else Units[i].Deselect();
-            Units[i].Deselect();
+            GameManager.Instance.PlayerUnits[i].Deselect();
         }
 
         // Loop through each unit.
-        foreach (Unit u in Units) {
+        foreach (Unit u in GameManager.Instance.PlayerUnits) {
 
             // If the current unit is not dead we can move on.
             if (u.State == UnitState.Dead) continue;
@@ -322,7 +318,7 @@ public class SquadManager : MonoBehaviour {
     /// </summary>
     public void SelectNextAvailableUnit () {
         UnitIndex++;
-        if (UnitIndex >= Units.Length) {
+        if (UnitIndex >= GameManager.Instance.PlayerUnits.Count) {
             UnitIndex = 0;
         }
         SelectUnit(UnitIndex);
@@ -333,8 +329,8 @@ public class SquadManager : MonoBehaviour {
     /// </summary>
     private void UpdateSquadNumbers() {
         
-        for (int i = 0; i < Units.Length; i++) {
-            Units[i].UpdateSquadNumber(i);
+        for (int i = 0; i < GameManager.Instance.PlayerUnits.Count; i++) {
+            GameManager.Instance.PlayerUnits[i].UpdateSquadNumber(i);
         }
 
     }

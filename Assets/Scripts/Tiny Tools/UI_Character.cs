@@ -16,7 +16,6 @@ public class UI_Character : MonoBehaviour, IPointerClickHandler {
     [SerializeField] private TextMeshProUGUI _abilityCharge;
 
 
-
     public void Init(Unit unit) {
         _unit = unit;
         _characterName.text = _unit.UnitStats.Name;

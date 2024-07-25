@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,7 @@ using TMPro;
 public class HUD : MonoBehaviour {
 
     public static HUD Instance { get; private set; }
+    private TickEntity _tickEntity;
 
     private void Awake() {
         if (Instance) {
@@ -13,23 +15,21 @@ public class HUD : MonoBehaviour {
         } else {
             Instance = this;
         }
+
+        _tickEntity = GetComponent<TickEntity>();
     }
 
     [SerializeField] private UI_Character[] _squad;
 
-    private void Start() {
-
+    public void Init() {
         for (int i = 0; i < _squad.Length; i++) {
-            _squad[i].Init(SquadManager.Instance.Units[i]);
+            _squad[i].Init(GameManager.Instance.PlayerUnits[i]);
         }
-    }
-
-    private void Update() {
-        UpdateSquad();
+        
+        TickEventManager.Instance.AddTickEntity(_tickEntity);
     }
 
     public void UpdateSquad() {
-
         for (int i = 0; i < _squad.Length; i++) {
 
             if (i == SquadManager.Instance.UnitIndex) {
@@ -42,5 +42,7 @@ public class HUD : MonoBehaviour {
 
     }
 
-
+    private void OnDisable() {
+        TickEventManager.Instance.RemoveTickEntity(_tickEntity);
+    }
 }

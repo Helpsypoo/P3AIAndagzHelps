@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using TMPro;
 using UnityEngine;
 
@@ -11,6 +12,8 @@ public class MissionStateManager : MonoBehaviour {
     
     [Header("Complete Mission")]
     [SerializeField] private RectTransform _completePanel;
+    [SerializeField] private Transform[] _missionCompleteUnitLocation;
+    [SerializeField] private CinemachineVirtualCamera _missionCompleteCam;
     
     [Header("Fail Mission")]
     [SerializeField] private RectTransform _failPanel;
@@ -43,6 +46,15 @@ public class MissionStateManager : MonoBehaviour {
     }
     
     public void Complete() {
+        for (int i = 0; i < GameManager.Instance.PlayerUnits.Count; i++) {
+            GameManager.Instance.PlayerUnits[i].transform.position = _missionCompleteUnitLocation[i].position;
+            GameManager.Instance.PlayerUnits[i].transform.rotation = _missionCompleteUnitLocation[i].rotation;
+            GameManager.Instance.PlayerUnits[i].Revive(true);
+            GameManager.Instance.PlayerUnits[i].SetState(UnitState.Locked);
+        }
+
+        _missionCompleteCam.Priority = 10;
+        
         _canvas.enabled = true;
         AudioManager.Instance.Play(AudioManager.Instance.CompletedJingle, MixerGroups.SFX);
         _anim.Play("Complete");
@@ -60,6 +72,8 @@ public class MissionStateManager : MonoBehaviour {
     }
 
     public void GoToMissionSelection() {
+        AudioManager.Instance.ClearGameSounds();
+        AudioManager.Instance.PlayAmbiance(AudioManager.Instance.MenuAmbiance, 2f, .4f);
         TransitionManager.Instance.TransitionToScene("MissionSelect");
     }
 }

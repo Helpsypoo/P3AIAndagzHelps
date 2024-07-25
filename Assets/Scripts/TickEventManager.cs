@@ -18,22 +18,26 @@ public class TickEventManager : MonoBehaviour {
     }
 
     private void Update() {
-        if (tickEntities.Count == 0) return;
+        if (tickEntities.Count == 0) {return;}
 
-        // Calculate the end index of the loop
-        int endIndex = currentEntityIndex + _amountPerUpdate;
-        if (endIndex > tickEntities.Count) {
-            endIndex -= tickEntities.Count;
+        //Update all if the amount is less or equal to our list
+        if (_amountPerUpdate >= tickEntities.Count) {
+            for (int i = 0; i < tickEntities.Count; i++) {
+                tickEntities[i].InvokeUpdateEvent();
+            }
+            return;
         }
 
-        // Loop through entities and invoke update event
-        for (int i = currentEntityIndex; i < endIndex; i++) {
+        //Debug.Log($"Current Index {currentEntityIndex}");
+        // Loop through _amountPerUpdate entities starting at currentEntityIndex and wrapping around the tickEntities list
+        for (int i = currentEntityIndex; i < currentEntityIndex + _amountPerUpdate; i++) {
             int index = i % tickEntities.Count;
             tickEntities[index].InvokeUpdateEvent();
         }
 
         // Update currentEntityIndex for the next frame
-        currentEntityIndex = endIndex % tickEntities.Count;
+
+        currentEntityIndex = (currentEntityIndex + _amountPerUpdate) % tickEntities.Count;
     }
 
     public void AddTickEntity(TickEntity _tickEntity) {

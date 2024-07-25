@@ -287,6 +287,9 @@ public class Unit : MonoBehaviour {
             case UnitState.Dead:
                 Die();
                 break;
+            case UnitState.Locked:
+                _navAgent.enabled = false;
+                break;
         }
         
         State = _newState;
@@ -331,9 +334,9 @@ public class Unit : MonoBehaviour {
     }
     
     [ContextMenu("Revive")]
-    public void Revive() {
+    public void Revive(bool _hiddenHealthbar = false) {
         _hitbox.enabled = true;
-        ChangeHealth(UnitStats.MaxHealth - Health);
+        ChangeHealth(UnitStats.MaxHealth - Health, _hiddenHealthbar);
         SetState(UnitState.Idle);
         
         if (_navAgent) {
@@ -456,8 +459,11 @@ public class Unit : MonoBehaviour {
         Vector3 _randomUpwardForce = new Vector3(Random.Range(-1f, 1f), Random.Range(3f, 6f), Random.Range(-1f, 1f));
         _looseGun?.AddForce(_randomUpwardForce);
         _looseGun?.AddTorque(Random.rotation.eulerAngles * Random.Range(-2f, 2f));
-
-
+        
+        if (SquadManager.Instance.UnitIndex >= GameManager.Instance.PlayerUnits.Count) {
+            return;
+        }
+        
         // If we are the currently selected unit, tell the squadmanager to select another unit.
         if (SquadManager.Instance.SelectedUnit == this) {
             Debug.Log("Asking Squadmanager to select a new unit");
@@ -530,6 +536,10 @@ public class Unit : MonoBehaviour {
 
     private bool AreAllyUnits(Unit _otherUnit) {
         return UnitStats.IsEnemy == _otherUnit.UnitStats.IsEnemy;
+    }
+
+    private void OnDestroy() {
+        if(_looseGun) Destroy(_looseGun.gameObject);
     }
 }
 

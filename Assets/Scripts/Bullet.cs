@@ -12,9 +12,8 @@ public class Bullet : MonoBehaviour {
     }
 
     private void Update() {
-        float _shooterAndTargetDist = Vector3.Distance(ShotLocation, Target.transform.position);
-        float _shooterAndBulletDist = Vector3.Distance(ShotLocation, transform.position);
-        if (_shooterAndBulletDist >= _shooterAndTargetDist -.5f) {
+        float _targetAndBulletDist = Vector3.Distance(Target.transform.position, transform.position);
+        if (_targetAndBulletDist <= 1f) {
             Target.ChangeHealth(Shooter.UnitStats.AttackDamage);
             GameManager.Instance.BulletStash.ReturnBullet(this);
         }

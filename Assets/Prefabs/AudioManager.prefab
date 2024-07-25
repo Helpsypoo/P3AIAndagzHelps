@@ -44,3 +44,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2269565cf7122bc4ba2f5a987adb6311, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeDuration: 2
+  masterMixer: {fileID: 24100000, guid: b3438ad49087d9e44acd1f458bd0862a, type: 2}
+  _uiClick: {fileID: 8300000, guid: a63dad8acae045f418ab6e7b700f8117, type: 3}
+  _uiHover: {fileID: 8300000, guid: c821c539f496bde4282396aa95d5ab3e, type: 3}
+  _menuAmbiance: {fileID: 8300000, guid: 536f2b7c3f496f8469156ab1d2879508, type: 3}
+  _missionAmbiance: {fileID: 8300000, guid: 14dbd23db3579c04ea5e2ac515ecf835, type: 3}
+  _completedJingle: {fileID: 8300000, guid: 3af8679131e7fc649b85383e9b643165, type: 3}
+  _failJingle: {fileID: 8300000, guid: 6a91eabefa241aa4b8f030f0868aa412, type: 3}
+  _transitionOn: {fileID: 8300000, guid: 2829141358622074386ab33df88a715a, type: 3}
+  _transitionOff: {fileID: 8300000, guid: 49693ce5b008c644c8953e4cddda560f, type: 3}
+  _meatGrinder: {fileID: 8300000, guid: 8f046cbc99badec499bd6584e904b23d, type: 3}
+  _saw: {fileID: 8300000, guid: 7636f3ed695cbd1468d337b41ce0601b, type: 3}
+  _liquid: {fileID: 8300000, guid: 382053f57731be44ba0424c0fcfd86cc, type: 3}
+  _pointTick: []
+  _enemyDeath:
+  - {fileID: 8300000, guid: 7773c3dd2419b534d848fb2fcfab2bf7, type: 3}
+  - {fileID: 8300000, guid: 91324e61a07df3546a6857dc65111441, type: 3}
+  - {fileID: 8300000, guid: ee898ac6c593bcf4182806924e3b7aa9, type: 3}
+  _unitDeath:
+  - {fileID: 8300000, guid: 91952cd83f256134fa5fd50a574a35f3, type: 3}
+  _liberatedDeath:
+  - {fileID: 8300000, guid: 8645f7c68a1c25b489a2ae97d2b2a4f3, type: 3}
+  - {fileID: 8300000, guid: 9f12a4922f584d246968ca061a14ea1b, type: 3}
+  - {fileID: 8300000, guid: 7520db713aa1a834dacd99da1f8907b7, type: 3}

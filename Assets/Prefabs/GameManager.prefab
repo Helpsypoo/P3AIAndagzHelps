@@ -107,10 +107,12 @@ MonoBehaviour:
   _waypointPrefab: {fileID: 5468352185981451129, guid: 30bc4a42a61d79e4bb372657023d13e3,
     type: 3}
   ActiveLiberated: []
+  DeadLiberated: []
   ActiveWaypoints:
   - {fileID: 0}
-  LiberatedScore: 0
   KillZone: {fileID: 0}
+  _playerUnitPrefabs: []
+  _enhancementBuildingAnim: {fileID: 0}
   <BulletStash>k__BackingField: {fileID: 1371408785687781674}
 --- !u!114 &850728086960533594
 MonoBehaviour:
@@ -124,6 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67f37868636d57b4491eb19efd0d0d85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _amountPerUpdate: 1
 --- !u!114 &2778639323256942352
 MonoBehaviour:
   m_ObjectHideFlags: 0

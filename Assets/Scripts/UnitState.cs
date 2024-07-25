@@ -2,5 +2,6 @@ public enum UnitState {
    Idle,
    Moving,
    Attacking,
-   Dead
+   Dead,
+   Locked
 }
