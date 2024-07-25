@@ -4,7 +4,14 @@ using UnityEngine;
 
 public class MissionMarker : MonoBehaviour {
 
-    [field: SerializeField] public string SceneName { get; private set; }
+    [field: SerializeField] public Mission Details { get; private set; }
+
+    private void Awake() {
+        if (Details == null) {
+            Debug.LogWarning($"Mission Marker, {transform.name}, did not have a mission attached. Destroying marker.");
+            Destroy(gameObject);
+        }
+    }
 
     private void Start() {
         PositionSelf();

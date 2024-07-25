@@ -69,7 +69,8 @@ public class SquadManager : MonoBehaviour {
     /// <param name="obj"></param>
     private void SelectClick(InputAction.CallbackContext obj) {
 
-        if (EventSystem.current.IsPointerOverGameObject()) return;
+        // If the mouse is over the HUD, don't register the click in the actual game.
+        if (_mouseOverUI) return;
 
         // Move the selection marker to the current mouse position and update _highlightedEntity. Since we're either selecting a
         // comrade or doing nothing, deactivate the marker.
@@ -105,6 +106,7 @@ public class SquadManager : MonoBehaviour {
     /// <param name="obj"></param>
     private void ActionClick(InputAction.CallbackContext obj) {
 
+        // If the mouse is over the HUD, don't register the click in the actual game.
         if (_mouseOverUI) return;
 
         // Move the selection marker to the current mouse position and update _highlightedEntity.
@@ -153,8 +155,6 @@ public class SquadManager : MonoBehaviour {
                     }
 
                     GameManager.Instance.SelectionMarker.Deactivate();
-                    // REVIVE POSSIBLY GOES IN HERE
-
 
                 // If the highlighted entity is a liberated, follow them.
                 } else if (_highlightedEntity.CompareTag(Globals.LIBERATED_TAG)) {
