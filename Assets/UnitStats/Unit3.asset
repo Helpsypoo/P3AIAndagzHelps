@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d42557186a5752f4bbcdf53c864ab728, type: 3}
   m_Name: Unit3
   m_EditorClassIdentifier: 
-  Name: Unit3
+  Name: Vectra
   Colour: {r: 0, g: 1, b: 0.15667748, a: 1}
-  MaxHealth: 100
+  MaxHealth: 300
   HealthRegenRate: 5
   HealthRegenDelay: 3
-  Speed: 7.5
-  AttackDamage: -3
-  AttackRate: 2
-  AttackRange: 25
+  Speed: 5
+  AttackDamage: -7
+  AttackRate: 1
+  AttackRange: 2
   IsEnemy: 0
   ActionRange: 1.5
   Footsteps:

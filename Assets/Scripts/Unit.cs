@@ -342,7 +342,7 @@ public class Unit : MonoBehaviour {
     
     [ContextMenu("Revive")]
     public void Revive(bool _hiddenHealthbar = false) {
-        _hitbox.enabled = true;
+        _hitbox.enabled = false; //Toggle collider to allow enemies to retarget
         ChangeHealth(UnitStats.MaxHealth - Health, _hiddenHealthbar);
         SetState(UnitState.Idle);
         
@@ -367,7 +367,9 @@ public class Unit : MonoBehaviour {
         if (CompareTag(Globals.UNIT_TAG)) {
             GameManager.Instance.ProcessUnitLife(this);
         }
-
+        
+        _hitbox.enabled = true;
+        _anim.transform.localRotation = Quaternion.identity;
     }
 
     public void SetTarget(Unit target) {

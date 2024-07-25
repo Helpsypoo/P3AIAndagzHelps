@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d42557186a5752f4bbcdf53c864ab728, type: 3}
   m_Name: Unit4
   m_EditorClassIdentifier: 
-  Name: Unit4
+  Name: Nova
   Colour: {r: 1, g: 0.95618093, b: 0, a: 1}
   MaxHealth: 100
   HealthRegenRate: 5
   HealthRegenDelay: 3
   Speed: 7.5
   AttackDamage: -3
-  AttackRate: 5
+  AttackRate: 3
   AttackRange: 25
   IsEnemy: 0
   ActionRange: 1.5

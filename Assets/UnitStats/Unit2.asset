@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d42557186a5752f4bbcdf53c864ab728, type: 3}
   m_Name: Unit2
   m_EditorClassIdentifier: 
-  Name: Unit2
+  Name: Percival
   Colour: {r: 1, g: 0, b: 0, a: 1}
   MaxHealth: 100
   HealthRegenRate: 5
   HealthRegenDelay: 3
   Speed: 7.5
-  AttackDamage: -3
-  AttackRate: 1
-  AttackRange: 25
+  AttackDamage: -13
+  AttackRate: 5
+  AttackRange: 40
   IsEnemy: 0
   ActionRange: 1.5
   Footsteps:

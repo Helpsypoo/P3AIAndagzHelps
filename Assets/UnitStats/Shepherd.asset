@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Shepherd
   Colour: {r: 0, g: 0.3090248, b: 1, a: 1}
-  MaxHealth: 100
+  MaxHealth: 50
   HealthRegenRate: 5
   HealthRegenDelay: 3
-  Speed: 7.5
-  AttackDamage: -10
-  AttackRate: 0.15
+  Speed: 10
+  AttackDamage: -2
+  AttackRate: 1
   AttackRange: 25
   IsEnemy: 0
   ActionRange: 1.5
