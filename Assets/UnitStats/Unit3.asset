@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d42557186a5752f4bbcdf53c864ab728, type: 3}
   m_Name: Unit3
   m_EditorClassIdentifier: 
-  Name: Vectra
+  Name: Chonk
   Colour: {r: 0, g: 1, b: 0.15667748, a: 1}
   MaxHealth: 300
   HealthRegenRate: 5

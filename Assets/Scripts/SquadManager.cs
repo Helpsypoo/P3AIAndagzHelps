@@ -148,20 +148,20 @@ public class SquadManager : MonoBehaviour {
                 if (unit.transform.CompareTag(Globals.UNIT_TAG) && unit != SelectedUnit) {
 
                     // If this unit is down, we need to revive them.
-                    if (unit.State == UnitState.Dead) {
+                    /*if (unit.State == UnitState.Dead) {
                         Debug.Log("Attempted to select fallen unit");
                         unit.Select();
                         SelectedUnit.StandDown();
                         SelectedUnit.SetReviveTarget(unit);
 
-                    } else {
+                    } else {*/
 
                         Unit thisUnit = SelectedUnit;
                         thisUnit.StandDown();
                         thisUnit.SetTarget(unit);
                         SelectUnit(_highlightedEntity);
 
-                    }
+                    //}
 
                     GameManager.Instance.SelectionMarker.Deactivate();
 

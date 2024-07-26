@@ -15,14 +15,14 @@ MonoBehaviour:
   Name: Nova
   Colour: {r: 1, g: 0.95618093, b: 0, a: 1}
   MaxHealth: 100
-  HealthRegenRate: 5
+  HealthRegenRate: 3
   HealthRegenDelay: 3
   Speed: 7.5
   AttackDamage: -3
   AttackRate: 3
   AttackRange: 25
   IsEnemy: 0
-  ActionRange: 1.5
+  ActionRange: 7
   Footsteps:
   - {fileID: 8300000, guid: 0594e66ca25fd854f9227919e8364f19, type: 3}
   - {fileID: 8300000, guid: 1896a68c05632aa4893aaca07ab21ac5, type: 3}

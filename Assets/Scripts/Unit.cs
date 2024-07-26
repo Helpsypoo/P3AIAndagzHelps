@@ -11,7 +11,6 @@ public class Unit : MonoBehaviour {
     public UnitStats UnitStats;
 
     [SerializeField] private HealthDisplay _healthDisplay;
-    [SerializeField] private HealthDisplay _reviveDisplay;
 
     [SerializeField] GameObject _selectionIndicator;
     [SerializeField] GameObject _reviveSelectionIndicator;
@@ -43,12 +42,12 @@ public class Unit : MonoBehaviour {
     private TickEntity _tickEntity;
     
     public float Health { get; private set; }
-    private float _timeAtLastCheck;
+    [HideInInspector] public float TimeAtLastCheck;
+    [HideInInspector] public float TimeSinceLastCheck;
     private float _timeInShade;
     private bool _attacking;
     private float _attackCooldown;
-    [SerializeField] private float _reviveTimer;
-    private bool _isReviving => _reviveTimer > 0f;
+    //private bool _isReviving => _reviveTimer > 0f;
 
     [field: SerializeField] public bool AtDestination { get; private set; }
 
@@ -100,7 +99,7 @@ public class Unit : MonoBehaviour {
             _attackCooldown -= Time.deltaTime;
         }
 
-        if (AtDestination && _reviveTimer > 0f) {
+        /*if (AtDestination && _reviveTimer > 0f) {
             _reviveTimer -= Time.deltaTime;
             if (_reviveTimer <= 0f) {
                 FollowTarget.Revive();
@@ -110,15 +109,13 @@ public class Unit : MonoBehaviour {
 
         if (_reviveTimer > 0f && _reviveTimer < Globals.REVIVE_TIMER) {
             _reviveDisplay.UpdateHealthDisplay(Globals.REVIVE_TIMER - _reviveTimer, Globals.REVIVE_TIMER);
-        }
+        }*/
 
     }
 
     private void SetColors() {
         foreach (Renderer _rend in _renderers) {
-            foreach (Material material in _rend.materials) {
-                material.color = UnitStats.Colour;
-            }
+            _rend.material.color = UnitStats.Colour;
         }
     }
 
@@ -229,10 +226,10 @@ public class Unit : MonoBehaviour {
     /// <summary>
     /// Called via the TickEntity system. A periodic check
     /// </summary>
-    public void PeriodicUpdate() {
+    public virtual void PeriodicUpdate() {
         if (_anim) { _anim.transform.localPosition = Vector3.zero; } //stop the animator drifting from the collider
-        float _timeSinceLastCheck = Time.time - _timeAtLastCheck;
-        CheckLightingStatus(_timeSinceLastCheck);
+        TimeSinceLastCheck = Time.time - TimeAtLastCheck;
+        CheckLightingStatus(TimeSinceLastCheck);
         UpdateDestinationStatus();
 
         if (AttackTarget) {
@@ -247,7 +244,7 @@ public class Unit : MonoBehaviour {
             ProcessFriendlyFollow();
         }
         
-        _timeAtLastCheck = Time.time;
+        TimeAtLastCheck = Time.time;
     }
     
     /// <summary>
@@ -280,6 +277,7 @@ public class Unit : MonoBehaviour {
         switch (_newState) {
             default:
             case UnitState.Idle:
+                _navAgent.enabled = true;
                 break;
             case UnitState.Moving:
                 break;
@@ -304,7 +302,7 @@ public class Unit : MonoBehaviour {
 
     public void ChangeHealth(float _amount, bool _hiddenDisplayUpdate = false) {
         Health = Mathf.Clamp(Health + _amount, 0, UnitStats.MaxHealth);
-        
+
         if (_hiddenDisplayUpdate) {
             _healthDisplay.HiddenHealthDisplayUpdate(Health, UnitStats.MaxHealth);
         } else {
@@ -323,11 +321,11 @@ public class Unit : MonoBehaviour {
             //TODO: Play damage effect
             
             //Reset any health regen delay
-            if (healthRegen != null) {
+           /* if (healthRegen != null) {
                 StopCoroutine(healthRegen);
             }
 
-            healthRegen = StartCoroutine(StartRegen());
+            healthRegen = StartCoroutine(StartRegen());*/
         }
     }
 
@@ -343,6 +341,7 @@ public class Unit : MonoBehaviour {
     [ContextMenu("Revive")]
     public void Revive(bool _hiddenHealthbar = false) {
         _hitbox.enabled = false; //Toggle collider to allow enemies to retarget
+        TimeAtLastCheck = Time.time;
         ChangeHealth(UnitStats.MaxHealth - Health, _hiddenHealthbar);
         SetState(UnitState.Idle);
         
@@ -386,9 +385,9 @@ public class Unit : MonoBehaviour {
 
     public void SetReviveTarget(Unit target) {
 
-        _reviveTimer = Globals.REVIVE_TIMER;
+        //_reviveTimer = Globals.REVIVE_TIMER;
         FollowTarget = target;
-        _reviveDisplay.HiddenHealthDisplayUpdate(Globals.REVIVE_TIMER - _reviveTimer, Globals.REVIVE_TIMER);
+        //_reviveDisplay.HiddenHealthDisplayUpdate(Globals.REVIVE_TIMER - _reviveTimer, Globals.REVIVE_TIMER);
         SetStopDistance(Globals.FOLLOW_DIST);
 
 
@@ -440,14 +439,11 @@ public class Unit : MonoBehaviour {
         if (CompareTag(Globals.UNIT_TAG)) {
             GameManager.Instance.ProcessUnitLife(this);
             _deathSFX = AudioManager.Instance.UnitDeath;
-            
         } else if(CompareTag(Globals.ENEMY_TAG)){
             _deathSFX = AudioManager.Instance.EnemyDeath;
             _hitbox.enabled = false;
-            
         } else {
             _deathSFX = AudioManager.Instance.LiberatedDeath;
-            _hitbox.enabled = false;
         }
         
         AudioManager.Instance.Play(_deathSFX, MixerGroups.SFX, new Vector2(.9f,1.1f), 2f, transform.position);
@@ -510,7 +506,7 @@ public class Unit : MonoBehaviour {
     
     private void ProcessFriendlyFollow() {
 
-        if (FollowTarget.Health <= 0 && !_isReviving) {
+        if (FollowTarget.Health <= 0/* && !_isReviving*/) {
             FollowTarget = null;
             return;
         }

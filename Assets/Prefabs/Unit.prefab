@@ -3821,22 +3821,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UnitStats: {fileID: 0}
   _healthDisplay: {fileID: 4620286243341599770}
-  _reviveDisplay: {fileID: 1983499746064898753}
   _selectionIndicator: {fileID: 6495128355960961892}
   _reviveSelectionIndicator: {fileID: 1355504972749881164}
   _leaderSelectionIndicator: {fileID: 3203198005691286741}
   _renderers:
-  - {fileID: 365871210047923971}
-  - {fileID: 365871210048845003}
-  - {fileID: 365871210048845007}
-  - {fileID: 365871210048845001}
-  - {fileID: 365871210048844995}
-  - {fileID: 365871210048844999}
-  - {fileID: 365871210048844993}
-  - {fileID: 365871210047923975}
-  - {fileID: 365871210048845005}
-  - {fileID: 365871210048844997}
-  - {fileID: 365871210047923969}
+  - {fileID: 3924463618163103015}
+  - {fileID: 2195085047368268865}
+  - {fileID: 4818997164557850686}
+  - {fileID: 5979544905539191380}
+  - {fileID: 3055908932430921621}
+  - {fileID: 8765045945843303479}
+  - {fileID: 7343843475226751884}
+  - {fileID: 7398622495003357040}
+  - {fileID: 668136457848285849}
   _weapon: {fileID: 7474278614370916259}
   _weaponPrefab: {fileID: 920266114437748004, guid: 4f55b7ee73ca6254eb645abb952dc4be,
     type: 3}
@@ -3844,7 +3841,8 @@ MonoBehaviour:
   RightFoot: {fileID: 5754863564776992244}
   _anim: {fileID: 6355418041820730948}
   <State>k__BackingField: 0
-  _reviveTimer: 0
+  TimeAtLastCheck: 0
+  TimeSinceLastCheck: 0
   <AtDestination>k__BackingField: 0
 --- !u!114 &417735457569587794
 MonoBehaviour:
@@ -4573,18 +4571,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 842f5a714ead5504facd5705468b7462, type: 3}
---- !u!114 &1983499746064898753 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2058358427125279748, guid: 842f5a714ead5504facd5705468b7462,
-    type: 3}
-  m_PrefabInstance: {fileID: 510609454282929861}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7008d575f29c7494f83bce608d9bc1fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &6044276495519751582 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6122531428246743899, guid: 842f5a714ead5504facd5705468b7462,
