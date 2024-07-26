@@ -30,7 +30,6 @@ public class MissionSelectionManager : MonoBehaviour {
     private Vector2 _mousePosition;
     private Vector2 _prevMousePosition;
     private Vector2 _mouseVelocity => _prevMousePosition - _mousePosition;
-    public Vector2 MouseVelocity;
     [SerializeField] private float _clickLength = 0.25f;
     private float _clickTimer = 0f;
 
@@ -55,8 +54,7 @@ public class MissionSelectionManager : MonoBehaviour {
         _mouseOverUI = EventSystem.current.IsPointerOverGameObject();
 
         _mousePosition = _input.Player.Mouse.ReadValue<Vector2>();
-        MouseVelocity = _mouseVelocity;
-
+        float normalisedMouseX = (_mousePosition.x / Screen.width) - 0.5f;
 
         if (_mouseDown && _clickTimer < _clickLength) {
             _clickTimer += Time.deltaTime;
@@ -65,10 +63,10 @@ public class MissionSelectionManager : MonoBehaviour {
 
         if (_mouseDown) {
             //_rotateSpeed = _mouseVelocity.x * _accelerationSpeed;
-            _rotateSpeed = Mathf.MoveTowards(_rotateSpeed, _mouseVelocity.x * _accelerationSpeed, Time.deltaTime * 3000f);
+            _rotateSpeed = Mathf.MoveTowards(_rotateSpeed, normalisedMouseX * _accelerationSpeed, Time.deltaTime * 1000f);
             _rotateSpeed = Mathf.Clamp(_rotateSpeed, -_maxSpeed, _maxSpeed);
         } else {
-            _rotateSpeed = Mathf.MoveTowards(_rotateSpeed, 0f, Time.deltaTime * _maxSpeed);
+            _rotateSpeed = Mathf.MoveTowards(_rotateSpeed, 0f, Time.deltaTime * _accelerationSpeed);
         }
 
 

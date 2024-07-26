@@ -228,13 +228,17 @@ public class SquadManager : MonoBehaviour {
         // Make sure we're not trying to use a unit we don't have.
         if (index >= GameManager.Instance.PlayerUnits.Count) return;
 
+        // If we have changed units, reset action mode.
+        if (index != UnitIndex) {
+            // Reset action mode so we're not immediately performing the new unit's action.
+            ActionMode = false;
+        }
+
         // If Unit is dead, we can't select it.
         if (GameManager.Instance.PlayerUnits[index].State == UnitState.Dead) return;
 
         UnitIndex = index;
         for (int i = 0; i < GameManager.Instance.PlayerUnits.Count; i++) {
-            //if (i == UnitIndex) Units[i].Select();
-            //else Units[i].Deselect();
             GameManager.Instance.PlayerUnits[i].Deselect();
         }
 
@@ -267,29 +271,6 @@ public class SquadManager : MonoBehaviour {
 
 
         }
-
-        //foreach (var unit in Units) {
-        //    if (unit.FollowTarget is null || unit.IsLeader)
-        //        continue;
-
-        //    var target = unit.FollowTarget;
-        //    if (target.IsLeader)
-        //        return new List<Unit> { unit, target };
-
-        //    var targetsTarget = target.FollowTarget;
-        //    if (targetsTarget is not null && targetsTarget.IsLeader)
-        //        return new List<Unit> { unit, target, targetsTarget };
-
-        //    var last = targetsTarget.FollowTarget;
-        //    if (last is not null && last.IsLeader)
-        //        return new List<uint> { unit, target, targetsTarget, last };
-        //}
-
-
-        // If a unit is following another unit, make sure it is highlighted so we know it is active.
-        //if (Units[i].FollowTarget != null && Units[i].FollowTarget.transform.CompareTag(Globals.UNIT_TAG) && Units[i].FollowTarget.State != UnitState.Dead) {
-        //    Units[i].Select();
-        //}
 
         _cinemachineCamera.Follow = SelectedUnit.transform;
         _cinemachineCamera.LookAt = SelectedUnit.transform;

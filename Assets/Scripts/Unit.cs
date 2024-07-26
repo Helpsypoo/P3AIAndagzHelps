@@ -415,11 +415,17 @@ public class Unit : MonoBehaviour {
         _attackCooldown = UnitStats.AttackRate;
     }
 
+    public Vector2 Cooldown => new Vector2(_attackCooldown, UnitStats.AttackRate);
+
     public void Fire() {
         _weapon.Fire();
     }
 
     public virtual void Die() {
+
+        // If we're already dead, we don't need to die again.
+        if (State == UnitState.Dead) return;
+
         _tickEntity?.RemoveFromTickEventManager();
         //Stop any current health regen
         if (healthRegen != null) {

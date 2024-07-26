@@ -13,14 +13,14 @@ public class Nova : Unit {
 
 	private Coroutine reviveCoroutine;
 
-	private void Awake() {
+	public override void Awake() {
 		base.Awake();
 		
 		_sphereCollider = GetComponent<SphereCollider>();
 		_decalProjector = GetComponentInChildren<DecalProjector>();
 	}
 
-	private void Start() {
+	public override void Start() {
 		base.Start();
 		
 		if (!UnitStats) {

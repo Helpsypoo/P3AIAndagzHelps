@@ -15,12 +15,23 @@ public class UI_Character : MonoBehaviour, IPointerClickHandler {
     [SerializeField] private TextMeshProUGUI _characterName;
     [SerializeField] private TextMeshProUGUI _abilityCharge;
     [SerializeField] private GameObject _actionIcon;
+    [SerializeField] private Slider _cooldownSlider;
 
 
     public void Init(Unit unit) {
         _unit = unit;
         _characterName.text = _unit.UnitStats.Name;
         _abilityCharge.text = unit.AbilityCharges.ToString();
+    }
+
+    private void Update() {
+
+        if (_unit != null) {
+            Vector2 cooldown = _unit.Cooldown;
+            _cooldownSlider.maxValue = cooldown.y;
+            _cooldownSlider.value = cooldown.y - cooldown.x;
+        }
+
     }
 
     public void UpdateCharacter() {

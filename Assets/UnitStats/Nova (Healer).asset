@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d42557186a5752f4bbcdf53c864ab728, type: 3}
-  m_Name: Unit4
+  m_Name: Nova (Healer)
   m_EditorClassIdentifier: 
   Name: Nova
   Colour: {r: 1, g: 0.95618093, b: 0, a: 1}

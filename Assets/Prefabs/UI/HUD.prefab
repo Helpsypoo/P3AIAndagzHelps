@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5827900984878494525}
   - component: {fileID: 982854704299102119}
   - component: {fileID: 781236144651335763}
+  - component: {fileID: 8533285471562518866}
   m_Layer: 5
   m_Name: HUD
   m_TagString: Untagged
@@ -120,6 +121,33 @@ MonoBehaviour:
   - {fileID: 8452288965281038007}
   - {fileID: 1673534582114212982}
   - {fileID: 4334006501060193755}
+--- !u!114 &8533285471562518866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806318749169005272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5806deeeef13b864e8de2f3c3fb8db1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 781236144651335763}
+        m_TargetAssemblyTypeName: HUD, Assembly-CSharp
+        m_MethodName: UpdateSquad
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2596106247593646270
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,7 +212,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -232,6 +260,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6924975350238639625}
     m_Modifications:
+    - target: {fileID: 1444008419370558542, guid: 318f0e08435d2af48a06d8103dba3477,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2336379686618123515, guid: 318f0e08435d2af48a06d8103dba3477,
         type: 3}
       propertyPath: m_Name
@@ -342,6 +375,16 @@ PrefabInstance:
       propertyPath: m_fontSize
       value: 12.6
       objectReference: {fileID: 0}
+    - target: {fileID: 6930078770758098189, guid: 318f0e08435d2af48a06d8103dba3477,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6930078770758098189, guid: 318f0e08435d2af48a06d8103dba3477,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -373,6 +416,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6924975350238639625}
     m_Modifications:
+    - target: {fileID: 1444008419370558542, guid: 318f0e08435d2af48a06d8103dba3477,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2336379686618123515, guid: 318f0e08435d2af48a06d8103dba3477,
         type: 3}
       propertyPath: m_Name
@@ -482,6 +530,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_fontSize
       value: 12.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6930078770758098189, guid: 318f0e08435d2af48a06d8103dba3477,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6930078770758098189, guid: 318f0e08435d2af48a06d8103dba3477,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -619,10 +677,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6047788908649908113, guid: 318f0e08435d2af48a06d8103dba3477,
+    - target: {fileID: 6930078770758098189, guid: 318f0e08435d2af48a06d8103dba3477,
         type: 3}
-      propertyPath: m_fontSize
-      value: 12.6
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6930078770758098189, guid: 318f0e08435d2af48a06d8103dba3477,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -655,6 +718,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6924975350238639625}
     m_Modifications:
+    - target: {fileID: 1444008419370558542, guid: 318f0e08435d2af48a06d8103dba3477,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2336379686618123515, guid: 318f0e08435d2af48a06d8103dba3477,
         type: 3}
       propertyPath: m_Name
@@ -764,6 +832,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_fontSize
       value: 12.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6930078770758098189, guid: 318f0e08435d2af48a06d8103dba3477,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6930078770758098189, guid: 318f0e08435d2af48a06d8103dba3477,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

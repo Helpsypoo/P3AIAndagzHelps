@@ -152,12 +152,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _planet: {fileID: 440909518}
-  _accelerationSpeed: 25
-  _maxSpeed: 250
+  _accelerationSpeed: 400
+  _maxSpeed: 700
   _missionWindow: {fileID: 142047518}
   _missionTitle: {fileID: 1350909019}
   _missionDescription: {fileID: 818337251}
-  MouseVelocity: {x: 0, y: 0}
   _clickLength: 0.15
 --- !u!4 &13112758
 Transform:

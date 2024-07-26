@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d42557186a5752f4bbcdf53c864ab728, type: 3}
-  m_Name: Shepherd
+  m_Name: Percival (Glass Cannon)
   m_EditorClassIdentifier: 
-  Name: Shepherd
-  Colour: {r: 0, g: 0.3090248, b: 1, a: 1}
-  MaxHealth: 50
+  Name: Percival
+  Colour: {r: 1, g: 0, b: 0, a: 1}
+  MaxHealth: 100
   HealthRegenRate: 5
   HealthRegenDelay: 3
-  Speed: 10
-  AttackDamage: -2
-  AttackRate: 1
-  AttackRange: 25
+  Speed: 7.5
+  AttackDamage: -13
+  AttackRate: 5
+  AttackRange: 40
   IsEnemy: 0
   ActionRange: 1.5
   Footsteps:
