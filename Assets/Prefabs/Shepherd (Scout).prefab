@@ -8,6 +8,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 334352151792965017, guid: 21e4e28341cf4064ca245be07c9b5fb4,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 334352151792965017, guid: 21e4e28341cf4064ca245be07c9b5fb4,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 334352151792965017, guid: 21e4e28341cf4064ca245be07c9b5fb4,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.35
+      objectReference: {fileID: 0}
     - target: {fileID: 346677584653850249, guid: 21e4e28341cf4064ca245be07c9b5fb4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -773,7 +788,7 @@ PrefabInstance:
     - target: {fileID: 5344825663267763069, guid: 21e4e28341cf4064ca245be07c9b5fb4,
         type: 3}
       propertyPath: m_Name
-      value: Unit_Shepherd Variant
+      value: Shepherd (Scout)
       objectReference: {fileID: 0}
     - target: {fileID: 5344825663267763069, guid: 21e4e28341cf4064ca245be07c9b5fb4,
         type: 3}
@@ -792,7 +807,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3896250379737852035, guid: 21e4e28341cf4064ca245be07c9b5fb4, type: 3}
-    m_RemovedGameObjects: []
+    - {fileID: 7532648924021596425, guid: 21e4e28341cf4064ca245be07c9b5fb4, type: 3}
+    m_RemovedGameObjects:
+    - {fileID: 7639292063656181858, guid: 21e4e28341cf4064ca245be07c9b5fb4, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5344825663267763069, guid: 21e4e28341cf4064ca245be07c9b5fb4,

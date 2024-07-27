@@ -144,7 +144,7 @@ public class Landmine : MonoBehaviour {
 
     private IEnumerator Explode() {
 
-        _projector.Activate();
+        _projector.ActivateExpand(5f, _blastRadius * 2f, _blastRadius * 2f);
         float blinkTimer = 0f;
         float interval = _beepInterval;
         int blinkCount = 0;

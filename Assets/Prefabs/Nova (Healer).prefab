@@ -64,6 +64,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 334352151792965017, guid: 21e4e28341cf4064ca245be07c9b5fb4,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 334352151792965017, guid: 21e4e28341cf4064ca245be07c9b5fb4,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 334352151792965017, guid: 21e4e28341cf4064ca245be07c9b5fb4,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.35
+      objectReference: {fileID: 0}
     - target: {fileID: 346677584653850249, guid: 21e4e28341cf4064ca245be07c9b5fb4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -819,7 +834,7 @@ PrefabInstance:
     - target: {fileID: 5344825663267763069, guid: 21e4e28341cf4064ca245be07c9b5fb4,
         type: 3}
       propertyPath: m_Name
-      value: Unit4 Variant
+      value: Nova (Healer)
       objectReference: {fileID: 0}
     - target: {fileID: 5344825663267763069, guid: 21e4e28341cf4064ca245be07c9b5fb4,
         type: 3}
@@ -833,7 +848,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3896250379737852035, guid: 21e4e28341cf4064ca245be07c9b5fb4, type: 3}
-    m_RemovedGameObjects: []
+    - {fileID: 7532648924021596425, guid: 21e4e28341cf4064ca245be07c9b5fb4, type: 3}
+    m_RemovedGameObjects:
+    - {fileID: 7639292063656181858, guid: 21e4e28341cf4064ca245be07c9b5fb4, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 346677584653850249, guid: 21e4e28341cf4064ca245be07c9b5fb4,
         type: 3}
@@ -953,7 +970,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UnitStats: {fileID: 11400000, guid: 57f57034fbb536040adbf530216a58e6, type: 2}
   _healthDisplay: {fileID: 6631535526491489437}
-  _reviveDisplay: {fileID: 549352518550690374}
   _selectionIndicator: {fileID: 5060404845563231203}
   _reviveSelectionIndicator: {fileID: 1069260908861112267}
   _leaderSelectionIndicator: {fileID: 3489573016572036178}
@@ -975,8 +991,10 @@ MonoBehaviour:
   _anim: {fileID: 4912165777424897731}
   <State>k__BackingField: 0
   TimeAtLastCheck: 0
-  _reviveTimer: 0
+  TimeSinceLastCheck: 0
   <AtDestination>k__BackingField: 0
+  _reviveDisplay: {fileID: 549352518550690374}
+  _reviveTimer: 0
 --- !u!135 &6965039261719874320
 SphereCollider:
   m_ObjectHideFlags: 0

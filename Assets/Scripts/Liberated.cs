@@ -48,7 +48,7 @@ public class Liberated : Unit {
         Vector3 blastDirection = (transform.position - blastOrigin).normalized;
         blastDirection += fuzzyFactor;
         _rigidbody.AddForce(blastDirection * force, ForceMode.Impulse);
-        StartCoroutine(AirTime(3f));
+        StartCoroutine(AirTime(4f));
 
     }
 

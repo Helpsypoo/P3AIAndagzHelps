@@ -1422,6 +1422,8 @@ MonoBehaviour:
   UnitStats: {fileID: 11400000, guid: cd3522efa5568b8449cff89d46e97298, type: 2}
   _healthDisplay: {fileID: 7813509929491215776}
   _selectionIndicator: {fileID: 8489215249219317188}
+  _reviveSelectionIndicator: {fileID: 0}
+  _leaderSelectionIndicator: {fileID: 0}
   _renderers:
   - {fileID: 6805139208613813876}
   - {fileID: 8321273299494514448}
@@ -1437,8 +1439,12 @@ MonoBehaviour:
   _weapon: {fileID: 4326700155503968758}
   _weaponPrefab: {fileID: 920266114437748004, guid: 4f55b7ee73ca6254eb645abb952dc4be,
     type: 3}
+  LeftFoot: {fileID: 0}
+  RightFoot: {fileID: 0}
   _anim: {fileID: 8040820766908728190}
   <State>k__BackingField: 0
+  TimeAtLastCheck: 0
+  TimeSinceLastCheck: 0
   <AtDestination>k__BackingField: 0
   _targets: []
 --- !u!195 &4506507958960583689
@@ -2111,6 +2117,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2211100292793662769}
     m_Modifications:
+    - target: {fileID: 684625057183427279, guid: 15b618b90b45673438e25c0a909f563e,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a8e72ce98c66211449b2f449d57c454d, type: 2}
     - target: {fileID: 1395173448037697159, guid: 15b618b90b45673438e25c0a909f563e,
         type: 3}
       propertyPath: m_Name
