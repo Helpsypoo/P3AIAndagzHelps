@@ -26,7 +26,6 @@ public class Shield : MonoBehaviour {
     /// </summary>
     /// <param name="radius">The desired radius of the forcefield.</param>
     public void Activate(float radius, float health) {
-
         StartCoroutine(ExpandContract(CurrentRadius, radius));
 
     }

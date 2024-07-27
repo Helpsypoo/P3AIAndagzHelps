@@ -1441,17 +1441,21 @@ MonoBehaviour:
   _weapon: {fileID: 4326700155503968758}
   _weaponPrefab: {fileID: 920266114437748004, guid: 4f55b7ee73ca6254eb645abb952dc4be,
     type: 3}
+  _lookAtPivot: {fileID: 0}
+  _lookAtPivotModifier: {x: 0, y: 0, z: 0}
   LeftFoot: {fileID: 0}
   RightFoot: {fileID: 0}
-  _healthTickCooldownDuration: 0.4
-  _anim: {fileID: 8040820766908728190}
+  LastDamagedBy: {fileID: 0}
+  Anim: {fileID: 8040820766908728190}
   <State>k__BackingField: 0
   TimeAtLastCheck: 0
   TimeSinceLastCheck: 0
   <AtDestination>k__BackingField: 0
   _sunBeam: {fileID: 8690507772298150565}
   HealFX: {fileID: 0}
-  _bloodFX: {fileID: 4649475741717750142}
+  _deathFX: {fileID: 4649475741717750142}
+  _attackAlertSound: {fileID: 0}
+  _targetMode: 0
   _targets: []
 --- !u!195 &4506507958960583689
 NavMeshAgent:

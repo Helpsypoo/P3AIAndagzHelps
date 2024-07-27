@@ -35,11 +35,10 @@ public class BulletPool : MonoBehaviour {
     }
 
     public void ReturnBullet(Bullet bullet) {
-
-        bullet.transform.SetParent(transform);
         bullet.gameObject.SetActive(false);
+        bullet.transform.SetParent(transform);
+        bullet.Rb.velocity = Vector3.zero;
         _pool.Enqueue(bullet);
-
     }
 
     private void CreateBullet() {

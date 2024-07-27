@@ -14,11 +14,17 @@ public class Chonk : Unit {
 
         if (!_shield.IsActive) {
             _shield.Activate(Radius, MaxShieldHealth);
+            UnitStats.InvunerableToSun = true;
         } else {
             _shield.Deactivate();
+            UnitStats.InvunerableToSun = false;
             //
         }
 
+    }
+
+    public void OnDisable() {
+        UnitStats.InvunerableToSun = false;
     }
 
 }

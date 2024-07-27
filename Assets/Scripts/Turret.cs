@@ -1,9 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class Turret : Enemy {
-	[SerializeField] private Transform _turretPivot;
 	public override void PeriodicUpdate() {
 		base.PeriodicUpdate();
 
@@ -11,5 +6,11 @@ public class Turret : Enemy {
 			//rotate _turretPivot towards AttackTarget
 			//
 		}
+	}
+
+	public override void ClearTarget() {
+		base.ClearTarget();
+		
+		Anim.Play("Idle");
 	}
 }

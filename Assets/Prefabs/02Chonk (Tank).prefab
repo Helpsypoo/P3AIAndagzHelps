@@ -753,6 +753,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 3.96
       objectReference: {fileID: 0}
+    - target: {fileID: 808777036803552441, guid: 21e4e28341cf4064ca245be07c9b5fb4,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2616360468254000453, guid: 21e4e28341cf4064ca245be07c9b5fb4,
         type: 3}
       propertyPath: avoidancePriority
@@ -833,7 +838,7 @@ PrefabInstance:
     - target: {fileID: 5344825663267763069, guid: 21e4e28341cf4064ca245be07c9b5fb4,
         type: 3}
       propertyPath: m_Name
-      value: Chonk (Tank)
+      value: 02Chonk (Tank)
       objectReference: {fileID: 0}
     - target: {fileID: 5344825663267763069, guid: 21e4e28341cf4064ca245be07c9b5fb4,
         type: 3}
@@ -855,6 +860,11 @@ PrefabInstance:
       propertyPath: m_Alpha
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7532648924021596425, guid: 21e4e28341cf4064ca245be07c9b5fb4,
+        type: 3}
+      propertyPath: _deathFX
+      value: 
+      objectReference: {fileID: 6737874553095435193}
     - target: {fileID: 7532648924021596425, guid: 21e4e28341cf4064ca245be07c9b5fb4,
         type: 3}
       propertyPath: _renderers.Array.size
@@ -961,6 +971,12 @@ SkinnedMeshRenderer:
 --- !u!137 &6001183696068922527 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 8765045945843303479, guid: 21e4e28341cf4064ca245be07c9b5fb4,
+    type: 3}
+  m_PrefabInstance: {fileID: 3092792204309694632}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &6737874553095435193 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8604816664747293457, guid: 21e4e28341cf4064ca245be07c9b5fb4,
     type: 3}
   m_PrefabInstance: {fileID: 3092792204309694632}
   m_PrefabAsset: {fileID: 0}

@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d42557186a5752f4bbcdf53c864ab728, type: 3}
-  m_Name: Shepherd (Scout)
+  m_Name: Shepard (Scout)
   m_EditorClassIdentifier: 
-  Name: Shepherd
+  Name: Shepard
   Colour: {r: 0, g: 0.3090248, b: 1, a: 1}
   MaxHealth: 50
   HealthRegenRate: 5
@@ -22,7 +22,9 @@ MonoBehaviour:
   AttackRate: 1
   AttackRange: 25
   IsEnemy: 0
+  InvunerableToSun: 0
   ActionRange: 1.5
+  ImmediateAction: 0
   Footsteps:
   - {fileID: 8300000, guid: 0594e66ca25fd854f9227919e8364f19, type: 3}
   - {fileID: 8300000, guid: 1896a68c05632aa4893aaca07ab21ac5, type: 3}

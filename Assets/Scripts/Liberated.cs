@@ -5,7 +5,7 @@ public class Liberated : Unit {
 
     private Rigidbody _rigidbody;
 
-    public bool IsLeader;
+    public new bool IsLeader;
 
     public override void Awake() {
         base.Awake();
@@ -38,6 +38,11 @@ public class Liberated : Unit {
 
         base.Die();
         GameManager.Instance.ProcessLiberatedDeath(this);
+    }
+
+    public override void Revive(bool _hiddenHealthbar = false) {
+        base.Revive(_hiddenHealthbar);
+        GameManager.Instance.JoinLiberated(this);
     }
 
     public void Launch(float force, Vector3 blastOrigin) {

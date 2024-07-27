@@ -105,6 +105,10 @@ public class SquadManager : MonoBehaviour {
     }
 
     private void ActionModifierClick(InputAction.CallbackContext obj) {
+        if (SelectedUnit.UnitStats.ImmediateAction) {
+            SelectedUnit.PerformAction(GameManager.Instance.SelectionMarker.transform.position, _highlightedEntity);
+            return;
+        }
 
         ActionMode = !ActionMode;
 
@@ -122,12 +126,13 @@ public class SquadManager : MonoBehaviour {
         // Move the selection marker to the current mouse position and update _highlightedEntity.
         UpdateSelectionMarker();
 
+        //Debug.Log($"Performing action {SelectedUnit.UnitStats.ImmediateAction}");
         // If Action Mode is toggled on, perform the action.
         if (ActionMode) {
             SelectedUnit.PerformAction(GameManager.Instance.SelectionMarker.transform.position, _highlightedEntity);
             ActionMode = false;
             return;
-        }
+        }   
         
         // If we don't have a selected entity and the cursor is on a walkable spot, our unit needs to walk there.
         if (_highlightedEntity == null && GameManager.Instance.SelectionMarker.CanWalk) {

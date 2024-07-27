@@ -772,7 +772,7 @@ PrefabInstance:
     - target: {fileID: 5344825663267763069, guid: 21e4e28341cf4064ca245be07c9b5fb4,
         type: 3}
       propertyPath: m_Name
-      value: 02Percival (Glass Cannon)
+      value: 03Percival (Glass Cannon)
       objectReference: {fileID: 0}
     - target: {fileID: 5344825663267763069, guid: 21e4e28341cf4064ca245be07c9b5fb4,
         type: 3}
@@ -873,17 +873,20 @@ MonoBehaviour:
   _weapon: {fileID: 7954710125597060214}
   _weaponPrefab: {fileID: 920266114437748004, guid: 4f55b7ee73ca6254eb645abb952dc4be,
     type: 3}
+  _lookAtPivot: {fileID: 0}
+  _lookAtPivotModifier: {x: 0, y: 0, z: 0}
   LeftFoot: {fileID: 1874242061024520963}
   RightFoot: {fileID: 5044127866490721825}
-  _healthTickCooldownDuration: 0.4
-  _anim: {fileID: 5904163531978157457}
+  LastDamagedBy: {fileID: 0}
+  Anim: {fileID: 5904163531978157457}
   <State>k__BackingField: 0
   TimeAtLastCheck: 0
   TimeSinceLastCheck: 0
   <AtDestination>k__BackingField: 0
   _sunBeam: {fileID: 7264015590063109120}
   HealFX: {fileID: 6312630286709991110}
-  _bloodFX: {fileID: 9130842982320521412}
+  _deathFX: {fileID: 9130842982320521412}
+  _attackAlertSound: {fileID: 0}
 --- !u!4 &5044127866490721825 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5754863564776992244, guid: 21e4e28341cf4064ca245be07c9b5fb4,

@@ -108,12 +108,13 @@ public class Nova : Unit {
 		if (!_unit) {
 			return;
 		}
+		
 
 		if (!_unitsToHeal.Contains(_unit)) {
 			_unitsToHeal.Add(_unit);
 		}
 		
-		if (_unit.Health < _unit.UnitStats.MaxHealth) {
+		if (_unit.Health < _unit.UnitStats.MaxHealth && _unit.State != UnitState.Dead) {
 			if (_unit.HealFX) {_unit.HealFX.gameObject.SetActive(true);}
 		}
 	}

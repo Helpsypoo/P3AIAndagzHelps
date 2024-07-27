@@ -99,11 +99,14 @@ public class GameManager : MonoBehaviour {
                 _liberatedPool.Add(_liberated);
             }
 
-            _liberated.IsLeader = ActiveLiberated.Count == 0;
-            _liberated.SetStopDistance(_liberated.IsLeader ? 0 : 0.8f);
-            //Debug.Log($"Set liberated to: {_liberated.IsLeader}. Count {ActiveLiberated.Count}");
-            ActiveLiberated.Add(_liberated);
+            JoinLiberated(_liberated);
         }
+    }
+    
+    public void JoinLiberated(Liberated _liberated) {
+        _liberated.IsLeader = ActiveLiberated.Count == 0;
+        _liberated.SetStopDistance(_liberated.IsLeader ? 0 : 0.8f);
+        ActiveLiberated.Add(_liberated);
     }
     
     private void SpawnOrRelocateUnits(Transform _spawnPointContainer) {

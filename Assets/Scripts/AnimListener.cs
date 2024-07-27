@@ -13,7 +13,9 @@ public class AnimListener : MonoBehaviour {
     }
 
     public void Fire() {
-        unit?.Fire();
+        if (unit && (unit.State != UnitState.Dead || unit.State != UnitState.Locked)) {
+            unit.Fire();
+        }
     }
     
     public void LeftFootstep() {

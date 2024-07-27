@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
@@ -19,6 +20,8 @@ public class Unit : MonoBehaviour {
     [SerializeField] Renderer[] _renderers;
     [SerializeField] Weapon _weapon;
     [SerializeField] Rigidbody _weaponPrefab;
+    [SerializeField] private Transform _lookAtPivot;
+    [SerializeField] private Vector3 _lookAtPivotModifier;
     public Transform LeftFoot;
     public Transform RightFoot;
 
@@ -28,6 +31,7 @@ public class Unit : MonoBehaviour {
 
     public Unit FollowTarget { get; private set; }
     public Unit AttackTarget { get; private set; }
+    public Unit LastDamagedBy;
 
     protected int _abilityCharges = 0;     // The remaining of times this unit can perform their special action.
     public int AbilityCharges => _abilityCharges;
@@ -38,7 +42,7 @@ public class Unit : MonoBehaviour {
 
     Rigidbody _looseGun;
 
-    [SerializeField] private Animator _anim;
+    public Animator Anim;
   
     [field: SerializeField] public UnitState State { get; private set; }
     protected NavMeshAgent _navAgent;
@@ -62,6 +66,7 @@ public class Unit : MonoBehaviour {
     [SerializeField] private LineRenderer _sunBeam;
     public ParticleSystem HealFX;
     [SerializeField] private ParticleSystem _deathFX;
+    [SerializeField] private AudioClip _attackAlertSound;
 
     /// <summary>
     /// The index in the SquadManager._units array.
@@ -101,18 +106,18 @@ public class Unit : MonoBehaviour {
 
     public virtual void Update() {
         if (Health <= 0) {
-            _sunBeam.gameObject.SetActive(false);
+            if(_sunBeam) {_sunBeam.gameObject.SetActive(false);}
             return;
         }
 
-        SetSunLaserDisplay();
+        ProcessSunLaserDisplay();
         
         if (State == UnitState.Locked) {
             return;
         }
         
         LookWhereYoureGoing();
-        if(_anim && _navAgent){ _anim.SetFloat(speed, _navAgent.velocity.magnitude);}
+        if(Anim && _navAgent){ Anim.SetFloat(speed, _navAgent.velocity.magnitude);}
 
         if (_attackCooldown > 0f) {
             _attackCooldown -= Time.deltaTime;
@@ -142,11 +147,11 @@ public class Unit : MonoBehaviour {
     /// If we have path, turn the unit to face the direction they are going.
     /// </summary>
     public void LookWhereYoureGoing() {
-        if (!_navAgent || (!FollowTarget && !AttackTarget && (!_navAgent.hasPath || State == UnitState.Dead))) {
+        if (!FollowTarget && !AttackTarget && (!_navAgent || ((_navAgent &&!_navAgent.hasPath) || State == UnitState.Dead))) {
             return;
         }
 
-        Vector3 lookTarget = _navAgent.nextPosition;
+        Vector3 lookTarget = _navAgent ? _navAgent.nextPosition : transform.position;
         if (AttackTarget) {
             lookTarget = AttackTarget.transform.position;
         } else if (FollowTarget) {
@@ -154,11 +159,21 @@ public class Unit : MonoBehaviour {
         }
 
         lookTarget.y = transform.position.y;
-        transform.LookAt(lookTarget);
+        if (_lookAtPivot) {
+            _lookAtPivot.LookAt(lookTarget);
+            Quaternion offsetRotation = Quaternion.Euler(_lookAtPivotModifier);
+            _lookAtPivot.rotation *= offsetRotation;
+        } else {
+            transform.LookAt(lookTarget);
+        }
+
     }
 
     public void UpdateDestinationStatus() {
-
+        if (!_navAgent) {
+            return;
+        }
+        
         bool prevDestination = AtDestination;
         // If we don't currently have a path we are at our destination (or we can't get there).
         if (!_navAgent.hasPath) {
@@ -209,12 +224,12 @@ public class Unit : MonoBehaviour {
     public void Select() {
 
         if (transform.CompareTag(Globals.UNIT_TAG) && State == UnitState.Dead) {
-            _reviveSelectionIndicator.SetActive(true);
+            if(_reviveSelectionIndicator){_reviveSelectionIndicator.SetActive(true);}
         } else {
             if (transform.CompareTag(Globals.UNIT_TAG) && IsLeader) {
-                _leaderSelectionIndicator.SetActive(true);
+                if(_leaderSelectionIndicator){_leaderSelectionIndicator.SetActive(true);}
             } else {
-                _selectionIndicator.SetActive(true);
+                if(_selectionIndicator){_selectionIndicator.SetActive(true);}
             }
         }
     }
@@ -230,7 +245,7 @@ public class Unit : MonoBehaviour {
         if (_leaderSelectionIndicator != null) {
             _leaderSelectionIndicator.SetActive(false);
         }
-        if (transform.CompareTag(Globals.UNIT_TAG)) {
+        if (_reviveSelectionIndicator && transform.CompareTag(Globals.UNIT_TAG)) {
             _reviveSelectionIndicator.SetActive(false);
         }
     }
@@ -246,7 +261,7 @@ public class Unit : MonoBehaviour {
     /// Called via the TickEntity system. A periodic check
     /// </summary>
     public virtual void PeriodicUpdate() {
-        if (_anim) { _anim.transform.localPosition = Vector3.zero; } //stop the animator drifting from the collider
+        if (Anim) { Anim.transform.localPosition = Vector3.zero; } //stop the animator drifting from the collider
         TimeSinceLastCheck = Time.time - TimeAtLastCheck;
         CheckLightingStatus(TimeSinceLastCheck);
         UpdateDestinationStatus();
@@ -274,9 +289,12 @@ public class Unit : MonoBehaviour {
     /// Checks if the object is in shade or not
     /// </summary>
     public void CheckLightingStatus(float _timeSinceLastCheck) {
+        if (UnitStats.InvunerableToSun) {
+            return;
+        }
         Vector3 lightDir = -_mainLight.transform.forward;
         //Debug.DrawLine(transform.position, transform.position + lightDir * 100f, Color.red, 1f);
-        _isInShadow = Physics.Raycast(transform.position, lightDir, out RaycastHit _hitInfo, 2000f, GameManager.Instance.ShadeLayerMask);
+        _isInShadow = Physics.Raycast(transform.position, lightDir, out RaycastHit _hitInfo, 2000f, GameManager.Instance.ShadeLayerMask, QueryTriggerInteraction.Ignore);
        
         if (_isInShadow) {
             //Debug.Log(gameObject.name + $" is shaded by {_hitInfo.transform.gameObject.name}.");
@@ -319,10 +337,10 @@ public class Unit : MonoBehaviour {
     public void SetTransform(Transform _target) {
         gameObject.transform.position = _target.position;
         gameObject.transform.rotation = _target.rotation;
-        _anim.transform.localRotation = Quaternion.identity;
+        Anim.transform.localRotation = Quaternion.identity;
     }
 
-    public void ChangeHealth(float _amount, bool _hiddenDisplayUpdate = false) {
+    public virtual void ChangeHealth(float _amount, bool _hiddenDisplayUpdate = false, Unit _lastDamager = null) {
         Health = Mathf.Clamp(Health + _amount, 0, UnitStats.MaxHealth);
 
         if (_hiddenDisplayUpdate) {
@@ -343,7 +361,7 @@ public class Unit : MonoBehaviour {
                 AudioManager.Instance.Play(
                     AudioManager.Instance.HealthTick,
                     MixerGroups.SFX,
-                    new Vector2(Health / UnitStats.MaxHealth + .2f, Health / UnitStats.MaxHealth + .2f),
+                    Vector2.one,
                     1f,
                     transform.position,
                     .9f);
@@ -374,7 +392,7 @@ public class Unit : MonoBehaviour {
     }
     
     [ContextMenu("Revive")]
-    public void Revive(bool _hiddenHealthbar = false) {
+    public virtual void Revive(bool _hiddenHealthbar = false) {
         _hitbox.enabled = false; //Toggle collider to allow enemies to retarget
         TimeAtLastCheck = Time.time;
         ChangeHealth(UnitStats.MaxHealth - Health, _hiddenHealthbar);
@@ -382,7 +400,7 @@ public class Unit : MonoBehaviour {
         
         if (_navAgent) {
             _navAgent.enabled = true;
-            _navAgent.isStopped = false;
+            if(_navAgent.isOnNavMesh) {_navAgent.isStopped = false;}
         }
 
         transform.tag = Globals.UNIT_TAG;
@@ -391,25 +409,32 @@ public class Unit : MonoBehaviour {
         _looseGun?.gameObject.SetActive(false);
         _weapon?.gameObject.SetActive(true);
         
-        if (_anim) {
-            _anim.Play("Idle", 0);
-            _anim.transform.localPosition = Vector3.zero;
-            _anim.transform.rotation = Quaternion.identity;
+        if (Anim) {
+            Anim.Play("Idle", 0);
+            Anim.transform.localPosition = Vector3.zero;
+            Anim.transform.rotation = Quaternion.identity;
         }
-        _reviveSelectionIndicator.SetActive(false);
+        if(_reviveSelectionIndicator){_reviveSelectionIndicator.SetActive(false);}
         
         if (CompareTag(Globals.UNIT_TAG)) {
             GameManager.Instance.ProcessUnitLife(this);
         }
         
         _hitbox.enabled = true;
-        _anim.transform.localRotation = Quaternion.identity;
+        Anim.transform.localRotation = Quaternion.identity;
     }
 
-    public void SetTarget(Unit target) {
+    public virtual void SetTarget(Unit target) {
+        if (State == UnitState.Dead) {
+            return;
+        }
+        
         if (target.UnitStats && !AreAllyUnits(target)) {
             this.AttackTarget = target;
             SetStopDistance(UnitStats.AttackRange);
+            if (_attackAlertSound) {
+                AudioManager.Instance.Play(_attackAlertSound, MixerGroups.SFX, Vector2.one, 1f, transform.position, .9f);
+            }
             //Debug.Log($"{UnitStats.Name} attack target set to {target.UnitStats.Name}");
         } else {
             this.FollowTarget = target;
@@ -428,7 +453,7 @@ public class Unit : MonoBehaviour {
 
     }
 
-    public void ClearTarget() {
+    public virtual void ClearTarget() {
         AttackTarget = null;
         ClearFollowTarget();
         if(_navAgent && _navAgent.enabled &&  _navAgent.isOnNavMesh) {_navAgent.isStopped = true;}
@@ -439,14 +464,9 @@ public class Unit : MonoBehaviour {
         StandDown();
     }
 
-    [ContextMenu("Toggle Shoot")]
-    public void ToggleShoot() {
-        _anim?.SetBool(hasAttackTargetInRange, !_anim.GetBool(hasAttackTargetInRange)); //this calls the Fire() function at a specific frame of the anim
-    }
-
     public virtual void TakeAim() {
-        if (_attackCooldown > 0f) return;
-        _anim?.SetTrigger(attackTrigger);
+        if (_attackCooldown > 0f || State == UnitState.Dead) return;
+        Anim?.SetTrigger(attackTrigger);
         _attackCooldown = UnitStats.AttackRate;
     }
 
@@ -471,7 +491,7 @@ public class Unit : MonoBehaviour {
         StandDown();
         Deselect();
 
-        if (_navAgent & _navAgent.enabled && _navAgent.isOnNavMesh) {
+        if (_navAgent && _navAgent.enabled && _navAgent.isOnNavMesh) {
             _navAgent.isStopped = true;
             _navAgent.enabled = false;
         }
@@ -481,17 +501,23 @@ public class Unit : MonoBehaviour {
             GameManager.Instance.ProcessUnitLife(this);
             _deathSFX = AudioManager.Instance.UnitDeath;
         } else if(CompareTag(Globals.ENEMY_TAG)){
-            _deathSFX = AudioManager.Instance.EnemyDeath;
+            if (UnitStats.Name.Contains("Turret")) {
+                _deathSFX = AudioManager.Instance.TurretDeath;
+            } else {
+                _deathSFX = AudioManager.Instance.EnemyDeath;
+            }
+
             _hitbox.enabled = false;
         } else {
             _deathSFX = AudioManager.Instance.LiberatedDeath;
         }
-        
+
+        ProcessKiller();
         AudioManager.Instance.Play(_deathSFX, MixerGroups.SFX, new Vector2(.9f,1.1f), 2f, transform.position);
 
-        if (_anim) {
-            _anim.SetBool(hasAttackTargetInRange, false);
-            _anim.Play("Death", 0);
+        if (Anim) {
+            Anim.SetBool(hasAttackTargetInRange, false);
+            Anim.Play("Death", 0);
         }
         _weapon?.gameObject.SetActive(false);
         if (!_looseGun && _weaponPrefab) {
@@ -527,7 +553,7 @@ public class Unit : MonoBehaviour {
         if (AttackTarget.Health <= 0 || Health <= 0) { 
             //If the thing we're following cannot be attacked exit
             AttackTarget = null;
-            _anim?.SetBool(hasAttackTargetInRange, false);
+            Anim?.SetBool(hasAttackTargetInRange, false);
             
             if (FollowTarget) {
                 SetTarget(FollowTarget);
@@ -536,12 +562,34 @@ public class Unit : MonoBehaviour {
         }
 
         bool _isInAttackRange = Vector3.Distance(AttackTarget.transform.position, transform.position) <= UnitStats.AttackRange;
-        //_anim?.SetBool(hasAttackTargetInRange, _isInAttackRange);
+        //Anim?.SetBool(hasAttackTargetInRange, _isInAttackRange);
         
         if (!_isInAttackRange) {
             MoveTo(AttackTarget.transform.position);
         } else {
             TakeAim();
+        }
+    }
+
+    private void ProcessKiller() {
+        if (!LastDamagedBy || LastDamagedBy.UnitStats) {
+            return;
+        }
+        switch (LastDamagedBy.UnitStats.Name) {
+            default:
+                break;
+            case "Shepard":
+                SessionManager.Instance.ShepardKills++;
+                break;
+            case "Chonk":
+                SessionManager.Instance.ChonkKills++;
+                break;
+            case "Percival":
+                SessionManager.Instance.PercivalKills++;
+                break;
+            case "Nova":
+                SessionManager.Instance.NovaKills++;
+                break;
         }
     }
     
@@ -568,7 +616,7 @@ public class Unit : MonoBehaviour {
         }
     }
 
-    public void SetSunLaserDisplay() {
+    public void ProcessSunLaserDisplay() {
         if (!_sunBeam) {
             return;
         }

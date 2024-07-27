@@ -14,14 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Turret
   Colour: {r: 1, g: 1, b: 1, a: 0}
-  MaxHealth: 100
+  MaxHealth: 50
   HealthRegenRate: 5
   HealthRegenDelay: 10
   Speed: 0
-  AttackDamage: -1
-  AttackRate: 1
-  AttackRange: 25
+  AttackDamage: -3
+  AttackRate: 0.1
+  AttackRange: 30
   IsEnemy: 1
   InvunerableToSun: 1
   ActionRange: 0
+  AlertRange: 28
+  ImmediateAction: 0
   Footsteps: []

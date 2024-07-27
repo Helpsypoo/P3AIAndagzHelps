@@ -36,6 +36,7 @@ public class AudioManager : MonoBehaviour {
     [SerializeField] private AudioClip _healthTick;
     [SerializeField] private AudioClip[] _pointTick;
     [SerializeField] private AudioClip[] _enemyDeath;
+    [SerializeField] private AudioClip[] _turretDeath;
     [SerializeField] private AudioClip[] _unitDeath;
     [SerializeField] private AudioClip[] _liberatedDeath;
     [SerializeField] private AudioClip[] _hit;
@@ -54,6 +55,7 @@ public class AudioManager : MonoBehaviour {
     public AudioClip HealthTick => _healthTick;
     public AudioClip[] PointTick => _pointTick;
     public AudioClip[] EnemyDeath => _enemyDeath;
+    public AudioClip[] TurretDeath => _turretDeath;
     public AudioClip[] UnitDeath => _unitDeath;
     public AudioClip[] LiberatedDeath => _liberatedDeath;
     public AudioClip[] Hit => _hit;

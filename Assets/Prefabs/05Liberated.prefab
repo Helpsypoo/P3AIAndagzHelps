@@ -678,17 +678,20 @@ MonoBehaviour:
   _renderers: []
   _weapon: {fileID: 0}
   _weaponPrefab: {fileID: 0}
+  _lookAtPivot: {fileID: 0}
+  _lookAtPivotModifier: {x: 0, y: 0, z: 0}
   LeftFoot: {fileID: 7063822236810396153}
   RightFoot: {fileID: 2102607242686523444}
-  _healthTickCooldownDuration: 0.4
-  _anim: {fileID: 1744257109543729030}
+  LastDamagedBy: {fileID: 0}
+  Anim: {fileID: 1744257109543729030}
   <State>k__BackingField: 0
   TimeAtLastCheck: 0
   TimeSinceLastCheck: 0
   <AtDestination>k__BackingField: 0
   _sunBeam: {fileID: 6915742510573880126}
   HealFX: {fileID: 3023560600334387765}
-  _bloodFX: {fileID: 3922455670058908601}
+  _deathFX: {fileID: 3922455670058908601}
+  _attackAlertSound: {fileID: 0}
   IsLeader: 0
 --- !u!195 &418485124985571544
 NavMeshAgent:

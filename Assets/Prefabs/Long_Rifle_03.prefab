@@ -163,9 +163,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3cbd39830719d3469b613b0a70f58ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _muzzleFlashFX: {fileID: 7283333655816500255}
-  _tracerPrefab: {fileID: 8984501566734356877, guid: edc555170136714468e06ae43a7e0c86,
-    type: 3}
+  _muzzleFlashFX:
+  - {fileID: 7283333655816500255}
   _fireSound: {fileID: 8300000, guid: f30349632c64e414dbc862c140582dfd, type: 3}
 --- !u!54 &920266114437748004
 Rigidbody:
