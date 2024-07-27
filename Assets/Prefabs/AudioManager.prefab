@@ -57,6 +57,7 @@ MonoBehaviour:
   _meatGrinder: {fileID: 8300000, guid: 8f046cbc99badec499bd6584e904b23d, type: 3}
   _saw: {fileID: 8300000, guid: 7636f3ed695cbd1468d337b41ce0601b, type: 3}
   _liquid: {fileID: 8300000, guid: 382053f57731be44ba0424c0fcfd86cc, type: 3}
+  _healthTick: {fileID: 8300000, guid: 7f1fe4d27e6dda24996a24bdf35abffd, type: 3}
   _pointTick: []
   _enemyDeath:
   - {fileID: 8300000, guid: 7773c3dd2419b534d848fb2fcfab2bf7, type: 3}
@@ -68,3 +69,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8645f7c68a1c25b489a2ae97d2b2a4f3, type: 3}
   - {fileID: 8300000, guid: 9f12a4922f584d246968ca061a14ea1b, type: 3}
   - {fileID: 8300000, guid: 7520db713aa1a834dacd99da1f8907b7, type: 3}
+  _hit:
+  - {fileID: 8300000, guid: 4c21e1a20105d9b4c93797d2c53bab1c, type: 3}
+  - {fileID: 8300000, guid: 144330a895688e643b529601ed432987, type: 3}
+  - {fileID: 8300000, guid: 216ccb5182126724dbbf3aa1b0f9d93b, type: 3}
+  - {fileID: 8300000, guid: a3aea9b7beac6ca479295200749ade9e, type: 3}

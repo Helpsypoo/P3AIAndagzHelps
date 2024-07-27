@@ -51,8 +51,7 @@ public class Enemy : Unit {
 
     public override void TakeAim() {
 		base.TakeAim();
-
-	}
+    }
 
     private void OnTriggerEnter(Collider other) {
 

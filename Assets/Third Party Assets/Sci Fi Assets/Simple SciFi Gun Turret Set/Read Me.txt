@@ -1,0 +1,22 @@
+Thank you for purchasing Simple SciFi Gun Turret Set!
+
+The pack includes 4 turret models that can be used individually or as upgrades for a base gun turret.
+Each turret and element comes with its own prefab that you can drag-and-drop in your scenes. 
+A small test scene is also provided in order to showcase all the turrets.
+
+**************************************************
+Using the pack in a linear workflow.
+
+This pack comes with additional Albedo textures suited for a linear workflow. They are stored inside the "\Textures\Linear\Linear Textures" folder. 
+
+In order to change the demo scene from gamma to linear, go to Edit>Project Settings> Player and change the Color Space from Gamma to Linear. 
+
+Inside the demo scene, navigate to the Lights group and enable the Directional Light 2 for a better view of the objects.
+
+**************************************************
+
+Contact
+*******************************************************
+email: tarko-smc@yahoo.com
+facebook: https://www.facebook.com/Tarko-3D-2008203466063073/
+youtube: https://www.youtube.com/channel/UCGM6y4fyfTonf9n59j66GCA

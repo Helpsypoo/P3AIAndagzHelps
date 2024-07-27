@@ -17,7 +17,7 @@ public class HealthDisplay : MonoBehaviour {
     private float chaseFillAdjustDuration = .5f;
     private float displayDuration = .5f;
     private float chaseFillAdjustDelay = 1f;
-
+    
     private void Awake() {
         canvasGroup = GetComponent<CanvasGroup>();
     }
@@ -36,6 +36,7 @@ public class HealthDisplay : MonoBehaviour {
         canvasGroup.alpha = 1f;
         
         float targetFillAmount = Mathf.Clamp01(_health / _maxHealth);
+        
         healthFill.fillAmount = targetFillAmount;
         
         if (updateDisplay != null) {
@@ -68,7 +69,6 @@ public class HealthDisplay : MonoBehaviour {
 
         // Wait before starting the fade out
         yield return new WaitForSeconds(displayDuration);
-
         // Smoothly change canvasGroup.alpha to 0 over fadeOutDuration
         elapsedTime = 0f;
         float initialAlpha = canvasGroup.alpha;

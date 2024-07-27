@@ -26,17 +26,19 @@ public class AudioManager : MonoBehaviour {
     [SerializeField] private AudioClip _uiHover;
     [SerializeField] private AudioClip _menuAmbiance;
     [SerializeField] private AudioClip _missionAmbiance;
-    [FormerlySerializedAs("completedJingle")] [SerializeField] private AudioClip _completedJingle;
-    [FormerlySerializedAs("failJingle")] [SerializeField] private AudioClip _failJingle;
+    [SerializeField] private AudioClip _completedJingle;
+    [SerializeField] private AudioClip _failJingle;
     [SerializeField] private AudioClip _transitionOn;
     [SerializeField] private AudioClip _transitionOff;
     [SerializeField] private AudioClip _meatGrinder;
     [SerializeField] private AudioClip _saw;
     [SerializeField] private AudioClip _liquid;
+    [SerializeField] private AudioClip _healthTick;
     [SerializeField] private AudioClip[] _pointTick;
     [SerializeField] private AudioClip[] _enemyDeath;
     [SerializeField] private AudioClip[] _unitDeath;
     [SerializeField] private AudioClip[] _liberatedDeath;
+    [SerializeField] private AudioClip[] _hit;
 
     public AudioClip UIClick => _uiClick;
     public AudioClip UIHover => _uiHover;
@@ -49,10 +51,12 @@ public class AudioManager : MonoBehaviour {
     public AudioClip MeatGrinder => _meatGrinder;
     public AudioClip Saw => _saw;
     public AudioClip Liquid => _liquid;
+    public AudioClip HealthTick => _healthTick;
     public AudioClip[] PointTick => _pointTick;
     public AudioClip[] EnemyDeath => _enemyDeath;
     public AudioClip[] UnitDeath => _unitDeath;
     public AudioClip[] LiberatedDeath => _liberatedDeath;
+    public AudioClip[] Hit => _hit;
 
 
     private void Awake() {
@@ -94,9 +98,9 @@ public class AudioManager : MonoBehaviour {
         return source;
     }
     
-    public void Play(AudioClip[] _clip, MixerGroups mixerGroup, Vector2 pitchRange = default, float volume = 1f, Vector3? _location = null, int _priority = 128) {
+    public void Play(AudioClip[] _clip, MixerGroups mixerGroup, Vector2 pitchRange = default, float volume = 1f, Vector3? _location = null, float _spatial = -1f, int _priority = 128) {
         AudioClip audioClip = _clip[Random.Range(0, _clip.Length)];
-        Play(audioClip, mixerGroup, pitchRange, volume, _location);
+        Play(audioClip, mixerGroup, pitchRange, volume, _location, _spatial, _priority);
     }
 
     public AudioSource PlayAmbiance(AudioClip _clip, float fadeDuration, float volume = 1f, float pitch = 1f, bool solo = true) {

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.ComponentModel;
 using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.AI;
@@ -22,6 +23,8 @@ public class Unit : MonoBehaviour {
     public Transform RightFoot;
 
     private CapsuleCollider _hitbox;
+    private float _healthTickCooldownDuration = .4f;
+    private bool _canHealthTick;
 
     public Unit FollowTarget { get; private set; }
     public Unit AttackTarget { get; private set; }
@@ -47,11 +50,18 @@ public class Unit : MonoBehaviour {
     private float _timeInShade;
     private bool _attacking;
     private float _attackCooldown;
+
+    private bool _isInShadow;
+
+    private Light _mainLight;
     //private bool _isReviving => _reviveTimer > 0f;
 
     [field: SerializeField] public bool AtDestination { get; private set; }
 
     private Coroutine healthRegen;
+    [SerializeField] private LineRenderer _sunBeam;
+    public ParticleSystem HealFX;
+    [SerializeField] private ParticleSystem _deathFX;
 
     /// <summary>
     /// The index in the SquadManager._units array.
@@ -69,14 +79,16 @@ public class Unit : MonoBehaviour {
     public virtual void Awake() {
         _navAgent = GetComponent<NavMeshAgent>();
         if (_navAgent == null) {
-            throw new System.Exception($"Cannot find NavMeshAgent on unit {transform.name}.");
+            Debug.LogWarning($"Cannot find NavMeshAgent on unit {transform.name}.");
         }
 
         _tickEntity = GetComponent<TickEntity>();
         _hitbox = GetComponent<CapsuleCollider>();
+        _mainLight = RenderSettings.sun;
     }
 
     public virtual void Start() {
+        _canHealthTick = true;
         _tickEntity?.AddToTickEventManager();
         ChangeHealth(UnitStats.MaxHealth - Health, true);
         SetColors();
@@ -88,7 +100,14 @@ public class Unit : MonoBehaviour {
     }
 
     public virtual void Update() {
-        if (Health <= 0 || State == UnitState.Locked) {
+        if (Health <= 0) {
+            _sunBeam.gameObject.SetActive(false);
+            return;
+        }
+
+        SetSunLaserDisplay();
+        
+        if (State == UnitState.Locked) {
             return;
         }
         
@@ -166,7 +185,7 @@ public class Unit : MonoBehaviour {
     /// </summary>
     /// <param name="destination">The location the unit will attempt to move to.</param>
     public void MoveTo(Vector3 destination) {
-        if (!_navAgent.enabled || !_navAgent.isOnNavMesh) {
+        if (!_navAgent || !_navAgent.enabled || !_navAgent.isOnNavMesh) {
             return;
         }
         _navAgent.SetDestination(destination);
@@ -243,6 +262,10 @@ public class Unit : MonoBehaviour {
             }
             ProcessFriendlyFollow();
         }
+
+        if (Health >= UnitStats.MaxHealth) {
+            if(HealFX) HealFX.gameObject.SetActive(false);
+        }
         
         TimeAtLastCheck = Time.time;
     }
@@ -251,12 +274,11 @@ public class Unit : MonoBehaviour {
     /// Checks if the object is in shade or not
     /// </summary>
     public void CheckLightingStatus(float _timeSinceLastCheck) {
-        Light mainLight = RenderSettings.sun;
-        Vector3 lightDir = -mainLight.transform.forward;
+        Vector3 lightDir = -_mainLight.transform.forward;
         //Debug.DrawLine(transform.position, transform.position + lightDir * 100f, Color.red, 1f);
-        bool isInShadow = Physics.Raycast(transform.position, lightDir, out RaycastHit _hitInfo, 2000f, GameManager.Instance.ShadeLayerMask);
+        _isInShadow = Physics.Raycast(transform.position, lightDir, out RaycastHit _hitInfo, 2000f, GameManager.Instance.ShadeLayerMask);
        
-        if (isInShadow) {
+        if (_isInShadow) {
             //Debug.Log(gameObject.name + $" is shaded by {_hitInfo.transform.gameObject.name}.");
             return;
         }
@@ -316,10 +338,19 @@ public class Unit : MonoBehaviour {
         }
     
         if (_amount > 0) {
-            //TODO: Play heal effect
+            if (_canHealthTick) {
+                _canHealthTick = false;
+                AudioManager.Instance.Play(
+                    AudioManager.Instance.HealthTick,
+                    MixerGroups.SFX,
+                    new Vector2(Health / UnitStats.MaxHealth + .2f, Health / UnitStats.MaxHealth + .2f),
+                    1f,
+                    transform.position,
+                    .9f);
+                Invoke("ResetCanHealthTick", _healthTickCooldownDuration);
+            }
         } else {
-            //TODO: Play damage effect
-            
+
             //Reset any health regen delay
            /* if (healthRegen != null) {
                 StopCoroutine(healthRegen);
@@ -327,6 +358,10 @@ public class Unit : MonoBehaviour {
 
             healthRegen = StartCoroutine(StartRegen());*/
         }
+    }
+
+    private void ResetCanHealthTick() {
+        _canHealthTick = true;
     }
 
     IEnumerator StartRegen() {
@@ -425,7 +460,7 @@ public class Unit : MonoBehaviour {
 
         // If we're already dead, we don't need to die again.
         if (State == UnitState.Dead) return;
-
+        if(_deathFX) {_deathFX.Play();}
         _tickEntity?.RemoveFromTickEventManager();
         //Stop any current health regen
         if (healthRegen != null) {
@@ -484,7 +519,7 @@ public class Unit : MonoBehaviour {
     }
 
     public void SetStopDistance(float _value) {
-        _navAgent.stoppingDistance = _value;
+        if(_navAgent){_navAgent.stoppingDistance = _value;}
     }
 
     protected virtual void ProcessAttack() {
@@ -531,6 +566,22 @@ public class Unit : MonoBehaviour {
             _attacking = true;
             SetTarget(unit);
         }
+    }
+
+    public void SetSunLaserDisplay() {
+        if (!_sunBeam) {
+            return;
+        }
+        if (!_isInShadow) {
+            Vector3[] _positions = new Vector3[] {
+                _sunBeam.transform.GetChild(0).position,
+                _mainLight.transform.position
+            };
+            _sunBeam.SetPositions(_positions);
+        }
+        
+        _sunBeam.gameObject.SetActive(!_isInShadow);
+
     }
 
     /// <summary>
