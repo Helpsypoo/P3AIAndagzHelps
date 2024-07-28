@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour {
     [HideInInspector] public List<Liberated> ActiveLiberated = new List<Liberated>();
     [HideInInspector] public List<Liberated> DeadLiberated = new List<Liberated>();
     public List<Waypoint> ActiveWaypoints = new List<Waypoint>();
-    public int LiberatedScore { get; private set; }
+
     public Transform KillZone;
     public List<Unit> PlayerUnits { get; private set; } = new List<Unit>();
     [SerializeField] private List<Unit> _playerUnitPrefabs = new List<Unit>();
@@ -39,6 +39,17 @@ public class GameManager : MonoBehaviour {
     [SerializeField] private Transform _orangeLiquid;
 
     [field: SerializeField] public BulletPool BulletStash { get; private set; }
+
+    [Header("Level Stats")] 
+    public int LiberatedCount;
+    public int LiberatedTotal;
+    public int Kills;
+    public int EnemyTotal;
+    public float StartTime;
+    public int UnitsDowned;
+    public int Score;
+    public int Survival;
+    public int SurvivalTotal;
 
     private void Awake() {
         if (AudioManager.Instance == null) {
@@ -67,7 +78,11 @@ public class GameManager : MonoBehaviour {
     public void SetActiveLevel(Level _level) {
         ActiveLevel = _level;
     }
-    
+
+    public int GetLiberatedPct() {
+        float _pct = (float)LiberatedCount / LiberatedTotal;
+        return Mathf.CeilToInt(_pct * 100);
+    }
 
     IEnumerator CreateLevelCoroutine(Level _level) {
         if (ActiveLevel != _level) {
@@ -76,11 +91,15 @@ public class GameManager : MonoBehaviour {
         }
         
         yield return new WaitUntil(() => ActiveLevel);
+        
+        LiberatedTotal = 0;
+        EnemyTotal = 0;
 
         SpawnOrRelocateLiberated(ActiveLevel.LiberatedSpawnContainer);
         SpawnOrRelocateUnits(ActiveLevel.UnitSpawnsContainer);
         SquadManager.Instance.Init();
         HUD.Instance.Init();
+        StartTime = Time.time;
     }
 
 
@@ -110,6 +129,8 @@ public class GameManager : MonoBehaviour {
     }
     
     private void SpawnOrRelocateUnits(Transform _spawnPointContainer) {
+        Survival = _spawnPointContainer.childCount;
+        SurvivalTotal = Survival;
         for (int i = 0; i < _spawnPointContainer.childCount; i++) {
 
             if (i >= _playerUnitPrefabs.Count) {
@@ -213,7 +234,7 @@ public class GameManager : MonoBehaviour {
     private float maxFull = 2.5f;
 
     public void ProcessLiberatedScore() {
-        LiberatedScore++;
+        LiberatedCount++;
         SessionManager.Instance.BlueGoop += 5;
         SessionManager.Instance.OrangeGoop += 1;
 

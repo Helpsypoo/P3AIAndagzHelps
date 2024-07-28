@@ -963,7 +963,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: SCore
+  m_text: Score
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5cc1de2e8eecaba4981052536f29a6e6, type: 2}
   m_sharedMaterial: {fileID: 7946084251452803208, guid: 5cc1de2e8eecaba4981052536f29a6e6,
@@ -1919,7 +1919,7 @@ GameObject:
   - component: {fileID: 8284078838599932143}
   - component: {fileID: 967864424078037154}
   m_Layer: 5
-  m_Name: Score (2)
+  m_Name: Kills
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2176,7 +2176,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 275, y: 0}
   m_SizeDelta: {x: 275, y: 0}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!222 &6903342419903704132
@@ -3569,6 +3569,16 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   _missionCompleteCam: {fileID: 0}
+  _liberatedTitle: {fileID: 4617465544604753694}
+  _liberatedCount: {fileID: 5155238251908024908}
+  _killsTitle: {fileID: 6040378062527081564}
+  _killsCount: {fileID: 2158107747214677555}
+  _timeTitle: {fileID: 3308609420249473183}
+  _timeCount: {fileID: 68051045630582908}
+  _survivalTitle: {fileID: 9145693923270550095}
+  _survivalCount: {fileID: 4118123398230768687}
+  _score: {fileID: 3331241397732972071}
+  _highscore: {fileID: 2501915590791333883}
   _failPanel: {fileID: 2193909569369311195}
   _failMessageText: {fileID: 5561647941325192049}
 --- !u!95 &2081901889157003219
@@ -3605,7 +3615,7 @@ GameObject:
   - component: {fileID: 2686934659676403854}
   - component: {fileID: 249765771612095194}
   m_Layer: 5
-  m_Name: Score (3)
+  m_Name: Survival
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4555,7 +4565,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: -12.5}
-  m_SizeDelta: {x: 152.32501, y: 25}
+  m_SizeDelta: {x: 149.48001, y: 25}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &1834863366789035748
 CanvasRenderer:
@@ -4585,7 +4595,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: units lost (3)
+  m_text: survival (3)
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5cc1de2e8eecaba4981052536f29a6e6, type: 2}
   m_sharedMaterial: {fileID: 7946084251452803208, guid: 5cc1de2e8eecaba4981052536f29a6e6,
@@ -5101,7 +5111,7 @@ GameObject:
   - component: {fileID: 210579428316737446}
   - component: {fileID: 3331241397732972071}
   m_Layer: 5
-  m_Name: Numer
+  m_Name: Number
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5236,7 +5246,7 @@ GameObject:
   - component: {fileID: 2003901403668432244}
   - component: {fileID: 2501915590791333883}
   m_Layer: 5
-  m_Name: Score (1)
+  m_Name: Highscore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5985,7 +5995,7 @@ GameObject:
   - component: {fileID: 2580137057349496348}
   - component: {fileID: 90051723875280303}
   m_Layer: 5
-  m_Name: Score (4)
+  m_Name: Time
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8131,7 +8141,7 @@ GameObject:
   - component: {fileID: 2883204772977567279}
   - component: {fileID: 3831123043222598054}
   m_Layer: 5
-  m_Name: Score (1)
+  m_Name: Liberated
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8257,7 +8267,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 230.00002, y: -12.5}
-  m_SizeDelta: {x: 77.675, y: 25}
+  m_SizeDelta: {x: 80.520004, y: 25}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!222 &4090571073303854135
 CanvasRenderer:
@@ -8287,7 +8297,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: -220
+  m_text: 220
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5cc1de2e8eecaba4981052536f29a6e6, type: 2}
   m_sharedMaterial: {fileID: 7946084251452803208, guid: 5cc1de2e8eecaba4981052536f29a6e6,

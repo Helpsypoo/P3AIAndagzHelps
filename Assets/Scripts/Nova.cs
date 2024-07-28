@@ -84,7 +84,7 @@ public class Nova : Unit {
 	IEnumerator Revive(List<Unit> _unitsToRevive) {
 		_reviveTimer = 0;
 		SetState(UnitState.Locked);
-		
+
 		while (_reviveTimer < Globals.REVIVE_TIMER) {
 			_reviveDisplay.UpdateHealthDisplay(_reviveTimer, Globals.REVIVE_TIMER);
 			_reviveTimer += Time.deltaTime;

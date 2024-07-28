@@ -12,6 +12,11 @@ public class Liberated : Unit {
         _rigidbody = GetComponent<Rigidbody>();
     }
 
+    public override void Start() {
+        base.Start();
+        GameManager.Instance.LiberatedTotal++;
+    }
+
     public override void PeriodicUpdate() {
         base.PeriodicUpdate();
 

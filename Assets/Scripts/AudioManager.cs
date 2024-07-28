@@ -34,6 +34,8 @@ public class AudioManager : MonoBehaviour {
     [SerializeField] private AudioClip _saw;
     [SerializeField] private AudioClip _liquid;
     [SerializeField] private AudioClip _healthTick;
+    [SerializeField] private AudioClip _scoreSubtotal;
+    [SerializeField] private AudioClip _scoreCalc;
     [SerializeField] private AudioClip[] _pointTick;
     [SerializeField] private AudioClip[] _enemyDeath;
     [SerializeField] private AudioClip[] _turretDeath;
@@ -53,6 +55,8 @@ public class AudioManager : MonoBehaviour {
     public AudioClip Saw => _saw;
     public AudioClip Liquid => _liquid;
     public AudioClip HealthTick => _healthTick;
+    public AudioClip ScoreCalc => _scoreCalc;
+    public AudioClip ScoreSubtotal => _scoreSubtotal;
     public AudioClip[] PointTick => _pointTick;
     public AudioClip[] EnemyDeath => _enemyDeath;
     public AudioClip[] TurretDeath => _turretDeath;

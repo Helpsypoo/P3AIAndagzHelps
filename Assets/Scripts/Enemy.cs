@@ -20,7 +20,9 @@ public class Enemy : Unit {
 			//Debug.Log($"No UnitStats on Enemy");
 			return;
 		}
-
+		
+		GameManager.Instance.EnemyTotal++;
+		Debug.Log($"Enemy total: {GameManager.Instance.EnemyTotal}");
 		SphereCollider _sphereCollider = GetComponent<SphereCollider>();
 		if (!_sphereCollider) {
 			//Debug.Log($"No SphereCollider on Enemy");
@@ -169,7 +171,9 @@ public class Enemy : Unit {
 			case TargetMode.FirstUnit:
 			case TargetMode.FirstLiberated:
 			case TargetMode.FirstAny:
-				SetTarget(_targets[0]);
+				if (_targets.Count > 0) {
+					SetTarget(_targets[0]);
+				}
 				break;
 			case TargetMode.Damager:
 				if (LastDamagedBy != null) {

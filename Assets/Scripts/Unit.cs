@@ -111,12 +111,11 @@ public class Unit : MonoBehaviour {
         }
 
         ProcessSunLaserDisplay();
-        
-        if (State == UnitState.Locked) {
-            return;
+
+        if (State != UnitState.Locked) {
+            LookWhereYoureGoing();
         }
-        
-        LookWhereYoureGoing();
+
         if(Anim && _navAgent){ Anim.SetFloat(speed, _navAgent.velocity.magnitude);}
 
         if (_attackCooldown > 0f) {
@@ -318,6 +317,7 @@ public class Unit : MonoBehaviour {
             default:
             case UnitState.Idle:
                 _navAgent.enabled = true;
+                _navAgent.isStopped = false;
                 break;
             case UnitState.Moving:
                 break;
@@ -327,6 +327,11 @@ public class Unit : MonoBehaviour {
                 Die();
                 break;
             case UnitState.Locked:
+                _navAgent.velocity = Vector3.zero;
+                if (_navAgent.isOnNavMesh) {
+                    _navAgent.isStopped = true;
+                }
+
                 _navAgent.enabled = false;
                 break;
         }
@@ -430,11 +435,11 @@ public class Unit : MonoBehaviour {
         }
         
         if (target.UnitStats && !AreAllyUnits(target)) {
-            this.AttackTarget = target;
             SetStopDistance(UnitStats.AttackRange);
-            if (_attackAlertSound) {
+            if (AttackTarget == null && _attackAlertSound) {
                 AudioManager.Instance.Play(_attackAlertSound, MixerGroups.SFX, Vector2.one, 1f, transform.position, .9f);
             }
+            this.AttackTarget = target;
             //Debug.Log($"{UnitStats.Name} attack target set to {target.UnitStats.Name}");
         } else {
             this.FollowTarget = target;
@@ -572,23 +577,25 @@ public class Unit : MonoBehaviour {
     }
 
     private void ProcessKiller() {
-        if (!LastDamagedBy || LastDamagedBy.UnitStats) {
+        if (!LastDamagedBy || !LastDamagedBy.UnitStats) {
             return;
         }
         switch (LastDamagedBy.UnitStats.Name) {
-            default:
-                break;
             case "Shepard":
                 SessionManager.Instance.ShepardKills++;
+                GameManager.Instance.Survival--;
                 break;
             case "Chonk":
                 SessionManager.Instance.ChonkKills++;
+                GameManager.Instance.Survival--;
                 break;
             case "Percival":
                 SessionManager.Instance.PercivalKills++;
+                GameManager.Instance.Survival--;
                 break;
             case "Nova":
                 SessionManager.Instance.NovaKills++;
+                GameManager.Instance.Survival--;
                 break;
         }
     }

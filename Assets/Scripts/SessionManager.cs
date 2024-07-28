@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class SessionManager : MonoBehaviour
 {
     public static SessionManager Instance;
+    public int Level;
 
     // Define your PlayerPrefs keys here for easy management
     private static List<string> allKeys = new List<string>
