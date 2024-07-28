@@ -31,6 +31,8 @@ public class Landmine : MonoBehaviour {
     [SerializeField] private Transform _blastVisualSphere;
     [SerializeField] private AOEProjector _projector;
 
+    private float _gracePeriod;
+
     public Vector3 BlastOrigin => new Vector3(transform.position.x, transform.position.y - _blastRadius, transform.position.z);
 
     private Coroutine _explosionRoutine;
@@ -56,6 +58,10 @@ public class Landmine : MonoBehaviour {
         if (timer > _beepInterval) {
             ToggleLight();
             timer = 0f;
+        }
+
+        if (_gracePeriod < 5f) {
+            _gracePeriod += Time.deltaTime;
         }
 
     }
@@ -130,7 +136,8 @@ public class Landmine : MonoBehaviour {
 
     }
 
-    private void OnTriggerEnter(Collider other) {
+    private void OnTriggerStay(Collider other) {
+        if (_gracePeriod < 5f) return;
         if (other.transform.CompareTag(Globals.UNIT_TAG) ||
             other.transform.CompareTag(Globals.LIBERATED_TAG) ||
             other.transform.CompareTag(Globals.ENEMY_TAG)

@@ -13,6 +13,7 @@ TagManager:
   - Enemy
   - FX
   - MissionMarker
+  - Bullets
   layers:
   - Default
   - TransparentFX
@@ -22,8 +23,8 @@ TagManager:
   - UI
   - Hitbox
   - Entities
-  - 
-  - 
+  - Shield
+  - HitShield
   - 
   - 
   - 

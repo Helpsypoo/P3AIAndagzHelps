@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 54453457801900860}
   - component: {fileID: 199822515480979474}
   - component: {fileID: 198737689383679476}
-  m_Layer: 0
+  - component: {fileID: 3663526971796320201}
+  m_Layer: 9
   m_Name: Bullet_GoldFire_Small_Projectile_Template
-  m_TagString: FX
+  m_TagString: Bullets
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -56,6 +57,7 @@ MonoBehaviour:
   Target: {fileID: 0}
   maxLife: 3
   Rb: {fileID: 0}
+  Damage: 0
 --- !u!114 &114950535843143764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5007,6 +5009,27 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!65 &3663526971796320201
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1238843893459588}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.1, y: 0.1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1540588367011230
 GameObject:
   m_ObjectHideFlags: 0
@@ -5018,7 +5041,7 @@ GameObject:
   - component: {fileID: 4521043017447906}
   - component: {fileID: 198319394701706832}
   - component: {fileID: 199044534075849594}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: flarespikes_thin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9846,7 +9869,7 @@ GameObject:
   - component: {fileID: 4749193282715014}
   - component: {fileID: 198861545429755246}
   - component: {fileID: 199353229655422934}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14728,7 +14751,7 @@ GameObject:
   - component: {fileID: 4259899786885656}
   - component: {fileID: 198956546110359946}
   - component: {fileID: 199041641609785352}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}

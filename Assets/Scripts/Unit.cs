@@ -55,9 +55,9 @@ public class Unit : MonoBehaviour {
     private bool _attacking;
     private float _attackCooldown;
 
-    private bool _isInShadow;
+    protected bool _isInShadow;
 
-    private Light _mainLight;
+    protected Light _mainLight;
     //private bool _isReviving => _reviveTimer > 0f;
 
     [field: SerializeField] public bool AtDestination { get; private set; }
@@ -287,7 +287,7 @@ public class Unit : MonoBehaviour {
     /// <summary>
     /// Checks if the object is in shade or not
     /// </summary>
-    public void CheckLightingStatus(float _timeSinceLastCheck) {
+    public virtual void CheckLightingStatus(float _timeSinceLastCheck) {
         if (UnitStats.InvunerableToSun) {
             return;
         }

@@ -12,6 +12,11 @@ public class Shield : MonoBehaviour {
     public float CurrentRadius => _collider.radius;
     public bool IsActive => _collider.radius > 0.01f;
 
+    [SerializeField] private float _health;
+    [SerializeField] private float _maxHealth;
+
+    private Unit _unit;
+
     /// <summary>
     /// Shrinks the shield down to nothing and deactivates it.
     /// </summary>
@@ -25,7 +30,10 @@ public class Shield : MonoBehaviour {
     /// Expands the forcefield out to the given radius and activates it.
     /// </summary>
     /// <param name="radius">The desired radius of the forcefield.</param>
-    public void Activate(float radius, float health) {
+    public void Activate(float radius, float health, float maxHealth, Unit unit) {
+        _health = health;
+        _maxHealth = maxHealth;
+        _unit = unit;
         StartCoroutine(ExpandContract(CurrentRadius, radius));
 
     }
@@ -62,6 +70,32 @@ public class Shield : MonoBehaviour {
             _collider.enabled = true;
             _collider.radius = endRadius;
         }
+    }
+
+    public void Damage(float amount) {
+        _health += amount;
+        if (_health < 0f) {
+            _unit.UnitStats.InvunerableToSun = false;
+            Deactivate();
+        } else {
+            _healthBar.UpdateHealthDisplay(_health, _maxHealth);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        
+        if (other.CompareTag(Globals.BULLET_TAG)) {
+            
+            Bullet bullet = other.GetComponent<Bullet>();
+            if (bullet == null) {
+                throw new System.Exception($"{bullet.gameObject.name} is tagged as Bullet but no Bullet component was found.");
+            }
+
+            bullet.ReturnToPool();
+            Damage(bullet.Damage);
+
+        }
+
     }
 
 }

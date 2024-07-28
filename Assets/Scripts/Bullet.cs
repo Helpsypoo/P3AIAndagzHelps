@@ -9,6 +9,8 @@ public class Bullet : MonoBehaviour {
 
     [HideInInspector] public Rigidbody Rb;
 
+    public float Damage;
+
     private void Awake() {
         Rb = GetComponent<Rigidbody>();
     }
@@ -25,7 +27,7 @@ public class Bullet : MonoBehaviour {
         }
     }
 
-    private void ReturnToPool() {
+    public void ReturnToPool() {
         CancelInvoke();
         if(GameManager.Instance && GameManager.Instance.BulletStash) {GameManager.Instance.BulletStash.ReturnBullet(this);}
     }
