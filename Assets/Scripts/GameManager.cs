@@ -9,7 +9,7 @@ using UnityEngine.Serialization;
 public class GameManager : MonoBehaviour {
 
     public static GameManager Instance;
-
+    public int TestLevel = -1;
     public float SunDamagePerSecond = 2.5f;
     
     public LayerMask ShadeLayerMask;
@@ -52,10 +52,6 @@ public class GameManager : MonoBehaviour {
     public int SurvivalTotal;
 
     private void Awake() {
-        if (AudioManager.Instance == null) {
-            SceneManager.LoadScene("Menu");
-        }
-        
         if (Instance) {
             Destroy(this);
         } else {
@@ -66,8 +62,18 @@ public class GameManager : MonoBehaviour {
     }
 
     private void Start() {
+        if (TestLevel != -1) {
+            CreateLevel(Levels[TestLevel]);
+        } else {
+            if (!SessionManager.Instance) {
+                SceneManager.LoadScene("Menu");
+            } else {
+                CreateLevel(Levels[SessionManager.Instance.Level]);
+            }
+            return;
+        }
+        
         AudioManager.Instance.PlayAmbiance(AudioManager.Instance.MissionAmbiance, 2f, .4f);
-        CreateLevel(Levels[SessionManager.Instance.Level]);
         UpdateGoop();
     }
 
@@ -86,7 +92,7 @@ public class GameManager : MonoBehaviour {
 
     IEnumerator CreateLevelCoroutine(Level _level) {
         if (ActiveLevel != _level) {
-            if(ActiveLevel){Destroy(ActiveLevel.gameObject);}
+            if(ActiveLevel) { Destroy(ActiveLevel.gameObject); }
             yield return StartCoroutine(InstantiateAsync(_level));
         }
         
@@ -109,7 +115,7 @@ public class GameManager : MonoBehaviour {
         for (int i = 0; i < _spawnPointContainer.childCount; i++) {
             LiberatedSpawn _spawn = _spawnPointContainer.GetChild(i).GetComponent<LiberatedSpawn>();
             if (!_spawn) {
-                _spawn.gameObject.SetActive(false);
+                _spawnPointContainer.GetChild(i).gameObject.SetActive(false);
                 continue;
             }
             
@@ -234,7 +240,9 @@ public class GameManager : MonoBehaviour {
         _liberated.gameObject.SetActive(false);
         
         LiberatedProcessed++;
-        SessionManager.Instance.BlueGoop += 5;
+        if (SessionManager.Instance) {
+            SessionManager.Instance.BlueGoop += 5;
+        }
         SessionManager.Instance.OrangeGoop += 1;
 
         UpdateGoop();
@@ -246,6 +254,9 @@ public class GameManager : MonoBehaviour {
     }
 
     private void UpdateGoop() {
+        if (!SessionManager.Instance) {
+            return;
+        }
         float _blueLerp =
             Mathf.Lerp(0, maxFull, SessionManager.Instance.BlueGoop / (float)SessionManager.Instance.MaxBlueGoop);
         float _orangeLerp =

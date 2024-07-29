@@ -611,7 +611,7 @@ public class Unit : MonoBehaviour {
     }
 
     private void ProcessKiller() {
-        if (!LastDamagedBy || !LastDamagedBy.UnitStats) {
+        if (!LastDamagedBy || !LastDamagedBy.UnitStats || !SessionManager.Instance) {
             return;
         }
         switch (LastDamagedBy.UnitStats.Name) {

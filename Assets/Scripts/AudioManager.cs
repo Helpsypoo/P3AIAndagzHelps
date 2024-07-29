@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
 public class AudioManager : MonoBehaviour {
@@ -75,7 +76,12 @@ public class AudioManager : MonoBehaviour {
     }
 
     private void Start() {
-        PlayAmbiance(_menuAmbiance, 1f);
+        if (SceneManager.GetActiveScene().name == "Menu") {
+            PlayAmbiance(_menuAmbiance, 1f);
+        } else {
+            PlayAmbiance(_missionAmbiance, 1f);
+        }
+
     }
 
     public AudioSource Play(AudioClip _clip, MixerGroups mixerGroup, Vector2 pitchRange = default, float volume = 1f, Vector3? _location = null, float _spatial = -1f, int _priority = 128, bool _loop = false) {

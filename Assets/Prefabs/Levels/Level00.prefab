@@ -145,6 +145,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5475440348050103364}
   - component: {fileID: 9205318219109115339}
+  - component: {fileID: 8342710124244543193}
   m_Layer: 0
   m_Name: Level00
   m_TagString: Untagged
@@ -216,6 +217,25 @@ MonoBehaviour:
   UnitSpawnsContainer: {fileID: 7737753389466538574}
   DaylightIntensity: -10
   MinimumLiberatedPct: 0
+  <Tutorial>k__BackingField: {fileID: 8342710124244543193}
+--- !u!114 &8342710124244543193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9127226642853165375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af3b56a00221cea42baa4c234e8b6fcc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stages:
+  - Title: Welcome to Mercury
+    Message: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+    ShowCloseButton: 1
 --- !u!1 &9146935521895984353
 GameObject:
   m_ObjectHideFlags: 0
