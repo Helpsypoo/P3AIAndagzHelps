@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 using TMPro;
@@ -19,6 +20,13 @@ public class MissionSelectionManager : MonoBehaviour {
     [SerializeField] GameObject _missionWindow;
     [SerializeField] TextMeshProUGUI _missionTitle;
     [SerializeField] TextMeshProUGUI _missionDescription;
+    [SerializeField] GameObject _missionButton;
+    [SerializeField] GameObject _missionFailedText;
+    [SerializeField] GameObject _missionCompletedText;
+
+    [SerializeField] private AudioClip _clickSound;
+    [SerializeField] private AudioClip _startSound;
+    [SerializeField] private AudioClip _backSound;
 
     private bool _mouseOverUI;
 
@@ -93,6 +101,7 @@ public class MissionSelectionManager : MonoBehaviour {
             _missionWindow.SetActive(false);
             _selectedMissionMarker = null;
         }
+
     }
 
     private void MouseUp(InputAction.CallbackContext obj) {
@@ -135,7 +144,28 @@ public class MissionSelectionManager : MonoBehaviour {
         _selectedMissionMarker = _highlightedMissionMarker;
         _missionTitle.text = _selectedMissionMarker.Details.Name;
         _missionDescription.text = _selectedMissionMarker.Details.Description;
+        
+        //_startMissionButton.enabled = _selectedMissionMarker.Details.Available;
+        switch (_selectedMissionMarker.Details.MissionStatus()) {
+            case 0:
+                _missionButton.SetActive(true);
+                _missionFailedText.SetActive(false);
+                _missionCompletedText.SetActive(false);
+                break;
+            case 1:
+                _missionButton.SetActive(false);
+                _missionFailedText.SetActive(false);
+                _missionCompletedText.SetActive(true);
+                break;
+            default:
+                _missionButton.SetActive(false);
+                _missionFailedText.SetActive(true);
+                _missionCompletedText.SetActive(false);
+                break;
+        }
+        AudioManager.Instance.Play(_clickSound, MixerGroups.UI);
         _missionWindow.SetActive(true);
+        
 
     }
 
@@ -145,6 +175,7 @@ public class MissionSelectionManager : MonoBehaviour {
             return;
         }
 
+        AudioManager.Instance.Play(_startSound, MixerGroups.UI);
         SessionManager.Instance.Level = _selectedMissionMarker.Details.Level;
         TransitionManager.Instance.TransitionToScene(_selectedMissionMarker.Details.SceneName);
 
@@ -154,6 +185,11 @@ public class MissionSelectionManager : MonoBehaviour {
 
         _highlightedMissionMarker = marker;
 
+    }
+
+    public void BackToMenu() {
+        AudioManager.Instance.Play(_backSound, MixerGroups.UI);
+        TransitionManager.Instance.TransitionToScene("Menu");
     }
 
 }

@@ -13,6 +13,9 @@ public class TransitionManager : MonoBehaviour {
 
     private RectTransform _canvas;
     private List<RectTransform> _transitionBars = new List<RectTransform>();
+
+    public bool Transitioning { get; private set; }
+
     private void Awake() {
         if (Instance != null) {
             Destroy(gameObject);
@@ -38,14 +41,20 @@ public class TransitionManager : MonoBehaviour {
     }
 
     IEnumerator ChangeSceneAfterTransition(string _sceneName) {
+        Transitioning = true;
         TransitionOnEffect();
         yield return new WaitUntil(() => !_transitionFX.IsActive());
         yield return SceneManager.LoadSceneAsync(_sceneName);
         yield return new WaitForSeconds(1f);
         TransitionOffEffect();
+        // Dirty hack.
+        yield return new WaitForSeconds(2f);
+        Transitioning = false;
     }
     
     private void TransitionOnEffect() {
+
+        
         float _delay = .3f;
         
         if (_transitionFX != null) {

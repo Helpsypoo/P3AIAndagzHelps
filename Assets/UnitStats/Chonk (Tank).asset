@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Chonk
   Colour: {r: 0, g: 1, b: 0.15667748, a: 1}
+  UIAvatar: {fileID: 21300000, guid: 69a9c8c38d2e98d4ba35bd061e8aec96, type: 3}
   MaxHealth: 300
   HealthRegenRate: 5
   HealthRegenDelay: 3
@@ -23,6 +24,7 @@ MonoBehaviour:
   AttackRange: 2
   IsEnemy: 0
   InvunerableToSun: 0
+  IsDestructable: 0
   ActionRange: 1.5
   AlertRange: 0
   ImmediateAction: 1

@@ -182,6 +182,7 @@ public class SessionManager : MonoBehaviour
         }
 
         PlayerPrefs.Save();
+        Load();
         NewGame();
     }
 }

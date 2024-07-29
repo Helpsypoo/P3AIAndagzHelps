@@ -809,6 +809,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: LiberatedSpawn-Prisoner (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 1920584841702332106, guid: c6a4b2e0da315234ca97f8424a910d98,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6775814467275482670, guid: c6a4b2e0da315234ca97f8424a910d98,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -957,6 +962,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: LiberatedSpawn-Prisoner (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1920584841702332106, guid: c6a4b2e0da315234ca97f8424a910d98,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6775814467275482670, guid: c6a4b2e0da315234ca97f8424a910d98,
         type: 3}
@@ -1181,6 +1191,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: LiberatedSpawn-Prisoner (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1920584841702332106, guid: c6a4b2e0da315234ca97f8424a910d98,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6775814467275482670, guid: c6a4b2e0da315234ca97f8424a910d98,
         type: 3}
@@ -1725,6 +1740,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: LiberatedSpawn-Prisoner (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 1920584841702332106, guid: c6a4b2e0da315234ca97f8424a910d98,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6775814467275482670, guid: c6a4b2e0da315234ca97f8424a910d98,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1798,6 +1818,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: LiberatedSpawn-Prisoner
+      objectReference: {fileID: 0}
+    - target: {fileID: 1920584841702332106, guid: c6a4b2e0da315234ca97f8424a910d98,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6775814467275482670, guid: c6a4b2e0da315234ca97f8424a910d98,
         type: 3}
@@ -2731,6 +2756,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: LiberatedSpawn-Prisoner (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1920584841702332106, guid: c6a4b2e0da315234ca97f8424a910d98,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6775814467275482670, guid: c6a4b2e0da315234ca97f8424a910d98,
         type: 3}

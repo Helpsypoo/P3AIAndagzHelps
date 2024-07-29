@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [CreateAssetMenu]
 public class UnitStats : ScriptableObject {
 	public string Name;
 	public Color Colour;
+	public Sprite UIAvatar;
+
 	public float MaxHealth;
 	public float HealthRegenRate;
 	public float HealthRegenDelay;

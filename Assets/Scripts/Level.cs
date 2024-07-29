@@ -8,6 +8,7 @@ public class Level : MonoBehaviour {
     public Transform UnitSpawnsContainer;
     public float DaylightIntensity;
     public int MinimumLiberatedPct;
+    [field: SerializeField] public TutorialManager Tutorial { get; private set; }
 
     IEnumerator Start() {
         yield return new WaitUntil(() => GameManager.Instance);

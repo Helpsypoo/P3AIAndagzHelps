@@ -5,6 +5,8 @@ using UnityEngine;
 public class MissionMarker : MonoBehaviour {
 
     [field: SerializeField] public Mission Details { get; private set; }
+    [SerializeField] private GameObject _availableMarker;
+    [SerializeField] private GameObject _unavailableMarker;
 
     private void Awake() {
         if (Details == null) {
@@ -15,6 +17,11 @@ public class MissionMarker : MonoBehaviour {
 
     private void Start() {
         PositionSelf();
+
+        _availableMarker.SetActive(Details.Available);
+        _unavailableMarker.SetActive(!Details.Available);
+
+
     }
 
 

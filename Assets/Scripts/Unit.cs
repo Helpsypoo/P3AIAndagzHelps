@@ -451,6 +451,7 @@ public class Unit : MonoBehaviour {
             SetStopDistance(Globals.FOLLOW_DIST);
         }
 
+
         SetFollowSpeed();
     }
 
@@ -468,7 +469,7 @@ public class Unit : MonoBehaviour {
             return;
         }
 
-        if (FollowTarget.UnitStats.Speed < UnitStats.Speed) {
+        if (Vector3.Distance(FollowTarget.transform.position, transform.position) <= Globals.FOLLOW_DIST && FollowTarget.UnitStats.Speed < UnitStats.Speed) {
             _navAgent.speed = FollowTarget.UnitStats.Speed;
         }
     }
@@ -502,6 +503,11 @@ public class Unit : MonoBehaviour {
     }
 
     public Vector2 Cooldown => new Vector2(_attackCooldown, UnitStats.AttackRate);
+
+    /// <summary>
+    /// 0 - 1 value representing the current percentage of cooldown (1 = ready to go, anything else and attack can't be used).
+    /// </summary>
+    public float CooldownPercent => 1f - (_attackCooldown / UnitStats.AttackRate);
 
     public void Fire() {
         _weapon.Fire();

@@ -20,6 +20,7 @@ public class HUD : MonoBehaviour {
     }
 
     [SerializeField] private UI_Character[] _squad;
+    [field: SerializeField] public HUDMessage MessageWindow;
 
     public void Init() {
         for (int i = 0; i < _squad.Length; i++) {

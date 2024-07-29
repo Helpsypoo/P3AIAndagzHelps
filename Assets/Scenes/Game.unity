@@ -654,6 +654,30 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &894821344 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9127226642853165375, guid: 7e4c144cfa72dab419c33f86e91d3b88,
+    type: 3}
+  m_PrefabInstance: {fileID: 1499800414}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &894821347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 894821344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af3b56a00221cea42baa4c234e8b6fcc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stages:
+  - Title: Welcome to Mercury
+    Message: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+    ShowCloseButton: 1
 --- !u!1 &896448848
 GameObject:
   m_ObjectHideFlags: 3
@@ -935,23 +959,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level00
       objectReference: {fileID: 0}
+    - target: {fileID: 9205318219109115339, guid: 7e4c144cfa72dab419c33f86e91d3b88,
+        type: 3}
+      propertyPath: <Tutorial>k__BackingField
+      value: 
+      objectReference: {fileID: 894821347}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9127226642853165375, guid: 7e4c144cfa72dab419c33f86e91d3b88,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 894821347}
   m_SourcePrefab: {fileID: 100100000, guid: 7e4c144cfa72dab419c33f86e91d3b88, type: 3}
---- !u!114 &1499800415 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9205318219109115339, guid: 7e4c144cfa72dab419c33f86e91d3b88,
-    type: 3}
-  m_PrefabInstance: {fileID: 1499800414}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8fff91c7bbb9ab40bba1029520b2c08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1550054134
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1232,6 +1253,7 @@ MonoBehaviour:
   <WaypointStash>k__BackingField: 4
   _cinemachineCamera: {fileID: 111726572}
   _highlightedEntity: {fileID: 0}
+  DisablePlayerInput: 0
 --- !u!4 &1824458237
 Transform:
   m_ObjectHideFlags: 0
@@ -1927,16 +1949,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 739305567733193105, guid: e8cc03a8b45f0b64a8b77301207cb986,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 739305567733193105, guid: e8cc03a8b45f0b64a8b77301207cb986,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 806318749169005272, guid: e8cc03a8b45f0b64a8b77301207cb986,
         type: 3}
       propertyPath: m_Name
@@ -2002,26 +2014,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4497116194548522694, guid: e8cc03a8b45f0b64a8b77301207cb986,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4497116194548522694, guid: e8cc03a8b45f0b64a8b77301207cb986,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4840069444881222397, guid: e8cc03a8b45f0b64a8b77301207cb986,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4840069444881222397, guid: e8cc03a8b45f0b64a8b77301207cb986,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5198822618410928344, guid: e8cc03a8b45f0b64a8b77301207cb986,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -2051,11 +2043,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6924975350238639625, guid: e8cc03a8b45f0b64a8b77301207cb986,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -16.970154
       objectReference: {fileID: 0}
     - target: {fileID: 7149746461896653173, guid: e8cc03a8b45f0b64a8b77301207cb986,
         type: 3}
@@ -2187,16 +2174,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7509625535330057040, guid: e8cc03a8b45f0b64a8b77301207cb986,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7509625535330057040, guid: e8cc03a8b45f0b64a8b77301207cb986,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2224,7 +2201,8 @@ PrefabInstance:
         type: 3}
       propertyPath: ActiveLevel
       value: 
-      objectReference: {fileID: 1499800415}
+      objectReference: {fileID: 9205318219109115339, guid: 7e4c144cfa72dab419c33f86e91d3b88,
+        type: 3}
     - target: {fileID: 207438960156835787, guid: e74be808551b9b6448c62368931fc510,
         type: 3}
       propertyPath: _blueLiquid

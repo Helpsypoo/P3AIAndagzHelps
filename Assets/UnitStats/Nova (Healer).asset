@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Nova
   Colour: {r: 1, g: 0.95618093, b: 0, a: 1}
+  UIAvatar: {fileID: 21300000, guid: 14eec4d95c3dbfc49a90fee8fb27d66b, type: 3}
   MaxHealth: 100
   HealthRegenRate: 3
   HealthRegenDelay: 3
@@ -23,7 +24,9 @@ MonoBehaviour:
   AttackRange: 25
   IsEnemy: 0
   InvunerableToSun: 0
+  IsDestructable: 0
   ActionRange: 7
+  AlertRange: 0
   ImmediateAction: 1
   Footsteps:
   - {fileID: 8300000, guid: 0594e66ca25fd854f9227919e8364f19, type: 3}

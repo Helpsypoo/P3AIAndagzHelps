@@ -20,6 +20,8 @@ public class SquadManager : MonoBehaviour {
     // Any unit the cursor is currently hovering over.
     [SerializeField] private Transform _highlightedEntity;
 
+    public bool DisablePlayerInput;
+
     public bool ActionMode { get; private set; }
 
     private bool _mouseOverUI;
@@ -76,6 +78,8 @@ public class SquadManager : MonoBehaviour {
         // If the mouse is over the HUD, don't register the click in the actual game.
         if (_mouseOverUI) return;
 
+        if (DisablePlayerInput) return;
+
         // Move the selection marker to the current mouse position and update _highlightedEntity. Since we're either selecting a
         // comrade or doing nothing, deactivate the marker.
         UpdateSelectionMarker();
@@ -122,6 +126,8 @@ public class SquadManager : MonoBehaviour {
 
         // If the mouse is over the HUD, don't register the click in the actual game.
         if (_mouseOverUI) return;
+
+        if (DisablePlayerInput) return;
 
         // Move the selection marker to the current mouse position and update _highlightedEntity.
         UpdateSelectionMarker();
