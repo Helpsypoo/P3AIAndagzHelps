@@ -13,6 +13,8 @@ public class Enemy : Unit {
 		base.Awake();
 	}
 	public override void Start() {
+		GameManager.Instance.EnemyTotal++;
+		
 		base.Start();
 		
 		//Debug.Log($"Running Start on Enemy");
@@ -21,8 +23,7 @@ public class Enemy : Unit {
 			return;
 		}
 		
-		GameManager.Instance.EnemyTotal++;
-		Debug.Log($"Enemy total: {GameManager.Instance.EnemyTotal}");
+		//Debug.Log($"Enemy total: {GameManager.Instance.EnemyTotal}");
 		SphereCollider _sphereCollider = GetComponent<SphereCollider>();
 		if (!_sphereCollider) {
 			//Debug.Log($"No SphereCollider on Enemy");
@@ -36,6 +37,9 @@ public class Enemy : Unit {
 		PrioritizeTargets();
 
         bool _isInAttackRange;
+        if (!AttackTarget) {
+	        return;
+        }
         if (UnitStats.Speed > 0) {
 	        _isInAttackRange = Vector3.Distance(AttackTarget.transform.position, transform.position) <= UnitStats.AttackRange;
         } else {

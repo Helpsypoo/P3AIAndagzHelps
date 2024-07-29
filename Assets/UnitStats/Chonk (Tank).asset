@@ -17,13 +17,14 @@ MonoBehaviour:
   MaxHealth: 300
   HealthRegenRate: 5
   HealthRegenDelay: 3
-  Speed: 5
+  Speed: 10
   AttackDamage: -7
   AttackRate: 1
   AttackRange: 2
   IsEnemy: 0
   InvunerableToSun: 0
   ActionRange: 1.5
+  AlertRange: 0
   ImmediateAction: 1
   Footsteps:
   - {fileID: 8300000, guid: 0594e66ca25fd854f9227919e8364f19, type: 3}

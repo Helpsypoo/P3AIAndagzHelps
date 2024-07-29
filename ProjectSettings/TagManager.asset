@@ -14,6 +14,7 @@ TagManager:
   - FX
   - MissionMarker
   - Bullets
+  - Obstacle
   layers:
   - Default
   - TransparentFX

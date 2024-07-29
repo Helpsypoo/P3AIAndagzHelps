@@ -31,7 +31,8 @@ public class Weapon : MonoBehaviour {
         _bullet.Target = unit.AttackTarget;
         _bullet.ShotLocation = unit.transform.position;
         _bullet.Damage = unit.UnitStats.AttackDamage;
-        
+        Vector3 _attackPos = unit.AttackTarget.transform.position;
+        _attackPos.y = 1.25f;
         Vector3 _attackDir = unit.AttackTarget.transform.position - _muzzleFlashFX[_fireCycle].transform.position;
         _attackDir = _attackDir.normalized;
 

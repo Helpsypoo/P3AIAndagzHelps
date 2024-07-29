@@ -145,6 +145,7 @@ public class MissionSelectionManager : MonoBehaviour {
             return;
         }
 
+        SessionManager.Instance.Level = _selectedMissionMarker.Details.Level;
         TransitionManager.Instance.TransitionToScene(_selectedMissionMarker.Details.SceneName);
 
     }

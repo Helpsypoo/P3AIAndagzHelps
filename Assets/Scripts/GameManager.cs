@@ -22,10 +22,10 @@ public class GameManager : MonoBehaviour {
 
     [SerializeField] private Liberated _liberatedPrefab;
     [SerializeField] private Waypoint _waypointPrefab;
-    private List<Liberated> _liberatedPool = new List<Liberated>();
     [HideInInspector] public List<Liberated> ActiveLiberated = new List<Liberated>();
     [HideInInspector] public List<Liberated> DeadLiberated = new List<Liberated>();
     public List<Waypoint> ActiveWaypoints = new List<Waypoint>();
+    public MoveArrow MoveArrow;
 
     public Transform KillZone;
     public List<Unit> PlayerUnits { get; private set; } = new List<Unit>();
@@ -41,12 +41,12 @@ public class GameManager : MonoBehaviour {
     [field: SerializeField] public BulletPool BulletStash { get; private set; }
 
     [Header("Level Stats")] 
-    public int LiberatedCount;
+    public int LiberatedProcessed;
+    public int LiberatedPercent;
     public int LiberatedTotal;
     public int Kills;
     public int EnemyTotal;
     public float StartTime;
-    public int UnitsDowned;
     public int Score;
     public int Survival;
     public int SurvivalTotal;
@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour {
 
     private void Start() {
         AudioManager.Instance.PlayAmbiance(AudioManager.Instance.MissionAmbiance, 2f, .4f);
-        CreateLevel(Levels[0]);
+        CreateLevel(Levels[SessionManager.Instance.Level]);
         UpdateGoop();
     }
 
@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour {
     }
 
     public int GetLiberatedPct() {
-        float _pct = (float)LiberatedCount / LiberatedTotal;
+        float _pct = (float)LiberatedProcessed / LiberatedTotal;
         return Mathf.CeilToInt(_pct * 100);
     }
 
@@ -107,23 +107,31 @@ public class GameManager : MonoBehaviour {
         ActiveLiberated.Clear();
         
         for (int i = 0; i < _spawnPointContainer.childCount; i++) {
-            Liberated _liberated;
-            if (i > _liberatedPool.Count) {
-                _liberated = _liberatedPool[i];
-                _liberated.transform.position = _spawnPointContainer.GetChild(i).position;
-                _liberated.transform.rotation = _spawnPointContainer.GetChild(i).rotation;
-                _liberated.Revive();
-            } else {
-                _liberated = Instantiate(_liberatedPrefab, _spawnPointContainer.GetChild(i).position, _spawnPointContainer.GetChild(i).rotation);
-                _liberatedPool.Add(_liberated);
+            LiberatedSpawn _spawn = _spawnPointContainer.GetChild(i).GetComponent<LiberatedSpawn>();
+            if (!_spawn) {
+                _spawn.gameObject.SetActive(false);
+                continue;
             }
+            
+            Liberated _liberated;
+            _liberated = Instantiate(_liberatedPrefab, _spawnPointContainer.GetChild(i).position, _spawnPointContainer.GetChild(i).rotation);
+            _liberated.IsPrisoner = _spawn.IsPrisoner;
 
-            JoinLiberated(_liberated);
+            if (!_liberated.IsPrisoner) {
+                JoinLiberated(_liberated);
+            } else {
+                _liberated.Shackle();
+            }
+            
+            _spawn.gameObject.SetActive(false);
         }
     }
     
     public void JoinLiberated(Liberated _liberated) {
+        //TODO: play join sound
+        Debug.Log($"Liberated joined squad");
         _liberated.IsLeader = ActiveLiberated.Count == 0;
+        _liberated.Free();
         _liberated.SetStopDistance(_liberated.IsLeader ? 0 : 0.8f);
         ActiveLiberated.Add(_liberated);
     }
@@ -138,26 +146,15 @@ public class GameManager : MonoBehaviour {
             }
             
             Unit _unit;
-            if (i > _liberatedPool.Count) {
-                _unit = _liberatedPool[i];
-                _unit.transform.position = _spawnPointContainer.GetChild(i).position;
-                _unit.transform.rotation = _spawnPointContainer.GetChild(i).rotation;
-                _unit.Revive();
-            } else {
-                _unit = Instantiate(_playerUnitPrefabs[i], _spawnPointContainer.GetChild(i).position, _spawnPointContainer.GetChild(i).rotation);
-                PlayerUnits.Add(_unit);
-            }
-            
+            _unit = Instantiate(_playerUnitPrefabs[i], _spawnPointContainer.GetChild(i).position, _spawnPointContainer.GetChild(i).rotation); 
+            PlayerUnits.Add(_unit);
+
         }
     }
 
     public void ProcessLiberatedDeath(Liberated _liberated) {
         ActiveLiberated.Remove(_liberated);
         DeadLiberated.Add(_liberated);
-        
-        if (IsProcessing) {
-            _liberated.gameObject.SetActive(false);
-        }
 
         if (ActiveLiberated.Count == 0) {
             if (IsProcessing) {
@@ -233,8 +230,10 @@ public class GameManager : MonoBehaviour {
 
     private float maxFull = 2.5f;
 
-    public void ProcessLiberatedScore() {
-        LiberatedCount++;
+    public void ProcessLiberatedScore(Liberated _liberated) {
+        _liberated.gameObject.SetActive(false);
+        
+        LiberatedProcessed++;
         SessionManager.Instance.BlueGoop += 5;
         SessionManager.Instance.OrangeGoop += 1;
 

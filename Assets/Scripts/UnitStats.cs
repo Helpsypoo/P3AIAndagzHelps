@@ -15,6 +15,7 @@ public class UnitStats : ScriptableObject {
 	public float AttackRange;
 	public bool IsEnemy;
 	public bool InvunerableToSun;
+	public bool IsDestructable;
 	public float ActionRange; // How close unit needs to be to target to perform their skill action thingie.
 	public float AlertRange; // For enemies only
 	public bool ImmediateAction;

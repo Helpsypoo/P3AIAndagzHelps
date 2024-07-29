@@ -7,13 +7,12 @@ public class KillZone : MonoBehaviour {
             return;
         }
         
-        _unit.Die();
-        
-        if (_unit.CompareTag(Globals.LIBERATED_TAG)) {
-            GameManager.Instance.ProcessLiberatedScore();
+        Liberated _liberated = other.GetComponent<Liberated>();
+        if (_liberated) {
+            GameManager.Instance.ProcessLiberatedScore(_liberated);
         }
         
-
+        _unit.Die();
     }
 
     private void OnTriggerStay(Collider other) {

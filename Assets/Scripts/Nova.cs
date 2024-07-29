@@ -66,7 +66,7 @@ public class Nova : Unit {
 		Collider[] _colliders = Physics.OverlapSphere(transform.position, UnitStats.ActionRange);
 		List<Unit> _unitsToRes = new List<Unit>();
 		foreach (Collider _col in _colliders) {
-			if (_col.CompareTag(Globals.UNIT_TAG) || _col.CompareTag(Globals.LIBERATED_TAG)) {
+			if (_col.CompareTag(Globals.UNIT_TAG)) {
 				Unit _unit = _col.GetComponent<Unit>();
 				if (_unit.Health <= 0) {
 					_unitsToRes.Add(_unit);

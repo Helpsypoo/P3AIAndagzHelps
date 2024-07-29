@@ -9,5 +9,6 @@ public class Mission : ScriptableObject {
     [TextArea(5, 8)]
     public string Description;
     public string SceneName;
+    public int Level;
 
 }

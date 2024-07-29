@@ -94,7 +94,7 @@ public class Unit : MonoBehaviour {
 
     public virtual void Start() {
         _canHealthTick = true;
-        _tickEntity?.AddToTickEventManager();
+        if(_tickEntity) {_tickEntity.AddToTickEventManager();}
         ChangeHealth(UnitStats.MaxHealth - Health, true);
         SetColors();
         if (_navAgent) { _navAgent.speed = UnitStats.Speed;}
@@ -105,6 +105,10 @@ public class Unit : MonoBehaviour {
     }
 
     public virtual void Update() {
+        if (UnitStats.IsDestructable) {
+            return;
+        }
+        
         if (Health <= 0) {
             if(_sunBeam) {_sunBeam.gameObject.SetActive(false);}
             return;
@@ -446,8 +450,29 @@ public class Unit : MonoBehaviour {
             //Debug.Log($"Set follow target to {target.UnitStats.Name}");
             SetStopDistance(Globals.FOLLOW_DIST);
         }
+
+        SetFollowSpeed();
     }
 
+    private void SetFollowSpeed() {
+        if (!_navAgent) {
+            return;
+        }
+        
+        if (!UnitStats) {
+            return;
+        }
+
+        if (!FollowTarget || !FollowTarget.UnitStats) {
+            _navAgent.speed = UnitStats.Speed;
+            return;
+        }
+
+        if (FollowTarget.UnitStats.Speed < UnitStats.Speed) {
+            _navAgent.speed = FollowTarget.UnitStats.Speed;
+        }
+    }
+    
     public void SetReviveTarget(Unit target) {
 
         //_reviveTimer = Globals.REVIVE_TIMER;
@@ -467,6 +492,7 @@ public class Unit : MonoBehaviour {
     public void ClearFollowTarget() {
         FollowTarget = null;
         StandDown();
+        SetFollowSpeed();
     }
 
     public virtual void TakeAim() {
@@ -505,14 +531,16 @@ public class Unit : MonoBehaviour {
         if (CompareTag(Globals.UNIT_TAG)) {
             GameManager.Instance.ProcessUnitLife(this);
             _deathSFX = AudioManager.Instance.UnitDeath;
+            GameManager.Instance.Survival--;
         } else if(CompareTag(Globals.ENEMY_TAG)){
             if (UnitStats.Name.Contains("Turret")) {
                 _deathSFX = AudioManager.Instance.TurretDeath;
             } else {
                 _deathSFX = AudioManager.Instance.EnemyDeath;
             }
-
+            
             _hitbox.enabled = false;
+            GameManager.Instance.Kills++;
         } else {
             _deathSFX = AudioManager.Instance.LiberatedDeath;
         }

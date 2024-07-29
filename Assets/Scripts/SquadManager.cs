@@ -138,6 +138,7 @@ public class SquadManager : MonoBehaviour {
         if (_highlightedEntity == null && GameManager.Instance.SelectionMarker.CanWalk) {
             GameManager.Instance.SelectionMarker.Activate(SelectedUnit);
             SelectedUnit.MoveTo(GameManager.Instance.SelectionMarker.Position);
+            GameManager.Instance.MoveArrow.Play(GameManager.Instance.SelectionMarker.Position, GameManager.Instance.SelectionMarker.transform.up);
             SelectedUnit.ClearFollowTarget();
             return;
         }

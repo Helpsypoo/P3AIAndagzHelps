@@ -93,10 +93,12 @@ public class Landmine : MonoBehaviour {
 
         // Remove any colliders that are not Unit base classes from the list.
         for (int i = 0; i < hitColliders.Length; i++) {
+            if (hitColliders[i] is SphereCollider) { continue; } //Sphere colliders are target areas. Units should always be capsules.  Skip any sphere colliders
+
             if (hitColliders[i].transform.CompareTag(Globals.UNIT_TAG) ||
                 hitColliders[i].transform.CompareTag(Globals.LIBERATED_TAG) ||
                 hitColliders[i].transform.CompareTag(Globals.ENEMY_TAG)
-                ) {
+               ) {
 
                 // Get the unit component from the collider object.
                 Unit unit = hitColliders[i].GetComponent<Unit>();
@@ -138,6 +140,7 @@ public class Landmine : MonoBehaviour {
 
     private void OnTriggerStay(Collider other) {
         if (_gracePeriod < 5f) return;
+        if (other is SphereCollider) { return; } //Sphere colliders are target areas. Units should always be capsules
         if (other.transform.CompareTag(Globals.UNIT_TAG) ||
             other.transform.CompareTag(Globals.LIBERATED_TAG) ||
             other.transform.CompareTag(Globals.ENEMY_TAG)

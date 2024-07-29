@@ -23,7 +23,12 @@ public class HUD : MonoBehaviour {
 
     public void Init() {
         for (int i = 0; i < _squad.Length; i++) {
-            _squad[i].Init(GameManager.Instance.PlayerUnits[i]);
+            if (i < GameManager.Instance.PlayerUnits.Count) {
+                _squad[i].Init(GameManager.Instance.PlayerUnits[i]);
+            } else {
+                _squad[i].gameObject.SetActive(false);
+            }
+
         }
         
         TickEventManager.Instance.AddTickEntity(_tickEntity);
@@ -31,7 +36,7 @@ public class HUD : MonoBehaviour {
 
     public void UpdateSquad() {
         for (int i = 0; i < _squad.Length; i++) {
-
+            if(!_squad[i].gameObject.activeSelf){ continue; }
             if (i == SquadManager.Instance.UnitIndex) {
                 _squad[i].Select();
                 _squad[i].UpdateActionVisual(SquadManager.Instance.ActionMode);

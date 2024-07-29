@@ -6,6 +6,8 @@ public class Liberated : Unit {
     private Rigidbody _rigidbody;
 
     public new bool IsLeader;
+    public bool IsPrisoner;
+    public SphereCollider LiberationRange;
 
     public override void Awake() {
         base.Awake();
@@ -17,10 +19,20 @@ public class Liberated : Unit {
         GameManager.Instance.LiberatedTotal++;
     }
 
+    public void Shackle() {
+        IsPrisoner = true;
+        LiberationRange.gameObject.SetActive(true);
+    }
+
+    public void Free() {
+        IsPrisoner = false;
+        LiberationRange.gameObject.SetActive(false);
+    }
+
     public override void PeriodicUpdate() {
         base.PeriodicUpdate();
 
-        if (Health <= 0) {
+        if (Health <= 0 || IsPrisoner) {
             return;
         }
         
