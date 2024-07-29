@@ -10,7 +10,7 @@ public class LiberationZone : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other) {
         if (other.CompareTag(Globals.UNIT_TAG)) {
-            GameManager.Instance.JoinLiberated(_self);
+            _self.FreeGroup();
         }
     }
 

@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Downed Pod
   Colour: {r: 1, g: 1, b: 1, a: 0}
-  MaxHealth: 25
+  UIAvatar: {fileID: 0}
+  MaxHealth: 12
   HealthRegenRate: 0
   HealthRegenDelay: 0
   Speed: 0

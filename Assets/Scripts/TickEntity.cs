@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
@@ -20,5 +21,9 @@ public class TickEntity : MonoBehaviour {
         if (TickEventManager.Instance != null) {
             TickEventManager.Instance.RemoveTickEntity(this);
         }
+    }
+    
+    private void OnDestroy() {
+        RemoveFromTickEventManager();
     }
 }

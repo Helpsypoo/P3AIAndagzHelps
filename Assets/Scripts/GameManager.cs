@@ -122,9 +122,9 @@ public class GameManager : MonoBehaviour {
             Liberated _liberated;
             _liberated = Instantiate(_liberatedPrefab, _spawnPointContainer.GetChild(i).position, _spawnPointContainer.GetChild(i).rotation);
             _liberated.IsPrisoner = _spawn.IsPrisoner;
-
+            _liberated.gameObject.name = $"Liberated({i})";
             if (!_liberated.IsPrisoner) {
-                JoinLiberated(_liberated);
+                _liberated.Free();
             } else {
                 _liberated.Shackle();
             }
@@ -135,9 +135,8 @@ public class GameManager : MonoBehaviour {
     
     public void JoinLiberated(Liberated _liberated) {
         //TODO: play join sound
-        Debug.Log($"Liberated joined squad");
+        //Debug.Log($"Liberated joined squad");
         _liberated.IsLeader = ActiveLiberated.Count == 0;
-        _liberated.Free();
         _liberated.SetStopDistance(_liberated.IsLeader ? 0 : 0.8f);
         ActiveLiberated.Add(_liberated);
     }
@@ -240,12 +239,13 @@ public class GameManager : MonoBehaviour {
         _liberated.gameObject.SetActive(false);
         
         LiberatedProcessed++;
+        
         if (SessionManager.Instance) {
             SessionManager.Instance.BlueGoop += 5;
+            SessionManager.Instance.OrangeGoop += 1;
+            UpdateGoop();
         }
-        SessionManager.Instance.OrangeGoop += 1;
-
-        UpdateGoop();
+        
         
         AudioManager.Instance.Play(AudioManager.Instance.Liquid, MixerGroups.SFX, new Vector2(.8f, 1.1f), 1f, _enhancementBuildingAnim.transform.position);
 

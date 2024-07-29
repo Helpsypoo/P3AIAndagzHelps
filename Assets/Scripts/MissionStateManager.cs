@@ -44,7 +44,7 @@ public class MissionStateManager : MonoBehaviour {
     public void MissionEvent(MissionCondition _condition) {
         _missionCondition = _condition;
         GameManager.Instance.SetIsProcessing(false);
-        UpdateLevelInformation(SessionManager.Instance.Level, _condition);
+        if(SessionManager.Instance) {UpdateLevelInformation(SessionManager.Instance.Level, _condition);}
         switch (_missionCondition) {
             case MissionCondition.Complete:
                 Complete();
@@ -148,7 +148,7 @@ public class MissionStateManager : MonoBehaviour {
         
         string _formattedTime = string.Format("{0}:{1:D2}", minutes, seconds);
         _timeTitle.text = $"Time  <size=14>({_formattedTime})";
-        int _timeScore = Mathf.CeilToInt(Mathf.Lerp(0, 1000, _timeDelta / (5 * 60)));
+        int _timeScore = Mathf.CeilToInt(Mathf.Lerp(1000, 0, _timeDelta / (5 * 60)));
         _timeCount.text = $"{_timeScore}";
         return _timeScore;
     }
@@ -164,7 +164,7 @@ public class MissionStateManager : MonoBehaviour {
     #endregion
 
     public void GoToMissionSelection() {
-        if (SessionManager.Instance.Level == 0 && 
+        if (SessionManager.Instance && SessionManager.Instance.Level == 0 && 
             (_missionCondition == MissionCondition.FailMininumLiberated || _missionCondition == MissionCondition.FailUnitsLost)) {
             AudioManager.Instance.ClearGameSounds();
             AudioManager.Instance.PlayAmbiance(AudioManager.Instance.MenuAmbiance, 2f, .4f);
@@ -172,9 +172,11 @@ public class MissionStateManager : MonoBehaviour {
             return;
         }
 
-        UpdateLevelInformation(SessionManager.Instance.Level, _missionCondition);
-        
-        SessionManager.Instance.Save();
+        if (SessionManager.Instance) {
+            UpdateLevelInformation(SessionManager.Instance.Level, _missionCondition);
+            SessionManager.Instance.Save();
+        }
+
         AudioManager.Instance.ClearGameSounds();
         AudioManager.Instance.PlayAmbiance(AudioManager.Instance.MenuAmbiance, 2f, .4f);
         TransitionManager.Instance.TransitionToScene("MissionSelect");

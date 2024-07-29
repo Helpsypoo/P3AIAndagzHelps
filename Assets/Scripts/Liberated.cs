@@ -24,9 +24,25 @@ public class Liberated : Unit {
         LiberationRange.gameObject.SetActive(true);
     }
 
+    public void FreeGroup() {
+        Free();
+        FreeNearby();
+    }
+    
     public void Free() {
         IsPrisoner = false;
         LiberationRange.gameObject.SetActive(false);
+        GameManager.Instance.JoinLiberated(this);
+    }
+
+    private void FreeNearby() {
+        Collider[] _colliders = Physics.OverlapSphere(transform.position, 10f);
+        foreach (Collider _col in _colliders) {
+            Liberated _liberated = _col.transform.GetComponent<Liberated>();
+            if (_liberated && _liberated.Health > 0 && _liberated.IsPrisoner) {
+                _liberated.Free();
+            }
+        }
     }
 
     public override void PeriodicUpdate() {
