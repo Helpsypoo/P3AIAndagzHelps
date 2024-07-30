@@ -31,7 +31,20 @@ public class Unit : MonoBehaviour {
     private bool _canHealthTick;
 
     public Unit FollowTarget { get; private set; }
-    public Unit AttackTarget { get; private set; }
+
+    public Unit AttackTarget
+    {
+        get => _attackTarget;
+        private set
+        {
+            _attackTarget = value;
+            if (!value)
+            {
+                Anim?.SetBool(hasAttackTargetInRange, false);
+            }
+        }
+    }
+
     public Unit LastDamagedBy;
 
     protected int _abilityCharges = 0;     // The remaining of times this unit can perform their special action.
@@ -74,8 +87,11 @@ public class Unit : MonoBehaviour {
     /// </summary>
     private int _squadNumber = 0;
 
+    [SerializeField] private Unit _attackTarget;
+
     private static readonly int speed = Animator.StringToHash("Speed");
     private static readonly int hasAttackTargetInRange = Animator.StringToHash("HasAttackTargetInRange");
+    protected static readonly int actionTrigger = Animator.StringToHash("Action");
     private static readonly int attackTrigger = Animator.StringToHash("Attack");
     public int SquadNumber => _squadNumber;
     public void UpdateSquadNumber(int number) {
@@ -321,6 +337,8 @@ public class Unit : MonoBehaviour {
         CheckLightingStatus(TimeSinceLastCheck);
         UpdateDestinationStatus();
 
+        // Debug.Log($"Attack target for {gameObject.name} is {AttackTarget}");
+        
         if (AttackTarget) {
             ProcessAttack();
         } else if (FollowTarget){ //Mirror the attack target of the unit we're following
@@ -486,6 +504,7 @@ public class Unit : MonoBehaviour {
     }
 
     public virtual void SetTarget(Unit target) {
+        Debug.Log("Setting target");
         if (State == UnitState.Dead) {
             return;
         }
@@ -496,7 +515,7 @@ public class Unit : MonoBehaviour {
                 AudioManager.Instance.Play(_attackAlertSound, MixerGroups.SFX, Vector2.one, 1f, transform.position, .9f);
             }
             this.AttackTarget = target;
-            //Debug.Log($"{UnitStats.Name} attack target set to {target.UnitStats.Name}");
+            Debug.Log($"{UnitStats.Name} attack target set to {target.UnitStats.Name}");
         } else {
             this.FollowTarget = target;
             //Debug.Log($"Set follow target to {target.UnitStats.Name}");
@@ -645,7 +664,7 @@ public class Unit : MonoBehaviour {
     }
 
     protected virtual void ProcessAttack() {
-        //Debug.Log($"$Processing attack for {UnitStats.name}");
+        Debug.Log($"$Processing attack for {UnitStats.name}");
         if (AttackTarget.Health <= 0 || Health <= 0) { 
             //If the thing we're following cannot be attacked exit
             AttackTarget = null;
@@ -658,7 +677,8 @@ public class Unit : MonoBehaviour {
         }
 
         bool _isInAttackRange = Vector3.Distance(AttackTarget.transform.position, transform.position) <= UnitStats.AttackRange;
-        //Anim?.SetBool(hasAttackTargetInRange, _isInAttackRange);
+        Anim?.SetBool(hasAttackTargetInRange, _isInAttackRange);
+        // Debug.Log("We processing attack, nbd");
         
         if (!_isInAttackRange) {
             MoveTo(AttackTarget.transform.position);
@@ -703,7 +723,9 @@ public class Unit : MonoBehaviour {
     /// <summary>
     /// Sets this unit to attack whenever it is in range of the target but only if this unit has a weapon to attack with.
     /// </summary>
-    public void Attack(Unit unit) {
+    public void Attack(Unit unit)
+    {
+        Debug.Log("Attack method triggered");
         if (_weapon != null) {
             _attacking = true;
             SetTarget(unit);

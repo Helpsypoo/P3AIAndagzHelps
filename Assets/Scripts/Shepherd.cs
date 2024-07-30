@@ -35,11 +35,11 @@ public class Shepherd : Unit {
                 SetStopDistance(UnitStats.ActionRange);
                 MoveTo(_wayPointPlacement.Value);
                 GameManager.Instance.MoveArrow.Play(GameManager.Instance.SelectionMarker.Position, GameManager.Instance.SelectionMarker.transform.up);
+                Anim?.SetTrigger(actionTrigger);
             } else {
                 GameManager.Instance.SelectionMarker.InvalidAction();
             }
         } else if ((target.CompareTag(Globals.UNIT_TAG) || target.CompareTag(Globals.LIBERATED_TAG))) {
-
             _wayPointPlacement = target.position;
             SetStopDistance(UnitStats.ActionRange);
             MoveTo(_wayPointPlacement.Value);
@@ -53,8 +53,6 @@ public class Shepherd : Unit {
             }
         }
         GameManager.Instance.SelectionMarker.Activate(this);
-
-
     }
 
     /// <summary>
