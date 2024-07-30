@@ -31,6 +31,8 @@ public class Landmine : MonoBehaviour {
     [SerializeField] private Transform _blastVisualSphere;
     [SerializeField] private AOEProjector _projector;
 
+    [SerializeField] private bool _instaBoom;
+
     private float _gracePeriod;
 
     public Vector3 BlastOrigin => new Vector3(transform.position.x, transform.position.y - _blastRadius, transform.position.z);
@@ -60,7 +62,7 @@ public class Landmine : MonoBehaviour {
             timer = 0f;
         }
 
-        if (_gracePeriod < 3f) {
+        if (_gracePeriod < 0.5f) {
             _gracePeriod += Time.deltaTime;
         }
 
@@ -139,7 +141,7 @@ public class Landmine : MonoBehaviour {
     }
 
     private void OnTriggerStay(Collider other) {
-        if (_gracePeriod < 3f) return;
+        if (_gracePeriod < 0.5f) return;
         if (other is SphereCollider) { return; } //Sphere colliders are target areas. Units should always be capsules
         if (other.transform.CompareTag(Globals.UNIT_TAG) ||
             other.transform.CompareTag(Globals.LIBERATED_TAG) ||
@@ -154,42 +156,43 @@ public class Landmine : MonoBehaviour {
 
     private IEnumerator Explode() {
 
-        _projector.ActivateExpand(5f, _blastRadius * 2f, _blastRadius * 2f);
-        float blinkTimer = 0f;
-        float interval = _beepInterval;
-        int blinkCount = 0;
-        int stageCount = 1;
-        while (stageCount < _beepStages) {
+        if (!_instaBoom) {
+            _projector.ActivateExpand(5f, _blastRadius * 2f, _blastRadius * 2f);
+            float blinkTimer = 0f;
+            float interval = _beepInterval;
+            int blinkCount = 0;
+            int stageCount = 1;
+            while (stageCount < _beepStages) {
 
-            blinkTimer += Time.deltaTime;
+                blinkTimer += Time.deltaTime;
 
-            if (blinkTimer > interval) {
-                blinkTimer = 0f;
-                ToggleLight();
+                if (blinkTimer > interval) {
+                    blinkTimer = 0f;
+                    ToggleLight();
 
-                blinkCount++;
-                if (blinkCount > 5 * stageCount) {
-                    interval *= 0.5f;
-                    stageCount++;
-                    blinkCount = 0;
+                    blinkCount++;
+                    if (blinkCount > 5 * stageCount) {
+                        interval *= 0.5f;
+                        stageCount++;
+                        blinkCount = 0;
+                    }
+
                 }
 
+                yield return null;
             }
 
-            yield return null;
+            AudioManager.Instance.Play(_explosionClip, MixerGroups.SFX, default, 1f, transform.position, 0.95f);
+            _blastVisualSphere.gameObject.SetActive(true);
+            float size = 0f;
+            while (size < _blastRadius * 2f) {
+
+                _blastVisualSphere.localScale = Vector3.one * size;
+                size += Time.deltaTime * _blastExpansionSpeed;
+                yield return null;
+
+            }
         }
-
-        AudioManager.Instance.Play(_explosionClip, MixerGroups.SFX, default, 1f, transform.position, 0.95f);
-        _blastVisualSphere.gameObject.SetActive(true);
-        float size = 0f;
-        while (size < _blastRadius * 2f) {
-
-            _blastVisualSphere.localScale = Vector3.one * size;
-            size += Time.deltaTime * _blastExpansionSpeed;
-            yield return null;
-
-        }
-
         ApplyDamage(GetVictims());
 
         _blastVisualSphere.localScale = Vector3.zero;
