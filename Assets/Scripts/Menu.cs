@@ -5,6 +5,11 @@ public class Menu : MonoBehaviour {
     public GameObject WarningMessage;
     private void Start() {
         WarningMessage.SetActive(false);
-        ResumeButton.SetActive(SessionManager.Instance.Level0Status > 0); 
+        ResumeButton.SetActive(SessionManager.Instance.Level0Status > 0);
+    }
+
+    public void Resume()
+    {
+        SessionManager.Instance.ResumeGame();
     }
 }
