@@ -43,7 +43,7 @@ public class TutorialManager : MonoBehaviour {
 
     public void CompleteCurrentTask() {
 
-        if (CurrentStage.ShowNextMessage) {
+        if (index <= _stages.Length && CurrentStage.ShowNextMessage) {
             ShowNextMessage();
         } else {
             HUD.Instance.MessageWindow.Deactivate();
