@@ -47,7 +47,7 @@ public class SessionManager : MonoBehaviour
     public int Level2Status;
     public int Level3Status;
     public int Level4Status;
-    
+
     public int Level0Highscore;
     public int Level1Highscore;
     public int Level2Highscore;
@@ -61,10 +61,10 @@ public class SessionManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        
+
         Load();
     }
-    
+
     public void NewGame() {
         if (Level0Status > 0) {
             Menu _menu = FindObjectOfType<Menu>();
@@ -73,7 +73,7 @@ public class SessionManager : MonoBehaviour
         }
         TransitionManager.Instance.TransitionToScene("Game");
     }
-    
+
     public void ResumeGame() {
         TransitionManager.Instance.TransitionToScene("MissionSelect");
     }
@@ -125,11 +125,11 @@ public class SessionManager : MonoBehaviour
         NovaKills = PlayerPrefs.GetInt("NovaKills", 0);
         PercivalLevel = PlayerPrefs.GetInt("NovaLevel", 0);
 
-        Level0Status = PlayerPrefs.GetInt("Level0Status", 0);
-        Level1Status = PlayerPrefs.GetInt("Level1Status", 0);
-        Level2Status = PlayerPrefs.GetInt("Level2Status", 0);
-        Level3Status = PlayerPrefs.GetInt("Level3Status", 0);
-        Level4Status = PlayerPrefs.GetInt("Level4Status", 0);
+        Level0Status = PlayerPrefs.GetInt("Level0Status", (int)MissionCondition.Available);
+        Level1Status = PlayerPrefs.GetInt("Level1Status", (int)MissionCondition.Locked);
+        Level2Status = PlayerPrefs.GetInt("Level2Status", (int)MissionCondition.Locked);
+        Level3Status = PlayerPrefs.GetInt("Level3Status", (int)MissionCondition.Locked);
+        Level4Status = PlayerPrefs.GetInt("Level4Status", (int)MissionCondition.Locked);
 
         Level0Highscore = PlayerPrefs.GetInt("Level0Highscore", 0);
         Level1Highscore = PlayerPrefs.GetInt("Level1Highscore", 0);
@@ -153,7 +153,7 @@ public class SessionManager : MonoBehaviour
                 return -1;
         }
     }
-    
+
     public void AddLevel(Unit _unit) {
         string _name = _unit.UnitStats.Name;
         switch (_name) {

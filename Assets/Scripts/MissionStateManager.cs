@@ -9,7 +9,7 @@ public class MissionStateManager : MonoBehaviour {
     private Canvas _canvas;
     private Animator _anim;
     private MissionCondition _missionCondition;
-    
+
     [Header("Complete Mission")]
     [SerializeField] private RectTransform _completePanel;
     [SerializeField] private Transform[] _missionCompleteUnitLocation;
@@ -17,9 +17,9 @@ public class MissionStateManager : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI _liberatedTitle;
     [SerializeField] private TextMeshProUGUI _liberatedCount;
     [SerializeField] private TextMeshProUGUI _killsTitle;
-    [SerializeField] private TextMeshProUGUI _killsCount;    
+    [SerializeField] private TextMeshProUGUI _killsCount;
     [SerializeField] private TextMeshProUGUI _timeTitle;
-    [SerializeField] private TextMeshProUGUI _timeCount;    
+    [SerializeField] private TextMeshProUGUI _timeCount;
     [SerializeField] private TextMeshProUGUI _survivalTitle;
     [SerializeField] private TextMeshProUGUI _survivalCount;
     [SerializeField] private TextMeshProUGUI _score;
@@ -30,7 +30,7 @@ public class MissionStateManager : MonoBehaviour {
     private float _endTime;
 
     [SerializeField] private LevelUpManager levelUpManager;
-    
+
     [Header("Fail Mission")]
     [SerializeField] private RectTransform _failPanel;
     [SerializeField] private TextMeshProUGUI _failMessageText;
@@ -50,7 +50,17 @@ public class MissionStateManager : MonoBehaviour {
     public void MissionEvent(MissionCondition _condition) {
         _missionCondition = _condition;
         GameManager.Instance.SetIsProcessing(false);
-        if(SessionManager.Instance) {UpdateLevelInformation(SessionManager.Instance.Level, _condition);}
+        if (SessionManager.Instance)
+        {
+            var levelId = SessionManager.Instance.Level;
+            UpdateLevelInformation(levelId, _condition);
+            // TODO: Change levelId < 4 to a different number if we don't have enough missions
+            if (_condition == MissionCondition.Complete && levelId < 4)
+            {
+                // Unlock the next mission if the current mission is complete
+                UpdateLevelInformation(levelId + 1, MissionCondition.Available);
+            }
+        }
         switch (_missionCondition) {
             case MissionCondition.Complete:
                 Complete();
@@ -62,9 +72,9 @@ public class MissionStateManager : MonoBehaviour {
                 Fail("all units were lost in battle");
                 break;
         }
-        
+
     }
-    
+
     public void Complete() {
         _endTime = Time.time;
         UpdateGoop();
@@ -75,9 +85,9 @@ public class MissionStateManager : MonoBehaviour {
             GameManager.Instance.PlayerUnits[i].SetState(UnitState.Locked);
             if(i < _missionCompleteUnitLocation.Length){GameManager.Instance.PlayerUnits[i].SetTransform(_missionCompleteUnitLocation[i]);}
         }
-        
+
         _missionCompleteCam.Priority = 10;
-        
+
         _canvas.enabled = true;
         AudioManager.Instance.Play(AudioManager.Instance.CompletedJingle, MixerGroups.SFX);
         _highscore.gameObject.SetActive(false);
@@ -114,7 +124,7 @@ public class MissionStateManager : MonoBehaviour {
     public void AnimateScore() {
         StartCoroutine(AnimateScoreCoroutine());
     }
-    
+
     private IEnumerator AnimateScoreCoroutine() {
         float _clipDuration = AudioManager.Instance.ScoreCalc.length;
         float elapsedTime = 0f;
@@ -127,11 +137,11 @@ public class MissionStateManager : MonoBehaviour {
             _score.text = currentScore.ToString();
             yield return null;
         }
-        
+
         _score.text = _scoreFinal.ToString();
         //TODO: check if highscore
     }
-    
+
     #region Caluations
     private int CalcLiberated() {
         int _pctInt = GameManager.Instance.GetLiberatedPct();
@@ -140,7 +150,7 @@ public class MissionStateManager : MonoBehaviour {
         _liberatedCount.text = $"{_liberatedScore}";
         return _liberatedScore;
     }
-    
+
     private int CalcKills() {
         if (GameManager.Instance.EnemyTotal == 0) {
             _killsTitle.text = $"Kills  <size=14>({GameManager.Instance.Kills})";
@@ -154,19 +164,19 @@ public class MissionStateManager : MonoBehaviour {
         return _killScore;
     }
 
-    
+
     private int CalcTime() {
         float _timeDelta = _endTime - GameManager.Instance.StartTime;
         int minutes = (int)(_timeDelta / 60);
         int seconds = (int)(_timeDelta % 60);
-        
+
         string _formattedTime = string.Format("{0}:{1:D2}", minutes, seconds);
         _timeTitle.text = $"Time  <size=14>({_formattedTime})";
         int _timeScore = Mathf.CeilToInt(Mathf.Lerp(5000, 0, _timeDelta / (5 * 60)));
         _timeCount.text = $"{_timeScore}";
         return _timeScore;
     }
-    
+
     private int CalcSurvival() {
         float _pct = (float)GameManager.Instance.Survival / GameManager.Instance.SurvivalTotal;
         _survivalTitle.text = $"Survival  <size=14>({GameManager.Instance.Survival})";
@@ -178,7 +188,7 @@ public class MissionStateManager : MonoBehaviour {
     #endregion
 
     public void GoToMissionSelection() {
-        if (SessionManager.Instance && SessionManager.Instance.Level == 0 && 
+        if (SessionManager.Instance && SessionManager.Instance.Level == 0 &&
             (_missionCondition == MissionCondition.FailMininumLiberated || _missionCondition == MissionCondition.FailUnitsLost)) {
             AudioManager.Instance.ClearGameSounds();
             AudioManager.Instance.PlayAmbiance(AudioManager.Instance.MenuAmbiance, 2f, .4f);
@@ -196,38 +206,25 @@ public class MissionStateManager : MonoBehaviour {
         TransitionManager.Instance.TransitionToScene("MissionSelect");
     }
 
-    private void UpdateLevelInformation(int _level, MissionCondition _status) {
-        int _statusToInt = ConvertMissionConditionToInt(_status);
-        switch (_level) {
+    private void UpdateLevelInformation(int levelId, MissionCondition missionCondition) {
+        var missionConditionValue = (int)missionCondition;
+        switch (levelId) {
             case 0:
-                SessionManager.Instance.Level0Status = _statusToInt;
+                SessionManager.Instance.Level0Status = missionConditionValue;
                 break;
             case 1:
-                SessionManager.Instance.Level1Status = _statusToInt;
+                SessionManager.Instance.Level1Status = missionConditionValue;
                 break;
             case 2:
-                SessionManager.Instance.Level2Status = _statusToInt;
+                SessionManager.Instance.Level2Status = missionConditionValue;
                 break;
             case 3:
-                SessionManager.Instance.Level3Status = _statusToInt;
+                SessionManager.Instance.Level3Status = missionConditionValue;
                 break;
             case 4:
-                SessionManager.Instance.Level4Status = _statusToInt;
+                SessionManager.Instance.Level4Status = missionConditionValue;
                 break;
-            
-        }
-    }
 
-    // Status || 0 = incomplete | 1 = complete | 2 = failed
-    private int ConvertMissionConditionToInt(MissionCondition _status) {
-        switch (_status) {
-            default:
-                return 0;
-            case MissionCondition.Complete:
-                return 1;
-            case MissionCondition.FailMininumLiberated:
-            case MissionCondition.FailUnitsLost:
-                return 2;
         }
     }
 }
