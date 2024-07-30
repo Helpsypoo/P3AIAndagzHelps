@@ -60,7 +60,7 @@ public class Landmine : MonoBehaviour {
             timer = 0f;
         }
 
-        if (_gracePeriod < 5f) {
+        if (_gracePeriod < 3f) {
             _gracePeriod += Time.deltaTime;
         }
 
@@ -139,7 +139,7 @@ public class Landmine : MonoBehaviour {
     }
 
     private void OnTriggerStay(Collider other) {
-        if (_gracePeriod < 5f) return;
+        if (_gracePeriod < 3f) return;
         if (other is SphereCollider) { return; } //Sphere colliders are target areas. Units should always be capsules
         if (other.transform.CompareTag(Globals.UNIT_TAG) ||
             other.transform.CompareTag(Globals.LIBERATED_TAG) ||

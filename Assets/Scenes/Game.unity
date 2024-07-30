@@ -998,6 +998,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8342710124244543193, guid: 7e4c144cfa72dab419c33f86e91d3b88,
+        type: 3}
+      propertyPath: _stages.Array.data[0].ShowNextMessage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9127226642853165375, guid: 7e4c144cfa72dab419c33f86e91d3b88,
         type: 3}
       propertyPath: m_Name
@@ -2760,6 +2765,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: SelectionMarker
       objectReference: {fileID: 0}
+    - target: {fileID: 3573890818399861074, guid: 85e722d4b81fc4c4eb1b4d8a40b00058,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4743190421182597724, guid: 85e722d4b81fc4c4eb1b4d8a40b00058,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7127111687153428849, guid: 85e722d4b81fc4c4eb1b4d8a40b00058,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2809,6 +2824,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8801771737331220669, guid: 85e722d4b81fc4c4eb1b4d8a40b00058,
+        type: 3}
+      propertyPath: _shakeIterations
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

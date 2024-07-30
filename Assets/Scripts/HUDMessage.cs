@@ -31,7 +31,6 @@ public class HUDMessage : MonoBehaviour {
         IsTyping = true;
 
         string output = "";
-        Debug.Log("Message Length: " + message.Length);
         foreach (char c in message) {
 
             output += c;

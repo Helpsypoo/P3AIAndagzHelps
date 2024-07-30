@@ -5,6 +5,7 @@ public class Waypoint : MonoBehaviour {
     private TickEntity _tickEntity;
 
     [SerializeField] private LineRenderer _line;
+    [SerializeField] private AudioClip _placeSound;
 
     private void Awake() {
         _tickEntity = GetComponent<TickEntity>();
@@ -12,6 +13,7 @@ public class Waypoint : MonoBehaviour {
 
     private void Start() {
         TickEventManager.Instance.AddTickEntity(_tickEntity);
+        AudioManager.Instance.Play(_placeSound, MixerGroups.SFX, default, 1f, transform.position, 0.95f);
     }
 
     public bool IsNextWayPoint() {

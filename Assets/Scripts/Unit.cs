@@ -499,7 +499,6 @@ public class Unit : MonoBehaviour {
     public virtual void TakeAim() {
         if (_attackCooldown > 0f || State == UnitState.Dead) return;
         Anim?.SetTrigger(attackTrigger);
-        _attackCooldown = UnitStats.AttackRate;
     }
 
     public Vector2 Cooldown => new Vector2(_attackCooldown, UnitStats.AttackRate);
@@ -511,6 +510,7 @@ public class Unit : MonoBehaviour {
 
     public void Fire() {
         _weapon.Fire();
+        _attackCooldown = UnitStats.AttackRate;
     }
 
     public virtual void Die() {

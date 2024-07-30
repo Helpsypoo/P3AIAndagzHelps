@@ -42,6 +42,7 @@ public class SquadManager : MonoBehaviour {
         _input.Player.SelectClick.performed += SelectClick;
         _input.Player.ActionClick.performed += ActionClick;
         _input.Player.ActionModifier.performed += ActionModifierClick;
+        _input.Player.CameraClick.performed += AbilityClick;
         _input.Player.Unit1.performed += SelectUnit1;
         _input.Player.Unit2.performed += SelectUnit2;
         _input.Player.Unit3.performed += SelectUnit3;
@@ -53,6 +54,7 @@ public class SquadManager : MonoBehaviour {
         _input.Player.SelectClick.performed -= SelectClick;
         _input.Player.ActionClick.performed -= ActionClick;
         _input.Player.ActionModifier.performed -= ActionModifierClick;
+        _input.Player.CameraClick.performed -= AbilityClick;
         _input.Player.Unit1.performed -= SelectUnit1;
         _input.Player.Unit2.performed -= SelectUnit2;
         _input.Player.Unit3.performed -= SelectUnit3;
@@ -67,6 +69,23 @@ public class SquadManager : MonoBehaviour {
     private void Update() {
         //UpdateSelectionMarker();
         _mouseOverUI = EventSystem.current.IsPointerOverGameObject();
+
+        float mouseScroll = _input.Player.MouseScroll.ReadValue<float>();
+        int index = UnitIndex;
+        if (mouseScroll > 0.2f) {
+            index--;
+            if (index < 0) {
+                index = GameManager.Instance.PlayerUnits.Count - 1;
+            }
+            SelectUnit(index);
+        } else if (mouseScroll < -0.2f) {
+            index++;
+            if (index > GameManager.Instance.PlayerUnits.Count - 1) {
+                index = 0;
+            }
+            SelectUnit(index);
+        }
+
     }
 
     /// <summary>
@@ -108,13 +127,28 @@ public class SquadManager : MonoBehaviour {
 
     }
 
+    private void AbilityClick(InputAction.CallbackContext obj) {
+
+        // If the mouse is over the HUD, don't register the click in the actual game.
+        if (_mouseOverUI) return;
+
+        if (DisablePlayerInput) return;
+
+        // Move the selection marker to the current mouse position and update _highlightedEntity.
+        UpdateSelectionMarker();
+
+        SelectedUnit.PerformAction(GameManager.Instance.SelectionMarker.transform.position, _highlightedEntity);
+        ActionMode = false;
+
+    }
+
     private void ActionModifierClick(InputAction.CallbackContext obj) {
         if (SelectedUnit.UnitStats.ImmediateAction) {
             SelectedUnit.PerformAction(GameManager.Instance.SelectionMarker.transform.position, _highlightedEntity);
             return;
         }
 
-        ActionMode = !ActionMode;
+        //ActionMode = !ActionMode;
 
     }
 

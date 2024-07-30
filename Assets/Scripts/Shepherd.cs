@@ -34,6 +34,7 @@ public class Shepherd : Unit {
                 _wayPointPlacement = position;
                 SetStopDistance(UnitStats.ActionRange);
                 MoveTo(_wayPointPlacement.Value);
+                GameManager.Instance.MoveArrow.Play(GameManager.Instance.SelectionMarker.Position, GameManager.Instance.SelectionMarker.transform.up);
             } else {
                 GameManager.Instance.SelectionMarker.InvalidAction();
             }
@@ -48,6 +49,7 @@ public class Shepherd : Unit {
             if (_wayPointToRemove != null) {
                 MoveTo(_wayPointToRemove.transform.position);
                 SetStopDistance(UnitStats.ActionRange);
+                GameManager.Instance.MoveArrow.Play(GameManager.Instance.SelectionMarker.Position, GameManager.Instance.SelectionMarker.transform.up);
             }
         }
         GameManager.Instance.SelectionMarker.Activate(this);
@@ -81,7 +83,6 @@ public class Shepherd : Unit {
         // Once we're there, remove the waypoint.
         GameManager.Instance.RemoveWaypoint(_wayPointToRemove);
         GameManager.Instance.SelectionMarker.Deactivate();
-        SquadManager.Instance.IncrementWaypoints();
 
     }
 

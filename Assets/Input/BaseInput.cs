@@ -116,6 +116,15 @@ public partial class @BaseInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MouseScroll"",
+                    ""type"": ""Value"",
+                    ""id"": ""0ce90524-022c-4de9-b349-db6181cc3e81"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -166,7 +175,7 @@ public partial class @BaseInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""7a122413-1bda-4adb-b307-37e5c9fb8a38"",
-                    ""path"": ""<Keyboard>/#(Q)"",
+                    ""path"": ""<Keyboard>/1"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -177,7 +186,7 @@ public partial class @BaseInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""b4573497-ffd9-404b-9ab9-e440aaf69637"",
-                    ""path"": ""<Keyboard>/#(W)"",
+                    ""path"": ""<Keyboard>/2"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -188,7 +197,7 @@ public partial class @BaseInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""e3983e3a-5854-480e-a71c-bb7e75fcc517"",
-                    ""path"": ""<Keyboard>/#(E)"",
+                    ""path"": ""<Keyboard>/3"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -199,7 +208,7 @@ public partial class @BaseInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""f6c11b23-b82f-400b-bc34-e2297c5fda54"",
-                    ""path"": ""<Keyboard>/#(R)"",
+                    ""path"": ""<Keyboard>/4"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -239,6 +248,17 @@ public partial class @BaseInput: IInputActionCollection2, IDisposable
                     ""action"": ""SelectionModifier"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3c60a2c7-cac0-4c46-8538-6606196f0ea4"",
+                    ""path"": ""<Mouse>/scroll/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseScroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -257,6 +277,7 @@ public partial class @BaseInput: IInputActionCollection2, IDisposable
         m_Player_Unit4 = m_Player.FindAction("Unit4", throwIfNotFound: true);
         m_Player_ActionModifier = m_Player.FindAction("ActionModifier", throwIfNotFound: true);
         m_Player_SelectionModifier = m_Player.FindAction("SelectionModifier", throwIfNotFound: true);
+        m_Player_MouseScroll = m_Player.FindAction("MouseScroll", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -328,6 +349,7 @@ public partial class @BaseInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Unit4;
     private readonly InputAction m_Player_ActionModifier;
     private readonly InputAction m_Player_SelectionModifier;
+    private readonly InputAction m_Player_MouseScroll;
     public struct PlayerActions
     {
         private @BaseInput m_Wrapper;
@@ -342,6 +364,7 @@ public partial class @BaseInput: IInputActionCollection2, IDisposable
         public InputAction @Unit4 => m_Wrapper.m_Player_Unit4;
         public InputAction @ActionModifier => m_Wrapper.m_Player_ActionModifier;
         public InputAction @SelectionModifier => m_Wrapper.m_Player_SelectionModifier;
+        public InputAction @MouseScroll => m_Wrapper.m_Player_MouseScroll;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -381,6 +404,9 @@ public partial class @BaseInput: IInputActionCollection2, IDisposable
             @SelectionModifier.started += instance.OnSelectionModifier;
             @SelectionModifier.performed += instance.OnSelectionModifier;
             @SelectionModifier.canceled += instance.OnSelectionModifier;
+            @MouseScroll.started += instance.OnMouseScroll;
+            @MouseScroll.performed += instance.OnMouseScroll;
+            @MouseScroll.canceled += instance.OnMouseScroll;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -415,6 +441,9 @@ public partial class @BaseInput: IInputActionCollection2, IDisposable
             @SelectionModifier.started -= instance.OnSelectionModifier;
             @SelectionModifier.performed -= instance.OnSelectionModifier;
             @SelectionModifier.canceled -= instance.OnSelectionModifier;
+            @MouseScroll.started -= instance.OnMouseScroll;
+            @MouseScroll.performed -= instance.OnMouseScroll;
+            @MouseScroll.canceled -= instance.OnMouseScroll;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -444,5 +473,6 @@ public partial class @BaseInput: IInputActionCollection2, IDisposable
         void OnUnit4(InputAction.CallbackContext context);
         void OnActionModifier(InputAction.CallbackContext context);
         void OnSelectionModifier(InputAction.CallbackContext context);
+        void OnMouseScroll(InputAction.CallbackContext context);
     }
 }

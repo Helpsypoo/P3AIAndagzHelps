@@ -94,6 +94,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "MouseScroll",
+                    "type": "Value",
+                    "id": "0ce90524-022c-4de9-b349-db6181cc3e81",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -144,7 +153,7 @@
                 {
                     "name": "",
                     "id": "7a122413-1bda-4adb-b307-37e5c9fb8a38",
-                    "path": "<Keyboard>/#(Q)",
+                    "path": "<Keyboard>/1",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -155,7 +164,7 @@
                 {
                     "name": "",
                     "id": "b4573497-ffd9-404b-9ab9-e440aaf69637",
-                    "path": "<Keyboard>/#(W)",
+                    "path": "<Keyboard>/2",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -166,7 +175,7 @@
                 {
                     "name": "",
                     "id": "e3983e3a-5854-480e-a71c-bb7e75fcc517",
-                    "path": "<Keyboard>/#(E)",
+                    "path": "<Keyboard>/3",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -177,7 +186,7 @@
                 {
                     "name": "",
                     "id": "f6c11b23-b82f-400b-bc34-e2297c5fda54",
-                    "path": "<Keyboard>/#(R)",
+                    "path": "<Keyboard>/4",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -215,6 +224,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "SelectionModifier",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3c60a2c7-cac0-4c46-8538-6606196f0ea4",
+                    "path": "<Mouse>/scroll/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MouseScroll",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

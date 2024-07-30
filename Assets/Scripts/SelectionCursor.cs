@@ -79,7 +79,7 @@ public class SelectionCursor : MonoBehaviour {
     private Coroutine Shake;
     private IEnumerator ShakeCursor(float iterations, float radius, float delay) {
 
-        _validCursor.SetActive(false);
+        //_validCursor.SetActive(false);
         _invalidCursor.SetActive(true);
 
         Vector3 startPos = transform.position;
@@ -98,7 +98,7 @@ public class SelectionCursor : MonoBehaviour {
         transform.position = startPos;
         Shake = null;
 
-        _validCursor.SetActive(true);
+        //_validCursor.SetActive(true);
         _invalidCursor.SetActive(false);
 
     }
