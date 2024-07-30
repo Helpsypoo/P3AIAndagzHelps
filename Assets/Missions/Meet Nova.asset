@@ -10,9 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b2e9ce898f7c1c94d992b61bc5af255d, type: 3}
-  m_Name: Mission 2
+  m_Name: Meet Nova
   m_EditorClassIdentifier: 
-  Name: Mission 2
-  Description: Mission 2
+  Name: Liberator, Heal Thy Self
+  Description: This is a tough one. There's multiple groups scattered across a region
+    of the planet, guarded and booby trapped. This mission is going to be dangerous
+    so we're sending you in with a medic.
   SceneName: Game
-  Level: 2
+  Level: 3

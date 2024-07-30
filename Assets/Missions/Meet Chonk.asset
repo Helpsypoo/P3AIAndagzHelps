@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b2e9ce898f7c1c94d992b61bc5af255d, type: 3}
-  m_Name: Mission 1
+  m_Name: Meet Chonk
   m_EditorClassIdentifier: 
-  Name: Mission 1
-  Description: Mission 1
+  Name: Use The Force
+  Description: Sometimes you need a bit of muscle. We're sending you out to liberate
+    a small group trapped on the day side, but we hear they're guarded by some dissidents.
   SceneName: Game
   Level: 1

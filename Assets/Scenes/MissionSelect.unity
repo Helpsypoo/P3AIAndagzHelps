@@ -2054,6 +2054,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MissionMarker (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 9116288577668311869, guid: a04f18042c664244b887ef2faf780205,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

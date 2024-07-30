@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Warm Up
   m_EditorClassIdentifier: 
   Name: Liberation Initiation
-  Description: We have gotten word that a nearby colony is in need of liberating.
-    This should be a nice shake down for your team. Get in, lberate, get out. Simple.
+  Description: A transport has broken down not too far from home base. We're sending
+    you out with Shepard to liberate those lost souls and bring them home.
   SceneName: Game
+  Level: 0

@@ -10,9 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b2e9ce898f7c1c94d992b61bc5af255d, type: 3}
-  m_Name: Mission 3
+  m_Name: Meet Percival
   m_EditorClassIdentifier: 
-  Name: Mission 3
-  Description: Mission 3
+  Name: This Planet is Mine
+  Description: The dissidents are getting creative. We've gotten word of multiple
+    groups of colonists to be liberated, but they're guarded and we think the dissidents
+    have set traps, so be careful!
   SceneName: Game
-  Level: 3
+  Level: 2
