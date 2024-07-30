@@ -111,6 +111,7 @@ public class Unit : MonoBehaviour {
         _canHealthTick = true;
         if(_tickEntity) {_tickEntity.AddToTickEventManager();}
         if(UpgradesSet || !CompareTag(Globals.UNIT_TAG)) {ChangeHealth(UnitStats.MaxHealth - Health, true);}
+        if(_sunBeam) {_sunBeam.gameObject.SetActive(false);}
         SetColors();
         if (_navAgent) { _navAgent.speed = UnitStats.Speed;}
 
@@ -167,7 +168,7 @@ public class Unit : MonoBehaviour {
             return;
         }
         
-        if (!UpgradesSet) {
+        if (CompareTag(Globals.UNIT_TAG) && !UpgradesSet) {
             return;
         }
         
@@ -327,7 +328,7 @@ public class Unit : MonoBehaviour {
     /// Called via the TickEntity system. A periodic check
     /// </summary>
     public virtual void PeriodicUpdate() {
-        if (!UpgradesSet) {
+        if (CompareTag(Globals.UNIT_TAG) && !UpgradesSet) {
             return;
         }
         
@@ -742,6 +743,7 @@ public class Unit : MonoBehaviour {
         if (!_sunBeam) {
             return;
         }
+        //Debug.Log("Processing sun laser display");
         if (!_isInShadow) {
             Vector3[] _positions = new Vector3[] {
                 _sunBeam.transform.GetChild(0).position,
