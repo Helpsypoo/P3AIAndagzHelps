@@ -680,11 +680,11 @@ public class Unit : MonoBehaviour {
             return;
         }
 
-        //bool _isInAttackRange = Vector3.Distance(AttackTarget.transform.position, transform.position) <= UnitStats.AttackRange;
-        Anim?.SetBool(hasAttackTargetInRange, AtDestination);
+        bool _isInAttackRange = Vector3.Distance(AttackTarget.transform.position, transform.position) <= UnitStats.AttackRange;
+        Anim?.SetBool(hasAttackTargetInRange, _isInAttackRange);
         // Debug.Log("We processing attack, nbd");
         
-        if (!AtDestination) {
+        if (!_isInAttackRange) {
             Debug.Log($"{UnitStats.name} moving to attack {AttackTarget.gameObject.name}");
             MoveTo(AttackTarget.transform.position);
         } else {
