@@ -15,6 +15,42 @@ public class Shield : MonoBehaviour {
     [SerializeField] private float _health;
     [SerializeField] private float _maxHealth;
 
+    private List<Liberated> _protectedLibs = new();
+
+    private TickEntity _tickEntity;
+
+    private void Awake() {
+        _tickEntity = GetComponent<TickEntity>();
+    }
+
+    private void Start() {
+        if (_tickEntity) { _tickEntity.AddToTickEventManager(); }
+    }
+
+    public void PeriodicUpdate() {
+
+        foreach (Liberated lib in GameManager.Instance.ActiveLiberated) {
+
+            // Get a list of liberated currently within range of the shield.
+            List<Liberated> currentLibs = new();
+            if (Vector3.Distance (transform.position, lib.transform.position) < CurrentRadius) {
+                currentLibs.Add(lib);
+                lib.UnitStats.InvunerableToSun = true;
+            }
+
+            // Any liberated that are no longer under the shield need to be made vulnerable to sun again.
+            foreach (Liberated l in _protectedLibs) {
+                if (!currentLibs.Contains (l)) {
+                    l.UnitStats.InvunerableToSun = false;
+                }
+            }
+
+            _protectedLibs = currentLibs;
+
+        }
+
+    }
+
     private Unit _unit;
 
     /// <summary>
@@ -83,7 +119,7 @@ public class Shield : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider other) {
-        
+
         if (other.CompareTag(Globals.BULLET_TAG)) {
             
             Bullet bullet = other.GetComponent<Bullet>();

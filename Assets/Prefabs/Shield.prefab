@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 6096633595512451470}
   - component: {fileID: 2526291096415493632}
   - component: {fileID: 7594178313946381716}
+  - component: {fileID: 8180006310522636593}
   m_Layer: 8
   m_Name: Shield
   m_TagString: Untagged
@@ -186,6 +187,33 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &8180006310522636593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4769977863720463067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5806deeeef13b864e8de2f3c3fb8db1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6096633595512451470}
+        m_TargetAssemblyTypeName: Shield, Assembly-CSharp
+        m_MethodName: PeriodicUpdate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &7413751243654031144
 PrefabInstance:
   m_ObjectHideFlags: 0
