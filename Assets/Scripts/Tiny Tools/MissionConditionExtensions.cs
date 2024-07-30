@@ -6,6 +6,8 @@ public static class MissionConditionExtensions
     {
         switch (missionCondition)
         {
+            case MissionCondition.Available:
+                return MissionMarker.State.Available;
             case MissionCondition.Complete:
                 return MissionMarker.State.Completed;
             case MissionCondition.FailMininumLiberated:
