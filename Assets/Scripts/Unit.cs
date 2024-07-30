@@ -35,11 +35,9 @@ public class Unit : MonoBehaviour {
     public Unit AttackTarget
     {
         get => _attackTarget;
-        private set
-        {
+        private set {
             _attackTarget = value;
-            if (!value)
-            {
+            if (!value) {
                 Anim?.SetBool(hasAttackTargetInRange, false);
             }
         }
@@ -112,7 +110,7 @@ public class Unit : MonoBehaviour {
     public virtual void Start() {
         _canHealthTick = true;
         if(_tickEntity) {_tickEntity.AddToTickEventManager();}
-        if(UpgradesSet){ChangeHealth(UnitStats.MaxHealth - Health, true);}
+        if(UpgradesSet || !CompareTag(Globals.UNIT_TAG)) {ChangeHealth(UnitStats.MaxHealth - Health, true);}
         SetColors();
         if (_navAgent) { _navAgent.speed = UnitStats.Speed;}
 
@@ -248,6 +246,7 @@ public class Unit : MonoBehaviour {
         } else {
             float sqrThreshold = Globals.MIN_ACTION_DIST * Globals.MIN_ACTION_DIST;
             AtDestination = (_navAgent.destination - transform.position).sqrMagnitude <= sqrThreshold;
+            //AtDestination = Vector3.Distance(_navAgent.destination, transform.position) <= _navAgent.stoppingDistance + Globals.MIN_ACTION_DIST;
         }
 
         // If we are now at our destination and we weren't before, throw a call to SelectionCursor to see if it needs to deactivate.
@@ -337,7 +336,7 @@ public class Unit : MonoBehaviour {
         CheckLightingStatus(TimeSinceLastCheck);
         UpdateDestinationStatus();
 
-        // Debug.Log($"Attack target for {gameObject.name} is {AttackTarget}");
+        //Debug.Log($"Attack target for {gameObject.name} is {AttackTarget}");
         
         if (AttackTarget) {
             ProcessAttack();
@@ -354,6 +353,8 @@ public class Unit : MonoBehaviour {
         if (Health >= UnitStats.MaxHealth) {
             if(HealFX) HealFX.gameObject.SetActive(false);
         }
+        
+        SetFollowSpeed();
         
         TimeAtLastCheck = Time.time;
     }
@@ -504,7 +505,7 @@ public class Unit : MonoBehaviour {
     }
 
     public virtual void SetTarget(Unit target) {
-        Debug.Log("Setting target");
+        Debug.Log($"Setting target of {UnitStats.Name} to {target.UnitStats}");
         if (State == UnitState.Dead) {
             return;
         }
@@ -515,15 +516,12 @@ public class Unit : MonoBehaviour {
                 AudioManager.Instance.Play(_attackAlertSound, MixerGroups.SFX, Vector2.one, 1f, transform.position, .9f);
             }
             this.AttackTarget = target;
-            Debug.Log($"{UnitStats.Name} attack target set to {target.UnitStats.Name}");
+            //Debug.Log($"{UnitStats.Name} attack target set to {target.UnitStats.Name}");
         } else {
             this.FollowTarget = target;
             //Debug.Log($"Set follow target to {target.UnitStats.Name}");
             SetStopDistance(Globals.FOLLOW_DIST);
         }
-
-
-        SetFollowSpeed();
     }
 
     private void SetFollowSpeed() {
@@ -535,7 +533,7 @@ public class Unit : MonoBehaviour {
             return;
         }
 
-        if (!FollowTarget || !FollowTarget.UnitStats) {
+        if (!FollowTarget || !FollowTarget.UnitStats || FollowTarget.UnitStats.Speed <= 0) {
             _navAgent.speed = UnitStats.Speed;
             return;
         }
@@ -568,7 +566,11 @@ public class Unit : MonoBehaviour {
     }
 
     public virtual void TakeAim() {
-        if (_attackCooldown > 0f || State == UnitState.Dead) return;
+        if (_attackCooldown > 0f || State == UnitState.Dead) {
+            //Debug.Log($"{UnitStats.name} cannot attack. Cooldown {_attackCooldown}. State {State}");
+            return;
+        }
+        //Debug.Log($"{UnitStats.name} taking aim at {AttackTarget.gameObject.name}");
         Anim?.SetTrigger(attackTrigger);
     }
 
@@ -664,9 +666,10 @@ public class Unit : MonoBehaviour {
     }
 
     protected virtual void ProcessAttack() {
-        Debug.Log($"$Processing attack for {UnitStats.name}");
+        //Debug.Log($"Processing attack for {UnitStats.name} to attack {AttackTarget.gameObject.name}");
         if (AttackTarget.Health <= 0 || Health <= 0) { 
             //If the thing we're following cannot be attacked exit
+            Debug.Log($"{UnitStats.name} cannot attack {AttackTarget.gameObject.name}. It's health is {AttackTarget.Health}. Our health is {Health}");
             AttackTarget = null;
             Anim?.SetBool(hasAttackTargetInRange, false);
             
@@ -676,11 +679,12 @@ public class Unit : MonoBehaviour {
             return;
         }
 
-        bool _isInAttackRange = Vector3.Distance(AttackTarget.transform.position, transform.position) <= UnitStats.AttackRange;
-        Anim?.SetBool(hasAttackTargetInRange, _isInAttackRange);
+        //bool _isInAttackRange = Vector3.Distance(AttackTarget.transform.position, transform.position) <= UnitStats.AttackRange;
+        Anim?.SetBool(hasAttackTargetInRange, AtDestination);
         // Debug.Log("We processing attack, nbd");
         
-        if (!_isInAttackRange) {
+        if (!AtDestination) {
+            Debug.Log($"{UnitStats.name} moving to attack {AttackTarget.gameObject.name}");
             MoveTo(AttackTarget.transform.position);
         } else {
             TakeAim();
@@ -725,10 +729,12 @@ public class Unit : MonoBehaviour {
     /// </summary>
     public void Attack(Unit unit)
     {
-        Debug.Log("Attack method triggered");
         if (_weapon != null) {
+            Debug.Log("Attack method triggered");
             _attacking = true;
             SetTarget(unit);
+        } else {
+            Debug.LogError($"Attempted to attack with {UnitStats.Name} but they have no weapon", gameObject);
         }
     }
 
@@ -739,7 +745,7 @@ public class Unit : MonoBehaviour {
         if (!_isInShadow) {
             Vector3[] _positions = new Vector3[] {
                 _sunBeam.transform.GetChild(0).position,
-                _mainLight.transform.position
+                _sunBeam.transform.GetChild(0).position + (-_mainLight.transform.forward * 1000f)
             };
             _sunBeam.SetPositions(_positions);
         }

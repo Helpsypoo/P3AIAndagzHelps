@@ -97,6 +97,9 @@ public class MissionStateManager : MonoBehaviour {
     }
 
     public void UpdateGoop() {
+        if (!SessionManager.Instance) {
+            return;
+        }
         _goopSlider.fillAmount = (float) SessionManager.Instance.BlueGoop / SessionManager.Instance.MaxBlueGoop;
         _goopValue.text = $"{SessionManager.Instance.BlueGoop} / {SessionManager.Instance.MaxBlueGoop}";
     }

@@ -26,6 +26,9 @@ MonoBehaviour:
   InvunerableToSun: 1
   IsDestructable: 0
   ActionRange: 0
+  ActionCharges: 0
   AlertRange: 28
   ImmediateAction: 0
+  UnitUpgrades:
+  - {fileID: 11400000, guid: baa386bb51d076f44ba2ec12647674cd, type: 2}
   Footsteps: []

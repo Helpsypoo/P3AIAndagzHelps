@@ -219,7 +219,7 @@ public class SquadManager : MonoBehaviour {
 
                     // If the highlighted entity is an enemy, attack them.
                 } else if (_highlightedEntity.CompareTag(Globals.ENEMY_TAG)) {
-                    Debug.Log("Attacking Enemy");
+                    Debug.Log($"Attacking {unit.UnitStats.Name}");
                     SelectedUnit.Attack(unit);
                     unit.Select();
                     GameManager.Instance.SelectionMarker.Deactivate();

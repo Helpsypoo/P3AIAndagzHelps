@@ -29,7 +29,8 @@ MonoBehaviour:
   ActionCharges: 0
   AlertRange: 0
   ImmediateAction: 0
-  UnitUpgrades: []
+  UnitUpgrades:
+  - {fileID: 11400000, guid: 29f20ed1027e71f4bb3a840aaf4a47b9, type: 2}
   Footsteps:
   - {fileID: 8300000, guid: 0594e66ca25fd854f9227919e8364f19, type: 3}
   - {fileID: 8300000, guid: 1896a68c05632aa4893aaca07ab21ac5, type: 3}

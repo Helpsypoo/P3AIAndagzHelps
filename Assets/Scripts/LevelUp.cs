@@ -28,6 +28,10 @@ public class LevelUp : MonoBehaviour {
 	}
 
 	public void UpdateDisplay(Unit _unitValue, LevelUpManager _manager) {
+		if (!SessionManager.Instance) {
+			return;
+		}
+		
 		_unit = _unitValue;
 		_levelUpManager = _manager;
 		
@@ -90,6 +94,10 @@ public class LevelUp : MonoBehaviour {
 	}
 
 	public void BuyUpgrade() {
+		if (!SessionManager.Instance) {
+			return;
+		}
+		
 		if (SessionManager.Instance.BlueGoop < _unit.UnitStats.UnitUpgrades[SessionManager.Instance.GetLevel(_unit) + 1].Cost) {
 			Upgrade.interactable = false;
 			_buttonEffects.CheckDisabled();

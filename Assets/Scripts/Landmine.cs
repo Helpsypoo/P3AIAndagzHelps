@@ -147,7 +147,7 @@ public class Landmine : MonoBehaviour {
             other.transform.CompareTag(Globals.LIBERATED_TAG) ||
             other.transform.CompareTag(Globals.ENEMY_TAG)
             ) {
-            Debug.Log("Landmine detected something");
+            //Debug.Log("Landmine detected something");
             if (_explosionRoutine == null) {
                 _explosionRoutine = StartCoroutine(Explode());
             }
