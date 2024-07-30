@@ -153,7 +153,7 @@ public class GameManager : MonoBehaviour {
             Unit _unit;
             _unit = Instantiate(_playerUnitPrefabs[i], _spawnPointContainer.GetChild(i).position, _spawnPointContainer.GetChild(i).rotation); 
             PlayerUnits.Add(_unit);
-
+            _unit.ApplyUpgrades(i);
         }
     }
 

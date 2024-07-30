@@ -13,7 +13,7 @@ public class SquadManager : MonoBehaviour {
 
     // The unit that is currently active, and actions will be performed with.
     public Unit SelectedUnit => GameManager.Instance.PlayerUnits[UnitIndex];
-    [field: SerializeField] public int WaypointStash { get; private set; }
+    [field: SerializeField] public int WaypointStash;
 
     [SerializeField] private CinemachineVirtualCamera _cinemachineCamera;
 

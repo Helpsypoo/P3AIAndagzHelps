@@ -11,7 +11,12 @@ public class Chonk : Unit {
 
     public override void Start() {
         base.Start();
-        _abilityCharges = ShieldCharges;
+        StartCoroutine(SetAfterAppliedUpgrades());
+    }
+    
+    IEnumerator SetAfterAppliedUpgrades() {
+        yield return new WaitUntil(() => UpgradesSet);
+        _abilityCharges = UnitStats.ActionCharges;
     }
 
     public override void PerformAction(Vector3 position, Transform target = null) {

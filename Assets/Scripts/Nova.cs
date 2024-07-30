@@ -22,7 +22,7 @@ public class Nova : Unit {
 
 	public override void Start() {
 		base.Start();
-		
+		StartCoroutine(SetAfterAppliedUpgrades());
 		if (!UnitStats) {
 			return;
 		}
@@ -30,6 +30,12 @@ public class Nova : Unit {
 		if(_sphereCollider) {_sphereCollider.radius = UnitStats.ActionRange/2;}
 		if(_decalProjector) {_decalProjector.size = new Vector3(UnitStats.ActionRange +.3f, UnitStats.ActionRange +.3f, _decalProjector.size.z);}
 	}
+	
+	IEnumerator SetAfterAppliedUpgrades() {
+		yield return new WaitUntil(() => UpgradesSet);
+		_abilityCharges = UnitStats.ActionCharges;
+	}
+
 
 	public override void PeriodicUpdate() {
 		base.PeriodicUpdate();
@@ -58,6 +64,10 @@ public class Nova : Unit {
 	
 	public override void PerformAction(Vector3 position, Transform target = null) {
 		if (Health <= 0) {
+			return;
+		}
+
+		if (_abilityCharges < 1) {
 			return;
 		}
 		
@@ -97,6 +107,7 @@ public class Nova : Unit {
 		}
 		
 		SetState(UnitState.Idle);
+		_abilityCharges--;
 	}
 
 	private void OnTriggerEnter(Collider other) {

@@ -10,9 +10,14 @@ public class Percival : Unit {
     private bool _placingMine;
     private Landmine _mineToDisarm;
 
-    public override void Awake() {
-        base.Awake();
-        _abilityCharges = _mines;
+    public override void Start() {
+        base.Start();
+        StartCoroutine(SetAfterAppliedUpgrades());
+    }
+
+    IEnumerator SetAfterAppliedUpgrades() {
+        yield return new WaitUntil(() => UpgradesSet);
+        _abilityCharges = UnitStats.ActionCharges;
     }
 
     public override void PeriodicUpdate() {

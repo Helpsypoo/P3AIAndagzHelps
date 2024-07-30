@@ -24,6 +24,7 @@ public class Unit : MonoBehaviour {
     [SerializeField] private Vector3 _lookAtPivotModifier;
     public Transform LeftFoot;
     public Transform RightFoot;
+    public bool UpgradesSet;
 
     private CapsuleCollider _hitbox;
     private float _healthTickCooldownDuration = .4f;
@@ -95,7 +96,7 @@ public class Unit : MonoBehaviour {
     public virtual void Start() {
         _canHealthTick = true;
         if(_tickEntity) {_tickEntity.AddToTickEventManager();}
-        ChangeHealth(UnitStats.MaxHealth - Health, true);
+        if(UpgradesSet){ChangeHealth(UnitStats.MaxHealth - Health, true);}
         SetColors();
         if (_navAgent) { _navAgent.speed = UnitStats.Speed;}
 
@@ -104,8 +105,55 @@ public class Unit : MonoBehaviour {
         }
     }
 
+    public void ApplyUpgrades(int _ref) {
+        UnitUpgrade _upgrade = UnitStats.UnitUpgrades[0];
+
+        
+        switch (_ref) {
+            default:
+            case 0:
+                if (SessionManager.Instance) {
+                    _upgrade = UnitStats.UnitUpgrades[SessionManager.Instance.ShepardLevel];
+                }
+                UnitStats.ActionCharges = _upgrade.Ability;
+                SquadManager.Instance.WaypointStash = UnitStats.ActionCharges;
+                break;
+            case 1:
+                if (SessionManager.Instance) {
+                    _upgrade = UnitStats.UnitUpgrades[SessionManager.Instance.ChonkLevel];
+                }
+                break;
+            case 2:
+                if (SessionManager.Instance) {
+                    _upgrade = UnitStats.UnitUpgrades[SessionManager.Instance.PercivalLevel];
+                }
+                break;
+            case 3:
+                if (SessionManager.Instance) {
+                    _upgrade = UnitStats.UnitUpgrades[SessionManager.Instance.NovaLevel];
+                }
+                break;
+        }
+        
+
+        if (!_upgrade) {
+            return;
+        }
+        
+        UnitStats.MaxHealth = _upgrade.MaxHealth;
+        UnitStats.Speed = _upgrade.Speed;
+        UnitStats.AttackDamage = _upgrade.Damage;
+        UnitStats.ActionCharges = _upgrade.Ability;
+        ChangeHealth(UnitStats.MaxHealth - Health, true);
+        UpgradesSet = true;
+    }
+
     public virtual void Update() {
         if (UnitStats.IsDestructable) {
+            return;
+        }
+        
+        if (!UpgradesSet) {
             return;
         }
         
@@ -264,6 +312,10 @@ public class Unit : MonoBehaviour {
     /// Called via the TickEntity system. A periodic check
     /// </summary>
     public virtual void PeriodicUpdate() {
+        if (!UpgradesSet) {
+            return;
+        }
+        
         if (Anim) { Anim.transform.localPosition = Vector3.zero; } //stop the animator drifting from the collider
         TimeSinceLastCheck = Time.time - TimeAtLastCheck;
         CheckLightingStatus(TimeSinceLastCheck);
@@ -514,7 +566,7 @@ public class Unit : MonoBehaviour {
     }
 
     public virtual void Die() {
-
+        //Debug.LogError($"{gameObject.name} died");
         // If we're already dead, we don't need to die again.
         if (State == UnitState.Dead) return;
         if(_deathFX) {_deathFX.Play();}
@@ -692,6 +744,16 @@ public class Unit : MonoBehaviour {
 
     private void OnDestroy() {
         if(_looseGun) Destroy(_looseGun.gameObject);
+        SetDefaultStats();
+    }
+
+    private void SetDefaultStats() {
+        if (UnitStats && UnitStats.UnitUpgrades.Length >= 1) {
+            UnitStats.MaxHealth = UnitStats.UnitUpgrades[0].MaxHealth;
+            UnitStats.Speed = UnitStats.UnitUpgrades[0].Speed;
+            UnitStats.AttackDamage = UnitStats.UnitUpgrades[0].Damage;
+            UnitStats.ActionCharges = UnitStats.UnitUpgrades[0].Ability;
+        }
     }
 }
 

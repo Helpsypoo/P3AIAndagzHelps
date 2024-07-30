@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Nova0
   m_EditorClassIdentifier: 
   Cost: 0
-  Health: 0
-  Speed: 0
-  Damage: 0
-  Ability: 0
+  MaxHealth: 100
+  Speed: 7.5
+  Damage: -3
+  Ability: 1
   Description: 

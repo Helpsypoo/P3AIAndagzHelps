@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu]
 public class UnitUpgrade : ScriptableObject {
     public int Cost;
-    public int Health;
-    public int Speed;
+    [FormerlySerializedAs("Health")] public int MaxHealth;
+    public float Speed;
     public int Damage;
     public int Ability;
     public string Description;

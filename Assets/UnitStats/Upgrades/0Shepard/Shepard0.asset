@@ -16,5 +16,5 @@ MonoBehaviour:
   Health: 50
   Speed: 10
   Damage: -2
-  Ability: 25
+  Ability: 5
   Description: 

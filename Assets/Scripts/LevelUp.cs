@@ -36,7 +36,7 @@ public class LevelUp : MonoBehaviour {
 		UnitUpgrade _currentLevel = _unit.UnitStats.UnitUpgrades[SessionManager.Instance.GetLevel(_unit)];
 
 
-		HealthValue.fillAmount = _currentLevel.Health/500f;
+		HealthValue.fillAmount = _currentLevel.MaxHealth/500f;
 		SpeedValue.fillAmount = _currentLevel.Speed/10f;
 		DamageValue.fillAmount = Mathf.Abs(_currentLevel.Damage)/10f;
 		AbilityValue.fillAmount = _currentLevel.Ability/10f;
@@ -53,7 +53,7 @@ public class LevelUp : MonoBehaviour {
 		}
 		
 		UnitUpgrade _nextLevel = _unit.UnitStats.UnitUpgrades[SessionManager.Instance.GetLevel(_unit) + 1];
-		HealthUpgradeValue.fillAmount = _nextLevel.Health/500f;
+		HealthUpgradeValue.fillAmount = _nextLevel.MaxHealth/500f;
 		SpeedUpgradeValue.fillAmount = _nextLevel.Speed/10f;
 		DamageUpgradeValue.fillAmount = Mathf.Abs(_nextLevel.Damage)/10f;
 		AbilityUpgradeValue.fillAmount = _nextLevel.Ability/10f;
@@ -84,6 +84,7 @@ public class LevelUp : MonoBehaviour {
 			return;
 		}
 		
+		_buttonEffects.CheckDisabled();
 		Cost.text = $"({_unit.UnitStats.UnitUpgrades[SessionManager.Instance.GetLevel(_unit) + 1].Cost})";
 		Cost.color = HealthValue.color;
 	}
@@ -94,6 +95,8 @@ public class LevelUp : MonoBehaviour {
 			_buttonEffects.CheckDisabled();
 			return;
 		}
+
+		AudioManager.Instance.Play(AudioManager.Instance.PurchaseUpgrade, MixerGroups.UI);
 
 		SessionManager.Instance.BlueGoop -= _unit.UnitStats.UnitUpgrades[SessionManager.Instance.GetLevel(_unit) + 1].Cost;
 		SessionManager.Instance.AddLevel(_unit);

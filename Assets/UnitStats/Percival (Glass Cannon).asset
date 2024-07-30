@@ -15,7 +15,6 @@ MonoBehaviour:
   Name: Percival
   Colour: {r: 1, g: 0, b: 0, a: 1}
   UIAvatar: {fileID: 21300000, guid: 0dbd1808be5aaee43b0fb49e4e8e6ab3, type: 3}
-  Level: 0
   MaxHealth: 100
   HealthRegenRate: 5
   HealthRegenDelay: 3
@@ -27,6 +26,7 @@ MonoBehaviour:
   InvunerableToSun: 0
   IsDestructable: 0
   ActionRange: 1.5
+  ActionCharges: 3
   AlertRange: 0
   ImmediateAction: 0
   UnitUpgrades:

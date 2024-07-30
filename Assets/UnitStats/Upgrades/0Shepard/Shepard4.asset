@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 888aefe98186f0a4286228efba49fbec, type: 3}
   m_Name: Shepard4
   m_EditorClassIdentifier: 
-  Cost: 0
-  Health: 0
-  Speed: 0
-  Damage: 0
-  Ability: 25
-  Description: 
+  Cost: 100
+  MaxHealth: 150
+  Speed: 10
+  Damage: -6
+  Ability: 5
+  Description: More health, more damage.

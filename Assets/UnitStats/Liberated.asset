@@ -14,15 +14,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Liberated
   Colour: {r: 0, g: 0, b: 0, a: 0}
+  UIAvatar: {fileID: 0}
   MaxHealth: 25
   HealthRegenRate: 5
   HealthRegenDelay: 10
-  Speed: 3.5
+  Speed: 7
   AttackDamage: 0
   AttackRate: 0
   AttackRange: 0
   IsEnemy: 0
+  InvunerableToSun: 0
+  IsDestructable: 0
   ActionRange: 1.5
+  ActionCharges: 0
+  AlertRange: 0
+  ImmediateAction: 0
+  UnitUpgrades: []
   Footsteps:
   - {fileID: 8300000, guid: 0594e66ca25fd854f9227919e8364f19, type: 3}
   - {fileID: 8300000, guid: 1896a68c05632aa4893aaca07ab21ac5, type: 3}

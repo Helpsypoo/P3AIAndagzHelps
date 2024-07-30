@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 888aefe98186f0a4286228efba49fbec, type: 3}
   m_Name: Percival2
   m_EditorClassIdentifier: 
-  Cost: 0
-  Health: 0
-  Speed: 0
-  Damage: 0
-  Ability: 0
-  Description: 
+  Cost: 50
+  MaxHealth: 100
+  Speed: 8.5
+  Damage: -17
+  Ability: 5
+  Description: More damage, more ability charges.

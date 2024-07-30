@@ -37,6 +37,7 @@ public class AudioManager : MonoBehaviour {
     [SerializeField] private AudioClip _healthTick;
     [SerializeField] private AudioClip _scoreSubtotal;
     [SerializeField] private AudioClip _scoreCalc;
+    [SerializeField] private AudioClip _purchaseUpgrade;
     [SerializeField] private AudioClip[] _pointTick;
     [SerializeField] private AudioClip[] _enemyDeath;
     [SerializeField] private AudioClip[] _turretDeath;
@@ -58,6 +59,7 @@ public class AudioManager : MonoBehaviour {
     public AudioClip HealthTick => _healthTick;
     public AudioClip ScoreCalc => _scoreCalc;
     public AudioClip ScoreSubtotal => _scoreSubtotal;
+    public AudioClip PurchaseUpgrade => _purchaseUpgrade;
     public AudioClip[] PointTick => _pointTick;
     public AudioClip[] EnemyDeath => _enemyDeath;
     public AudioClip[] TurretDeath => _turretDeath;
@@ -285,9 +287,9 @@ public class AudioManager : MonoBehaviour {
     }
 
     public void ClearGameSounds() {
-        foreach (AudioSource _as in sfxSources) {
+        /*foreach (AudioSource _as in sfxSources) {
             Destroy(_as.gameObject);
-        }
+        }*/
     }
 
 

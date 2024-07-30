@@ -60,6 +60,7 @@ MonoBehaviour:
   _healthTick: {fileID: 8300000, guid: 7f1fe4d27e6dda24996a24bdf35abffd, type: 3}
   _scoreSubtotal: {fileID: 8300000, guid: 52349d8a968a5f44a881581ea2e17e97, type: 3}
   _scoreCalc: {fileID: 8300000, guid: f8209add74b281f46a862ffcbe89fed2, type: 3}
+  _purchaseUpgrade: {fileID: 8300000, guid: cfff9ff1ac749bd429aa1bc5eaa8c628, type: 3}
   _pointTick: []
   _enemyDeath:
   - {fileID: 8300000, guid: 7773c3dd2419b534d848fb2fcfab2bf7, type: 3}
