@@ -1,12 +1,22 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class MissionMarker : MonoBehaviour {
 
+    public enum State
+    {
+        Available,
+        Locked,
+        Completed
+    }
+
     [field: SerializeField] public Mission Details { get; private set; }
     [SerializeField] private GameObject _availableMarker;
-    [SerializeField] private GameObject _unavailableMarker;
+    [SerializeField] private GameObject _completedMarker;
+    [SerializeField] private GameObject _lockedMarker;
 
     private void Awake() {
         if (Details == null) {
@@ -18,10 +28,26 @@ public class MissionMarker : MonoBehaviour {
     private void Start() {
         PositionSelf();
 
-        _availableMarker.SetActive(Details.Available);
-        _unavailableMarker.SetActive(!Details.Available);
-
-
+        switch (Details.Condition.ToMissionMarkerState())
+        {
+            case State.Available:
+                _availableMarker.SetActive(true);
+                _completedMarker.SetActive(false);
+                _lockedMarker.SetActive(false);
+                break;
+            case State.Locked:
+                _availableMarker.SetActive(false);
+                _completedMarker.SetActive(false);
+                _lockedMarker.SetActive(true);
+                break;
+            case State.Completed:
+                _availableMarker.SetActive(false);
+                _completedMarker.SetActive(true);
+                _lockedMarker.SetActive(false);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
     }
 
 
@@ -33,6 +59,6 @@ public class MissionMarker : MonoBehaviour {
             transform.forward = hit.normal;
 
         }
-    
+
     }
 }

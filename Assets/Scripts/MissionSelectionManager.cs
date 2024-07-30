@@ -23,6 +23,7 @@ public class MissionSelectionManager : MonoBehaviour {
     [SerializeField] GameObject _missionButton;
     [SerializeField] GameObject _missionFailedText;
     [SerializeField] GameObject _missionCompletedText;
+    [SerializeField] GameObject _missionLockedText;
 
     [SerializeField] private AudioClip _clickSound;
     [SerializeField] private AudioClip _startSound;
@@ -153,9 +154,7 @@ public class MissionSelectionManager : MonoBehaviour {
         Ray ray = _camera.ScreenPointToRay(_mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hitInfo, 1000f)) {
             if (hitInfo.transform.CompareTag(Globals.MISSION_MARKER_TAG)) {
-                if (_highlightedMissionMarker != null && _highlightedMissionMarker.gameObject != hitInfo.transform.gameObject) {
-                    UpdateSelectedMission(hitInfo.transform.GetComponent<MissionMarker>());
-                } else if (_highlightedMissionMarker == null) {
+                if (_highlightedMissionMarker == null || _highlightedMissionMarker.gameObject != hitInfo.transform.gameObject) {
                     UpdateSelectedMission(hitInfo.transform.GetComponent<MissionMarker>());
                 }
                 return;
@@ -209,21 +208,30 @@ public class MissionSelectionManager : MonoBehaviour {
         _missionDescription.text = _selectedMissionMarker.Details.Description;
 
         //_startMissionButton.enabled = _selectedMissionMarker.Details.Available;
-        switch (_selectedMissionMarker.Details.MissionStatus()) {
-            case 0:
+        switch (_selectedMissionMarker.Details.Condition) {
+            case MissionCondition.Available:
                 _missionButton.SetActive(true);
-                _missionFailedText.SetActive(false);
                 _missionCompletedText.SetActive(false);
-                break;
-            case 1:
-                _missionButton.SetActive(false);
                 _missionFailedText.SetActive(false);
+                _missionLockedText.SetActive(false);
+                break;
+            case MissionCondition.Complete:
+                _missionButton.SetActive(false);
                 _missionCompletedText.SetActive(true);
+                _missionFailedText.SetActive(false);
+                _missionLockedText.SetActive(false);
+                break;
+            case MissionCondition.Locked:
+                _missionButton.SetActive(false);
+                _missionCompletedText.SetActive(false);
+                _missionFailedText.SetActive(false);
+                _missionLockedText.SetActive(true);
                 break;
             default:
                 _missionButton.SetActive(false);
-                _missionFailedText.SetActive(true);
                 _missionCompletedText.SetActive(false);
+                _missionFailedText.SetActive(true);
+                _missionLockedText.SetActive(false);
                 break;
         }
         AudioManager.Instance.Play(_clickSound, MixerGroups.UI);

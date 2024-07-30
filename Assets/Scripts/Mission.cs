@@ -11,20 +11,22 @@ public class Mission : ScriptableObject {
     public string SceneName;
     public int Level;
 
-    public bool Available => MissionStatus() == 0;
-
-    public int MissionStatus() {
-        switch (Level) {
-            case 1:
-                return SessionManager.Instance.Level1Status;
-            case 2:
-                return SessionManager.Instance.Level2Status;
-            case 3:
-                return SessionManager.Instance.Level3Status;
-            case 4:
-                return SessionManager.Instance.Level4Status;
-            default:
-                return SessionManager.Instance.Level0Status;
+    public MissionCondition Condition
+    {
+        get
+        {
+            switch (Level) {
+                case 1:
+                    return (MissionCondition)SessionManager.Instance.Level1Status;
+                case 2:
+                    return (MissionCondition)SessionManager.Instance.Level2Status;
+                case 3:
+                    return (MissionCondition)SessionManager.Instance.Level3Status;
+                case 4:
+                    return (MissionCondition)SessionManager.Instance.Level4Status;
+                default:
+                    return (MissionCondition)SessionManager.Instance.Level0Status;
+            }
         }
     }
 }
