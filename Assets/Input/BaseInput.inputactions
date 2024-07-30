@@ -207,17 +207,6 @@
                 },
                 {
                     "name": "",
-                    "id": "48948809-03db-43d2-a86d-75a3fa315c83",
-                    "path": "<Mouse>/middleButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ActionModifier",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "9977c085-5194-49b2-bbb5-38d9a45b6c6f",
                     "path": "<Keyboard>/shift",
                     "interactions": "",

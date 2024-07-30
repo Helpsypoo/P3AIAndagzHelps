@@ -15,6 +15,7 @@ TagManager:
   - MissionMarker
   - Bullets
   - Obstacle
+  - Mines
   layers:
   - Default
   - TransparentFX

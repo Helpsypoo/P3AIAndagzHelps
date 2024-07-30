@@ -148,7 +148,7 @@ public class SquadManager : MonoBehaviour {
             return;
         }
 
-        //ActionMode = !ActionMode;
+        ActionMode = !ActionMode;
 
     }
 

@@ -12,6 +12,8 @@ public static class Globals {
     public const string LIBERATED_TAG = "Liberated";
     public const string MISSION_MARKER_TAG = "MissionMarker";
     public const string BULLET_TAG = "Bullets";
+    public const string MINES_TAG = "Mines";
+    public const string OBSTACLE_TAG = "Obstacle";
     #endregion
 
     #region Layers
@@ -20,6 +22,7 @@ public static class Globals {
     
     #region LayerMasks
     public static readonly LayerMask SELECTION_LAYERMASK = LayerMask.GetMask("Entities", "Default", "Hitbox");
+    public static readonly LayerMask ENEMY_LINE_OF_SIGHT = LayerMask.GetMask("Entities", "Hitbox");
     #endregion
 
     /// <summary>

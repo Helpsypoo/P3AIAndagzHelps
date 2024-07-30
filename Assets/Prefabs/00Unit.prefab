@@ -3412,6 +3412,61 @@ Transform:
   - {fileID: 1140351875867157305}
   m_Father: {fileID: 3398216958197585196}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3724613343373818473
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6886100893712875171}
+  - component: {fileID: 4940518373029115616}
+  m_Layer: 10
+  m_Name: LineOfSightCheck
+  m_TagString: Unit
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6886100893712875171
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3724613343373818473}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.63, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 346677584653850249}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &4940518373029115616
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3724613343373818473}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 4
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3749131201329765379
 GameObject:
   m_ObjectHideFlags: 0
@@ -3807,6 +3862,7 @@ Transform:
   - {fileID: 7833735560910475001}
   - {fileID: 6793611554420055314}
   - {fileID: 8604816664747293456}
+  - {fileID: 6886100893712875171}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7532648924021596425
@@ -3846,8 +3902,8 @@ MonoBehaviour:
   _attackAlertSound: {fileID: 0}
   _shield: {fileID: 8984115850701413175}
   <Radius>k__BackingField: 1.4
-  <ShieldHealth>k__BackingField: 0
   <MaxShieldHealth>k__BackingField: 0
+  <ShieldCharges>k__BackingField: 0
 --- !u!114 &417735457569587794
 MonoBehaviour:
   m_ObjectHideFlags: 0

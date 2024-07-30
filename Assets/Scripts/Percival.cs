@@ -8,6 +8,7 @@ public class Percival : Unit {
     [SerializeField] private int _mines;
 
     private bool _placingMine;
+    private Landmine _mineToDisarm;
 
     public override void Awake() {
         base.Awake();
@@ -22,9 +23,25 @@ public class Percival : Unit {
         //    GameObject newMine = Instantiate(_minePrefab, transform.position, Quaternion.identity);
         //}
 
+        if (_mineToDisarm != null && AtDestination) {
+            Destroy(_mineToDisarm.gameObject);
+            _mineToDisarm = null;
+            
+        }
+
     }
 
     public override void PerformAction(Vector3 position, Transform target = null) {
+
+        if (target != null && target.CompareTag(Globals.MINES_TAG)) {
+            Landmine mine = target.GetComponent<Landmine>();
+            if (mine == null) {
+                throw new System.Exception($"Attempted to get Landmine component from object, {target.name}, which was tagged as a Mine, but no Landmine component was found.");
+            }
+            _mineToDisarm = mine;
+            MoveTo(position);
+            return;
+        }
 
         if (_abilityCharges < 1) return;
 

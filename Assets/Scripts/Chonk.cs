@@ -9,14 +9,17 @@ public class Chonk : Unit {
     [field: SerializeField] public float MaxShieldHealth { get; private set; }
     [field: SerializeField] public int ShieldCharges { get; private set; }
 
-    public  override void Start() {
+    public override void Start() {
         base.Start();
         _abilityCharges = ShieldCharges;
     }
 
     public override void PerformAction(Vector3 position, Transform target = null) {
-        base.PerformAction(position, target);
 
+        if (_shield.IsActive) return;
+
+        base.PerformAction(position, target);
+        Debug.Log("Activating Shield");
         if (_abilityCharges > 0 && !_shield.IsActive) {
             _shield.Activate(Radius, MaxShieldHealth, MaxShieldHealth, this);
             UnitStats.InvunerableToSun = true;

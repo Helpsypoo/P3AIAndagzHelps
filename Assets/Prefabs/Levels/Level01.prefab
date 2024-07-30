@@ -33,6 +33,101 @@ Transform:
   - {fileID: 606437241506930629}
   m_Father: {fileID: 3281081457514612276}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3413150740626551800
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8980331459944851007}
+  - component: {fileID: 5462308066024982860}
+  - component: {fileID: 2390556051132406484}
+  - component: {fileID: 2935295221247299265}
+  m_Layer: 0
+  m_Name: TutorialStage3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &8980331459944851007
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3413150740626551800}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 139, y: 0, z: 245.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5475440348050103364}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &5462308066024982860
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3413150740626551800}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 7
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &2390556051132406484
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3413150740626551800}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &2935295221247299265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3413150740626551800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff95a31262e40624fa1b5ec46682e4e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tag: Unit
 --- !u!1 &4735723173588697448
 GameObject:
   m_ObjectHideFlags: 0
@@ -102,6 +197,101 @@ Transform:
   - {fileID: 5557178313494412635}
   m_Father: {fileID: 3281081457514612276}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7803913238701038222
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3123008586896606577}
+  - component: {fileID: 7544560309601166354}
+  - component: {fileID: 7688398724648595917}
+  - component: {fileID: 5707663283136996611}
+  m_Layer: 0
+  m_Name: TutorialStage4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &3123008586896606577
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7803913238701038222}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 121.8, y: 0, z: 218.9}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5475440348050103364}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &7544560309601166354
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7803913238701038222}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 9
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &7688398724648595917
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7803913238701038222}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &5707663283136996611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7803913238701038222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff95a31262e40624fa1b5ec46682e4e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tag: Unit
 --- !u!1 &8229594951814330224
 GameObject:
   m_ObjectHideFlags: 0
@@ -189,6 +379,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5475440348050103364}
   - component: {fileID: 9205318219109115339}
+  - component: {fileID: 3547588614612234035}
   m_Layer: 0
   m_Name: Level01
   m_TagString: Untagged
@@ -209,6 +400,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 8980331459944851007}
+  - {fileID: 3123008586896606577}
   - {fileID: 3281081457514612276}
   - {fileID: 6282452212275350607}
   - {fileID: 2696540057846285344}
@@ -288,7 +481,54 @@ MonoBehaviour:
   UnitSpawnsContainer: {fileID: 7737753389466538574}
   DaylightIntensity: -10
   MinimumLiberatedPct: 0
-  <Tutorial>k__BackingField: {fileID: 0}
+  <Tutorial>k__BackingField: {fileID: 3547588614612234035}
+--- !u!114 &3547588614612234035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9127226642853165375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af3b56a00221cea42baa4c234e8b6fcc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stages:
+  - Title: Dissidents
+    Message: It turns out, not everyone is happy with being liberated. Not to worry,
+      we have a guy for that. Meet your enforcer, he calls himself Chonk.
+    ShowCloseButton: 1
+    ShowNextMessage: 1
+    Target: {fileID: 0}
+  - Title: Dissidents
+    Message: You can select different units by left clicking on them, clicking on
+      their avatar at the bottom of the screen, using the 1-4 number keys, or scrolling
+      the mouse wheel.
+    ShowCloseButton: 1
+    ShowNextMessage: 1
+    Target: {fileID: 0}
+  - Title: Dissidents
+    Message: If you right click on a unit or liberated, the selected unit will follow
+      them. Try squadding up before proceeding so Chonk can do his job.
+    ShowCloseButton: 0
+    ShowNextMessage: 1
+    Target: {fileID: 3413150740626551800}
+  - Title: Dissidents
+    Message: There is a dissident guarding those liberated. Shepard is equipped for
+      heavy combat, I would advise you use Chonk to deal with this renegade, and
+      any others you encounter enroute back to the base.
+    ShowCloseButton: 0
+    ShowNextMessage: 1
+    Target: {fileID: 7803913238701038222}
+  - Title: Dissidents
+    Message: You may encounter more dissidents along the way. Fortunately, Chonk
+      carries a personal shield. You can activate it, by clicking the middle mouse
+      button, or pressing space bar and right clicking. You only have limited charges,
+      so use them wisely.
+    ShowCloseButton: 1
+    ShowNextMessage: 0
+    Target: {fileID: 0}
 --- !u!1 &9146935521895984353
 GameObject:
   m_ObjectHideFlags: 0

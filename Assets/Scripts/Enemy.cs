@@ -41,17 +41,24 @@ public class Enemy : Unit {
 	        return;
         }
         if (UnitStats.Speed > 0) {
-	        _isInAttackRange = Vector3.Distance(AttackTarget.transform.position, transform.position) <= UnitStats.AttackRange;
+	        _isInAttackRange = Vector3.Distance(AttackTarget.transform.position, transform.position) <= _navAgent.stoppingDistance;
         } else {
 	        _isInAttackRange = Vector3.Distance(AttackTarget.transform.position, transform.position) <= UnitStats.AttackRange + 2; //give turrets a slightly larger attack range to account for colliders
         }
 
         //_anim?.SetBool(hasAttackTargetInRange, _isInAttackRange);
 
-        if (!_isInAttackRange) {
-            MoveTo(AttackTarget.transform.position);
+
+
+        if (_isInAttackRange) {
+			if (CanSeeAttackTarget()) {
+				TakeAim();
+			} else {
+				SetStopDistance(Globals.MIN_ACTION_DIST);
+                MoveTo(AttackTarget.transform.position);
+            }
         } else {
-            TakeAim();
+            MoveTo(AttackTarget.transform.position);
         }
     }
 
@@ -97,6 +104,26 @@ public class Enemy : Unit {
 	    }
 	    
 	    base.ChangeHealth(_amount, _hiddenDisplayUpdate, _lastDamager);
+    }
+
+	public bool CanSeeAttackTarget() {
+        //raycast check
+        Vector3 origin = transform.position;
+        Vector3 destination = AttackTarget.transform.position;
+        origin.y += 0.1f;
+        destination.y += 0.1f;
+        bool canSeeTarget = false;
+        Vector3 dir = (destination - origin).normalized;
+
+        if (Physics.Raycast(origin, dir, out RaycastHit hit, UnitStats.AttackRange)) {
+
+            Unit u = hit.transform.GetComponent<Unit>();
+            if (u == AttackTarget) {
+                canSeeTarget = true;
+            }
+
+        }
+		return canSeeTarget;
     }
 
 	private void AddTarget(Unit unit) {
