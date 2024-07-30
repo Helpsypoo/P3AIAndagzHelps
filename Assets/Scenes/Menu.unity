@@ -735,9 +735,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1125110860}
-        m_TargetAssemblyTypeName: SessionManager, Assembly-CSharp
-        m_MethodName: ResumeGame
+      - m_Target: {fileID: 717832732}
+        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+        m_MethodName: Resume
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
