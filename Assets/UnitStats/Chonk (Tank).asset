@@ -15,6 +15,7 @@ MonoBehaviour:
   Name: Chonk
   Colour: {r: 0, g: 1, b: 0.15667748, a: 1}
   UIAvatar: {fileID: 21300000, guid: 69a9c8c38d2e98d4ba35bd061e8aec96, type: 3}
+  Level: 0
   MaxHealth: 300
   HealthRegenRate: 5
   HealthRegenDelay: 3
@@ -28,6 +29,12 @@ MonoBehaviour:
   ActionRange: 1.5
   AlertRange: 0
   ImmediateAction: 1
+  UnitUpgrades:
+  - {fileID: 11400000, guid: 9c79b5e3c2a3cf74b9adbba406cbe2b5, type: 2}
+  - {fileID: 11400000, guid: febb99c2fa9c318449030c9c081f0d73, type: 2}
+  - {fileID: 11400000, guid: 5f92839e9e1c72f46aa1ca77c542da50, type: 2}
+  - {fileID: 11400000, guid: f8c44af57e2f64d4c8eb5c7ae325d3f3, type: 2}
+  - {fileID: 11400000, guid: 0b93fd42fbfa6cb4f85ac72e8ae138b0, type: 2}
   Footsteps:
   - {fileID: 8300000, guid: 0594e66ca25fd854f9227919e8364f19, type: 3}
   - {fileID: 8300000, guid: 1896a68c05632aa4893aaca07ab21ac5, type: 3}

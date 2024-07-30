@@ -67,10 +67,10 @@ public class GameManager : MonoBehaviour {
         } else {
             if (!SessionManager.Instance) {
                 SceneManager.LoadScene("Menu");
-            } else {
-                CreateLevel(Levels[SessionManager.Instance.Level]);
+                return;
             }
-            return;
+            
+            CreateLevel(Levels[SessionManager.Instance.Level]);
         }
         
         AudioManager.Instance.PlayAmbiance(AudioManager.Instance.MissionAmbiance, 2f, .4f);

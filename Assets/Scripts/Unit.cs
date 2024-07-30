@@ -537,7 +537,12 @@ public class Unit : MonoBehaviour {
         if (CompareTag(Globals.UNIT_TAG)) {
             GameManager.Instance.ProcessUnitLife(this);
             _deathSFX = AudioManager.Instance.UnitDeath;
-            GameManager.Instance.Survival--;
+            Mathf.Clamp(GameManager.Instance.Survival - 1, 0, GameManager.Instance.SurvivalTotal);
+            if(UnitStats.Name == "Shepard") {
+                if (GameManager.Instance.PlayerUnits.Count < 4) {
+                    MissionStateManager.Instance.Fail("You lost your squad leader");
+                }
+            }
         } else if(CompareTag(Globals.ENEMY_TAG)){
             if (UnitStats.Name.Contains("Turret")) {
                 _deathSFX = AudioManager.Instance.TurretDeath;
@@ -617,19 +622,15 @@ public class Unit : MonoBehaviour {
         switch (LastDamagedBy.UnitStats.Name) {
             case "Shepard":
                 SessionManager.Instance.ShepardKills++;
-                GameManager.Instance.Survival--;
                 break;
             case "Chonk":
                 SessionManager.Instance.ChonkKills++;
-                GameManager.Instance.Survival--;
                 break;
             case "Percival":
                 SessionManager.Instance.PercivalKills++;
-                GameManager.Instance.Survival--;
                 break;
             case "Nova":
                 SessionManager.Instance.NovaKills++;
-                GameManager.Instance.Survival--;
                 break;
         }
     }

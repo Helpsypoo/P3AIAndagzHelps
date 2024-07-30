@@ -16,6 +16,10 @@ public class ButtonGraphicEffects : MonoBehaviour, IPointerEnterHandler, IPointe
 	[SerializeField] private Color _disabledColor;
 
 	private void Start() {
+		CheckDisabled();
+	}
+
+	public void CheckDisabled() {
 		UpdateGraphics(_button.interactable ? _normalColor : _disabledColor);
 	}
 
@@ -52,6 +56,10 @@ public class ButtonGraphicEffects : MonoBehaviour, IPointerEnterHandler, IPointe
 	}
 
 	private void UpdateGraphics(Color color) {
+		if (!_button.interactable) {
+			return;
+		}
+		
 		foreach (var graphic in _graphics) {
 			graphic.color = color;
 		}

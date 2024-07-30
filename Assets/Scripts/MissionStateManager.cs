@@ -2,6 +2,7 @@ using System.Collections;
 using Cinemachine;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MissionStateManager : MonoBehaviour {
     public static MissionStateManager Instance;
@@ -23,8 +24,12 @@ public class MissionStateManager : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI _survivalCount;
     [SerializeField] private TextMeshProUGUI _score;
     [SerializeField] private TextMeshProUGUI _highscore;
+    [SerializeField] private TextMeshProUGUI _goopValue;
+    [SerializeField] private Image _goopSlider;
     private int _scoreFinal;
     private float _endTime;
+
+    [SerializeField] private LevelUpManager levelUpManager;
     
     [Header("Fail Mission")]
     [SerializeField] private RectTransform _failPanel;
@@ -39,6 +44,7 @@ public class MissionStateManager : MonoBehaviour {
 
         _canvas = GetComponent<Canvas>();
         _anim = GetComponent<Animator>();
+        _goopSlider.gameObject.SetActive(false);
     }
 
     public void MissionEvent(MissionCondition _condition) {
@@ -61,6 +67,9 @@ public class MissionStateManager : MonoBehaviour {
     
     public void Complete() {
         _endTime = Time.time;
+        UpdateGoop();
+        _goopSlider.gameObject.SetActive(true);
+        levelUpManager.UpdateLevelUps();
         for (int i = 0; i < GameManager.Instance.PlayerUnits.Count; i++) {
             GameManager.Instance.PlayerUnits[i].Revive(true);
             GameManager.Instance.PlayerUnits[i].SetState(UnitState.Locked);
@@ -75,6 +84,11 @@ public class MissionStateManager : MonoBehaviour {
         _anim.Play("Complete");
         _completePanel.gameObject.SetActive(true);
         CalculateScore();
+    }
+
+    public void UpdateGoop() {
+        _goopSlider.fillAmount = (float) SessionManager.Instance.BlueGoop / SessionManager.Instance.MaxBlueGoop;
+        _goopValue.text = $"{SessionManager.Instance.BlueGoop} / {SessionManager.Instance.MaxBlueGoop}";
     }
 
     public void Fail(string _failMessage) {
@@ -148,14 +162,14 @@ public class MissionStateManager : MonoBehaviour {
         
         string _formattedTime = string.Format("{0}:{1:D2}", minutes, seconds);
         _timeTitle.text = $"Time  <size=14>({_formattedTime})";
-        int _timeScore = Mathf.CeilToInt(Mathf.Lerp(1000, 0, _timeDelta / (5 * 60)));
+        int _timeScore = Mathf.CeilToInt(Mathf.Lerp(5000, 0, _timeDelta / (5 * 60)));
         _timeCount.text = $"{_timeScore}";
         return _timeScore;
     }
     
     private int CalcSurvival() {
         float _pct = (float)GameManager.Instance.Survival / GameManager.Instance.SurvivalTotal;
-        _survivalTitle.text = $"Survival  <size=14>({Mathf.CeilToInt(_pct*100)}%)";
+        _survivalTitle.text = $"Survival  <size=14>({GameManager.Instance.Survival})";
         int _survivalScore = Mathf.CeilToInt(Mathf.Lerp(0, 1000, _pct));
         _survivalCount.text = $"{_survivalScore}";
         return _survivalScore;

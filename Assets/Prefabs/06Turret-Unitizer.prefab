@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8358261405829009118}
   - component: {fileID: 6080088193773587014}
   m_Layer: 7
-  m_Name: 06Turret
+  m_Name: 06Turret-Unitizer
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee6984939ab41454bb95aad07cb90481, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UnitStats: {fileID: 11400000, guid: 18703e6495578a246a6edaff517a41ae, type: 2}
+  UnitStats: {fileID: 11400000, guid: b43ccf68fed04494d91855b64e6de937, type: 2}
   _healthDisplay: {fileID: 7813509929491215776}
   _selectionIndicator: {fileID: 8489215249219317188}
   _reviveSelectionIndicator: {fileID: 0}
@@ -62,6 +62,7 @@ MonoBehaviour:
   _lookAtPivotModifier: {x: 0, y: -90, z: 0}
   LeftFoot: {fileID: 0}
   RightFoot: {fileID: 0}
+  LastDamagedBy: {fileID: 0}
   Anim: {fileID: 7288999785043951197}
   <State>k__BackingField: 0
   TimeAtLastCheck: 0
@@ -71,6 +72,7 @@ MonoBehaviour:
   HealFX: {fileID: 0}
   _deathFX: {fileID: 0}
   _attackAlertSound: {fileID: 8300000, guid: e198a102d718aa742919ee0eff6197f6, type: 3}
+  _targetMode: 0
   _targets: []
 --- !u!136 &4453008780424716847
 CapsuleCollider:
@@ -223,6 +225,36 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 23000012245765408, guid: c36865a7da8627b42a5d8dae1b1a98bb,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: bb1cc1a61a3a8ae4b8a31ffdaa02fe14, type: 2}
+    - target: {fileID: 23000012453719126, guid: c36865a7da8627b42a5d8dae1b1a98bb,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: bb1cc1a61a3a8ae4b8a31ffdaa02fe14, type: 2}
+    - target: {fileID: 23000012567119702, guid: c36865a7da8627b42a5d8dae1b1a98bb,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: bb1cc1a61a3a8ae4b8a31ffdaa02fe14, type: 2}
+    - target: {fileID: 23000012721662426, guid: c36865a7da8627b42a5d8dae1b1a98bb,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: bb1cc1a61a3a8ae4b8a31ffdaa02fe14, type: 2}
+    - target: {fileID: 23000013286920992, guid: c36865a7da8627b42a5d8dae1b1a98bb,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: bb1cc1a61a3a8ae4b8a31ffdaa02fe14, type: 2}
+    - target: {fileID: 23000013598274414, guid: c36865a7da8627b42a5d8dae1b1a98bb,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: bb1cc1a61a3a8ae4b8a31ffdaa02fe14, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

@@ -28,6 +28,13 @@ MonoBehaviour:
   ActionRange: 1.5
   AlertRange: 0
   ImmediateAction: 0
+  UnitUpgrades:
+  - {fileID: 11400000, guid: 67e20942e1ad1374daa284d13b88038a, type: 2}
+  - {fileID: 11400000, guid: 4e15830b6f79145478933519cc2d532e, type: 2}
+  - {fileID: 11400000, guid: 475fb130ef0f3af4193878b0d7e0044c, type: 2}
+  - {fileID: 11400000, guid: 60189fc0e7f9a004ba474baf97498932, type: 2}
+  - {fileID: 11400000, guid: fc7c781223a007844a61bbb1a6abd7df, type: 2}
+  - {fileID: 11400000, guid: 433ee9d77c21ca74aa06289c222c76bb, type: 2}
   Footsteps:
   - {fileID: 8300000, guid: 0594e66ca25fd854f9227919e8364f19, type: 3}
   - {fileID: 8300000, guid: 1896a68c05632aa4893aaca07ab21ac5, type: 3}

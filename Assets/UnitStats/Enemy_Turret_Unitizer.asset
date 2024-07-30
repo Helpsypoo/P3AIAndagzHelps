@@ -10,19 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d42557186a5752f4bbcdf53c864ab728, type: 3}
-  m_Name: Enemy_Turret
+  m_Name: Enemy_Turret_Unitizer
   m_EditorClassIdentifier: 
-  Name: Turret
+  Name: Unitizer Turret
   Colour: {r: 1, g: 1, b: 1, a: 0}
+  UIAvatar: {fileID: 0}
   MaxHealth: 50
   HealthRegenRate: 5
   HealthRegenDelay: 10
   Speed: 0
-  AttackDamage: -3
-  AttackRate: 0.1
-  AttackRange: 30
+  AttackDamage: -2
+  AttackRate: 1
+  AttackRange: 40
   IsEnemy: 1
   InvunerableToSun: 1
+  IsDestructable: 0
   ActionRange: 0
   AlertRange: 28
   ImmediateAction: 0
