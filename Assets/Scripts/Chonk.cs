@@ -24,13 +24,14 @@ public class Chonk : Unit {
         if (_shield.IsActive) return;
 
         base.PerformAction(position, target);
+        Anim?.SetTrigger(actionTrigger);
         Debug.Log("Activating Shield");
         if (_abilityCharges > 0 && !_shield.IsActive) {
             _shield.Activate(Radius, MaxShieldHealth, MaxShieldHealth, this);
             UnitStats.InvunerableToSun = true;
             _abilityCharges--;
+            
         }
-
     }
 
     /// <summary>
