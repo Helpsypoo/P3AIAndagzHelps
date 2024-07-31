@@ -43,7 +43,7 @@ public class Enemy : Unit {
         if (UnitStats.Speed > 0) {
 	        _isInAttackRange = Vector3.Distance(AttackTarget.transform.position, transform.position) <= _navAgent.stoppingDistance;
         } else {
-	        _isInAttackRange = Vector3.Distance(AttackTarget.transform.position, transform.position) <= UnitStats.AttackRange + 2; //give turrets a slightly larger attack range to account for colliders
+	        _isInAttackRange = Vector3.Distance(AttackTarget.transform.position, transform.position) <= UnitStats.AttackRange + 4; //give turrets a slightly larger attack range to account for colliders
         }
 
         //_anim?.SetBool(hasAttackTargetInRange, _isInAttackRange);
@@ -116,7 +116,10 @@ public class Enemy : Unit {
         Vector3 dir = (destination - origin).normalized;
 
         if (Physics.Raycast(origin, dir, out RaycastHit hit, UnitStats.AttackRange)) {
-
+	        if (hit.collider.gameObject.CompareTag(Globals.SHIELD_TAG)) {
+		        canSeeTarget = true;
+		        return canSeeTarget;
+	        }
             Unit u = hit.transform.GetComponent<Unit>();
             if (u == AttackTarget) {
                 canSeeTarget = true;

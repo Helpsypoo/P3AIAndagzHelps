@@ -13,7 +13,7 @@ public class AnimListener : MonoBehaviour {
     }
 
     public void Fire() {
-        Debug.Log("Fire!!!!!!");
+        //Debug.Log("Fire!!!!!!");
         if (unit && (unit.State != UnitState.Dead || unit.State != UnitState.Locked)) {
             unit.Fire();
         }

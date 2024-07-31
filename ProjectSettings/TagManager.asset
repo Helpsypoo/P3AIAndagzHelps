@@ -16,6 +16,7 @@ TagManager:
   - Bullets
   - Obstacle
   - Mines
+  - Shield
   layers:
   - Default
   - TransparentFX

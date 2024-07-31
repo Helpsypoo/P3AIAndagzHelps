@@ -13,6 +13,7 @@ public static class Globals {
     public const string MISSION_MARKER_TAG = "MissionMarker";
     public const string BULLET_TAG = "Bullets";
     public const string MINES_TAG = "Mines";
+    public const string SHIELD_TAG = "Shield";
     public const string OBSTACLE_TAG = "Obstacle";
     #endregion
 

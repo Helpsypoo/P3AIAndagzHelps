@@ -506,7 +506,7 @@ public class Unit : MonoBehaviour {
     }
 
     public virtual void SetTarget(Unit target) {
-        Debug.Log($"Setting target of {UnitStats.Name} to {target.UnitStats}");
+        //Debug.Log($"Setting target of {UnitStats.Name} to {target.UnitStats}");
         if (State == UnitState.Dead) {
             return;
         }
