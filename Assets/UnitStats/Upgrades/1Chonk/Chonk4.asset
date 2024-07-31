@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Chonk4
   m_EditorClassIdentifier: 
   Cost: 75
-  Health: 500
+  MaxHealth: 400
   Speed: 10
   Damage: -10
   Ability: 4

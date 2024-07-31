@@ -968,6 +968,11 @@ PrefabInstance:
       propertyPath: _instaBoom
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3263375867172678940, guid: c74394e67b01cc44cb02d8ad7fb8a73d,
+        type: 3}
+      propertyPath: _maxDamage
+      value: -500
+      objectReference: {fileID: 0}
     - target: {fileID: 6386702317230149818, guid: c74394e67b01cc44cb02d8ad7fb8a73d,
         type: 3}
       propertyPath: m_Name

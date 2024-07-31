@@ -49,7 +49,7 @@ public class LevelUp : MonoBehaviour {
 	}
 
 	public void ShowUpgrade() {
-		if (SessionManager.Instance.GetLevel(_unit) + 1 > _unit.UnitStats.UnitUpgrades.Length) {
+		if (SessionManager.Instance.GetLevel(_unit) + 1 > _unit.UnitStats.UnitUpgrades.Length - 1) {
 			Upgrade.interactable = false;
 			Cost.text = "";
 			Description.text = "No more upgrades";
@@ -57,10 +57,10 @@ public class LevelUp : MonoBehaviour {
 		}
 		
 		UnitUpgrade _nextLevel = _unit.UnitStats.UnitUpgrades[SessionManager.Instance.GetLevel(_unit) + 1];
-		HealthUpgradeValue.fillAmount = _nextLevel.MaxHealth/500f;
+		HealthUpgradeValue.fillAmount = _nextLevel.MaxHealth/400f;
 		SpeedUpgradeValue.fillAmount = _nextLevel.Speed/10f;
-		DamageUpgradeValue.fillAmount = Mathf.Abs(_nextLevel.Damage)/10f;
-		AbilityUpgradeValue.fillAmount = _nextLevel.Ability/10f;
+		DamageUpgradeValue.fillAmount = Mathf.Abs(_nextLevel.Damage)/20f;
+		AbilityUpgradeValue.fillAmount = _nextLevel.Ability/5f;
 		Description.text = _nextLevel.Description;
 	}
 	

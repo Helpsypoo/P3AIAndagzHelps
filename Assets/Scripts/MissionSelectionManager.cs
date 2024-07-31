@@ -210,6 +210,8 @@ public class MissionSelectionManager : MonoBehaviour {
         //_startMissionButton.enabled = _selectedMissionMarker.Details.Available;
         switch (_selectedMissionMarker.Details.Condition) {
             case MissionCondition.Available:
+            case MissionCondition.FailMininumLiberated:
+            case MissionCondition.FailUnitsLost:
                 _missionButton.SetActive(true);
                 _missionCompletedText.SetActive(false);
                 _missionFailedText.SetActive(false);

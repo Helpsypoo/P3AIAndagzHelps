@@ -928,7 +928,7 @@ PrefabInstance:
     - target: {fileID: 7532648924021596425, guid: 21e4e28341cf4064ca245be07c9b5fb4,
         type: 3}
       propertyPath: <MaxShieldHealth>k__BackingField
-      value: 100
+      value: 125
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

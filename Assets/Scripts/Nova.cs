@@ -108,6 +108,9 @@ public class Nova : Unit {
 		
 		SetState(UnitState.Idle);
 		_abilityCharges--;
+		if(GameManager.Instance.PlayerUnits[0].State == UnitState.Dead && _abilityCharges == 0) {
+			MissionStateManager.Instance.Fail("You lost your squad leader");
+		}
 	}
 
 	private void OnTriggerEnter(Collider other) {

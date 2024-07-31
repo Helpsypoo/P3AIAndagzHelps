@@ -140,8 +140,10 @@ public class Shield : MonoBehaviour {
                 throw new System.Exception($"{bullet.gameObject.name} is tagged as Bullet but no Bullet component was found.");
             }
 
-            bullet.ReturnToPool();
-            Damage(bullet.Damage);
+            if (bullet.Shooter.UnitStats.IsEnemy) {
+                bullet.ReturnToPool();
+                Damage(bullet.Damage);
+            }
 
         }
 

@@ -621,7 +621,7 @@ public class Unit : MonoBehaviour {
             _deathSFX = AudioManager.Instance.UnitDeath;
             Mathf.Clamp(GameManager.Instance.Survival - 1, 0, GameManager.Instance.SurvivalTotal);
             if(UnitStats.Name == "Shepard") {
-                if (GameManager.Instance.PlayerUnits.Count < 4) {
+                if (GameManager.Instance.PlayerUnits.Count < 4 || (GameManager.Instance.PlayerUnits.Count == 4 && GameManager.Instance.PlayerUnits[3]._abilityCharges == 0)) {
                     MissionStateManager.Instance.Fail("You lost your squad leader");
                 }
             }
