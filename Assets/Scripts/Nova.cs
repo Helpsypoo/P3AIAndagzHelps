@@ -71,6 +71,7 @@ public class Nova : Unit {
 			return;
 		}
 		
+		Anim?.SetTrigger(actionTrigger);
 		base.PerformAction(position, target);
 
 		Collider[] _colliders = Physics.OverlapSphere(transform.position, UnitStats.ActionRange);
