@@ -11,207 +11,201 @@ AvatarMask:
   m_Elements:
   - m_Path: 
     m_Weight: 1
-  - m_Path: Arm cannon.001
-    m_Weight: 1
-  - m_Path: Belt.001
-    m_Weight: 1
-  - m_Path: Cross strap
-    m_Weight: 1
-  - m_Path: Cube
-    m_Weight: 1
-  - m_Path: Cube.001
-    m_Weight: 1
-  - m_Path: Forearm.002
-    m_Weight: 1
-  - m_Path: GloveRight.001
-    m_Weight: 1
-  - m_Path: Head.002
-    m_Weight: 1
-  - m_Path: Hips.001
+  - m_Path: Belt.005
     m_Weight: 0
-  - m_Path: Juice
-    m_Weight: 1
-  - m_Path: Left boot.001
+  - m_Path: Chonk
     m_Weight: 0
-  - m_Path: Left thigh.001
+  - m_Path: Chonk/ROOT
     m_Weight: 0
-  - m_Path: Neck.001
-    m_Weight: 1
-  - m_Path: Nova
+  - m_Path: Chonk/ROOT/CTRL-FOOT.L
     m_Weight: 0
-  - m_Path: Nova/ROOT
+  - m_Path: Chonk/ROOT/CTRL-FOOT.L/CTRL-POLE-IK-LEG.L
     m_Weight: 0
-  - m_Path: Nova/ROOT/CTRL-FOOT.L
+  - m_Path: Chonk/ROOT/CTRL-FOOT.L/CTRL-POLE-IK-LEG.L/CTRL-POLE-IK-LEG.L_end
     m_Weight: 0
-  - m_Path: Nova/ROOT/CTRL-FOOT.L/CTRL-POLE-IK-LEG.L
+  - m_Path: Chonk/ROOT/CTRL-FOOT.L/MCH-IK-LEG.L
     m_Weight: 0
-  - m_Path: Nova/ROOT/CTRL-FOOT.L/CTRL-POLE-IK-LEG.L/CTRL-POLE-IK-LEG.L_end
+  - m_Path: Chonk/ROOT/CTRL-FOOT.L/MCH-IK-LEG.L/MCH-IK-LEG.L_end
     m_Weight: 0
-  - m_Path: Nova/ROOT/CTRL-FOOT.L/MCH-IK-LEG.L
+  - m_Path: Chonk/ROOT/CTRL-FOOT.L/TGT-Foot.L
     m_Weight: 0
-  - m_Path: Nova/ROOT/CTRL-FOOT.L/MCH-IK-LEG.L/MCH-IK-LEG.L_end
+  - m_Path: Chonk/ROOT/CTRL-FOOT.L/TGT-Foot.L/TGT-ToeBase.L
     m_Weight: 0
-  - m_Path: Nova/ROOT/CTRL-FOOT.L/TGT-Foot.L
+  - m_Path: Chonk/ROOT/CTRL-FOOT.L/TGT-Foot.L/TGT-ToeBase.L/TGT-Toe_End.L
     m_Weight: 0
-  - m_Path: Nova/ROOT/CTRL-FOOT.L/TGT-Foot.L/TGT-ToeBase.L
+  - m_Path: Chonk/ROOT/CTRL-FOOT.L/TGT-Foot.L/TGT-ToeBase.L/TGT-Toe_End.L/TGT-Toe_End.L_end
     m_Weight: 0
-  - m_Path: Nova/ROOT/CTRL-FOOT.L/TGT-Foot.L/TGT-ToeBase.L/TGT-Toe_End.L
+  - m_Path: Chonk/ROOT/CTRL-FOOT.R
     m_Weight: 0
-  - m_Path: Nova/ROOT/CTRL-FOOT.L/TGT-Foot.L/TGT-ToeBase.L/TGT-Toe_End.L/TGT-Toe_End.L_end
+  - m_Path: Chonk/ROOT/CTRL-FOOT.R/CTRL-POLE-IK-LEG.R
     m_Weight: 0
-  - m_Path: Nova/ROOT/CTRL-FOOT.R
+  - m_Path: Chonk/ROOT/CTRL-FOOT.R/CTRL-POLE-IK-LEG.R/CTRL-POLE-IK-LEG.R_end
     m_Weight: 0
-  - m_Path: Nova/ROOT/CTRL-FOOT.R/CTRL-POLE-IK-LEG.R
+  - m_Path: Chonk/ROOT/CTRL-FOOT.R/MCH-IK-LEG.R
     m_Weight: 0
-  - m_Path: Nova/ROOT/CTRL-FOOT.R/CTRL-POLE-IK-LEG.R/CTRL-POLE-IK-LEG.R_end
+  - m_Path: Chonk/ROOT/CTRL-FOOT.R/MCH-IK-LEG.R/MCH-IK-LEG.R_end
     m_Weight: 0
-  - m_Path: Nova/ROOT/CTRL-FOOT.R/MCH-IK-LEG.R
+  - m_Path: Chonk/ROOT/CTRL-FOOT.R/TGT-Foot.R
     m_Weight: 0
-  - m_Path: Nova/ROOT/CTRL-FOOT.R/MCH-IK-LEG.R/MCH-IK-LEG.R_end
+  - m_Path: Chonk/ROOT/CTRL-FOOT.R/TGT-Foot.R/TGT-ToeBase.R
     m_Weight: 0
-  - m_Path: Nova/ROOT/CTRL-FOOT.R/TGT-Foot.R
+  - m_Path: Chonk/ROOT/CTRL-FOOT.R/TGT-Foot.R/TGT-ToeBase.R/TGT-Toe_End.R
     m_Weight: 0
-  - m_Path: Nova/ROOT/CTRL-FOOT.R/TGT-Foot.R/TGT-ToeBase.R
+  - m_Path: Chonk/ROOT/CTRL-FOOT.R/TGT-Foot.R/TGT-ToeBase.R/TGT-Toe_End.R/TGT-Toe_End.R_end
     m_Weight: 0
-  - m_Path: Nova/ROOT/CTRL-FOOT.R/TGT-Foot.R/TGT-ToeBase.R/TGT-Toe_End.R
+  - m_Path: Chonk/ROOT/CTRL-Neck
+    m_Weight: 1
+  - m_Path: Chonk/ROOT/CTRL-Neck/TGT-Neck
+    m_Weight: 1
+  - m_Path: Chonk/ROOT/CTRL-Neck/TGT-Neck/TGT-Head
+    m_Weight: 1
+  - m_Path: Chonk/ROOT/CTRL-Neck/TGT-Neck/TGT-Head/TGT-HeadTop_End
+    m_Weight: 1
+  - m_Path: Chonk/ROOT/CTRL-Neck/TGT-Neck/TGT-Head/TGT-HeadTop_End/TGT-HeadTop_End_end
+    m_Weight: 1
+  - m_Path: Chonk/ROOT/CTRL-WRIST.L
+    m_Weight: 1
+  - m_Path: Chonk/ROOT/CTRL-WRIST.L/CTRL-POLE-IK-ARM.L
+    m_Weight: 1
+  - m_Path: Chonk/ROOT/CTRL-WRIST.L/CTRL-POLE-IK-ARM.L/CTRL-POLE-IK-ARM.L_end
+    m_Weight: 1
+  - m_Path: Chonk/ROOT/CTRL-WRIST.L/TGT-Hand.L
+    m_Weight: 1
+  - m_Path: Chonk/ROOT/CTRL-WRIST.L/TGT-Hand.L/TGT-Hand.L_end
+    m_Weight: 1
+  - m_Path: Chonk/ROOT/CTRL-WRIST.R
+    m_Weight: 1
+  - m_Path: Chonk/ROOT/CTRL-WRIST.R/CTRL-POLE-IK-ARM.R
+    m_Weight: 1
+  - m_Path: Chonk/ROOT/CTRL-WRIST.R/CTRL-POLE-IK-ARM.R/CTRL-POLE-IK-ARM.R_end
+    m_Weight: 1
+  - m_Path: Chonk/ROOT/CTRL-WRIST.R/TGT-Hand.R
+    m_Weight: 1
+  - m_Path: Chonk/ROOT/CTRL-WRIST.R/TGT-Hand.R/TGT-Hand.R_end
+    m_Weight: 1
+  - m_Path: Chonk/ROOT/DEF-Hips
     m_Weight: 0
-  - m_Path: Nova/ROOT/CTRL-FOOT.R/TGT-Foot.R/TGT-ToeBase.R/TGT-Toe_End.R/TGT-Toe_End.R_end
+  - m_Path: Chonk/ROOT/DEF-Hips/DEF-Spine
+    m_Weight: 1
+  - m_Path: Chonk/ROOT/DEF-Hips/DEF-Spine/DEF-Spine1
+    m_Weight: 1
+  - m_Path: Chonk/ROOT/DEF-Hips/DEF-Spine/DEF-Spine1/DEF-Spine2
+    m_Weight: 1
+  - m_Path: Chonk/ROOT/DEF-Hips/DEF-Spine/DEF-Spine1/DEF-Spine2/DEF-Neck
+    m_Weight: 1
+  - m_Path: Chonk/ROOT/DEF-Hips/DEF-Spine/DEF-Spine1/DEF-Spine2/DEF-Neck/DEF-Head
+    m_Weight: 1
+  - m_Path: Chonk/ROOT/DEF-Hips/DEF-Spine/DEF-Spine1/DEF-Spine2/DEF-Neck/DEF-Head/DEF-Head_end
+    m_Weight: 1
+  - m_Path: Chonk/ROOT/DEF-Hips/DEF-Spine/DEF-Spine1/DEF-Spine2/DEF-Shoulder.L
+    m_Weight: 1
+  - m_Path: Chonk/ROOT/DEF-Hips/DEF-Spine/DEF-Spine1/DEF-Spine2/DEF-Shoulder.L/DEF-Arm.L
+    m_Weight: 1
+  - m_Path: Chonk/ROOT/DEF-Hips/DEF-Spine/DEF-Spine1/DEF-Spine2/DEF-Shoulder.L/DEF-Arm.L/DEF-ForeArm.L
+    m_Weight: 1
+  - m_Path: Chonk/ROOT/DEF-Hips/DEF-Spine/DEF-Spine1/DEF-Spine2/DEF-Shoulder.L/DEF-Arm.L/DEF-ForeArm.L/DEF-Hand.L
+    m_Weight: 1
+  - m_Path: Chonk/ROOT/DEF-Hips/DEF-Spine/DEF-Spine1/DEF-Spine2/DEF-Shoulder.L/DEF-Arm.L/DEF-ForeArm.L/DEF-Hand.L/DEF-Hand.L_end
+    m_Weight: 1
+  - m_Path: Chonk/ROOT/DEF-Hips/DEF-Spine/DEF-Spine1/DEF-Spine2/DEF-Shoulder.R
+    m_Weight: 1
+  - m_Path: Chonk/ROOT/DEF-Hips/DEF-Spine/DEF-Spine1/DEF-Spine2/DEF-Shoulder.R/DEF-Arm.R
+    m_Weight: 1
+  - m_Path: Chonk/ROOT/DEF-Hips/DEF-Spine/DEF-Spine1/DEF-Spine2/DEF-Shoulder.R/DEF-Arm.R/DEF-ForeArm.R
+    m_Weight: 1
+  - m_Path: Chonk/ROOT/DEF-Hips/DEF-Spine/DEF-Spine1/DEF-Spine2/DEF-Shoulder.R/DEF-Arm.R/DEF-ForeArm.R/DEF-Hand.R
+    m_Weight: 1
+  - m_Path: Chonk/ROOT/DEF-Hips/DEF-Spine/DEF-Spine1/DEF-Spine2/DEF-Shoulder.R/DEF-Arm.R/DEF-ForeArm.R/DEF-Hand.R/DEF-Hand.R_end
+    m_Weight: 1
+  - m_Path: Chonk/ROOT/DEF-Hips/DEF-UpLeg.L
     m_Weight: 0
-  - m_Path: Nova/ROOT/CTRL-Neck
-    m_Weight: 1
-  - m_Path: Nova/ROOT/CTRL-Neck/TGT-Neck
-    m_Weight: 1
-  - m_Path: Nova/ROOT/CTRL-Neck/TGT-Neck/TGT-Head
-    m_Weight: 1
-  - m_Path: Nova/ROOT/CTRL-Neck/TGT-Neck/TGT-Head/TGT-HeadTop_End
-    m_Weight: 1
-  - m_Path: Nova/ROOT/CTRL-Neck/TGT-Neck/TGT-Head/TGT-HeadTop_End/TGT-HeadTop_End_end
-    m_Weight: 1
-  - m_Path: Nova/ROOT/CTRL-WRIST.L
-    m_Weight: 1
-  - m_Path: Nova/ROOT/CTRL-WRIST.L/CTRL-POLE-IK-ARM.L
-    m_Weight: 1
-  - m_Path: Nova/ROOT/CTRL-WRIST.L/CTRL-POLE-IK-ARM.L/CTRL-POLE-IK-ARM.L_end
-    m_Weight: 1
-  - m_Path: Nova/ROOT/CTRL-WRIST.L/TGT-Hand.L
-    m_Weight: 1
-  - m_Path: Nova/ROOT/CTRL-WRIST.L/TGT-Hand.L/TGT-Hand.L_end
-    m_Weight: 1
-  - m_Path: Nova/ROOT/CTRL-WRIST.R
-    m_Weight: 1
-  - m_Path: Nova/ROOT/CTRL-WRIST.R/CTRL-POLE-IK-ARM.R
-    m_Weight: 1
-  - m_Path: Nova/ROOT/CTRL-WRIST.R/CTRL-POLE-IK-ARM.R/CTRL-POLE-IK-ARM.R_end
-    m_Weight: 1
-  - m_Path: Nova/ROOT/CTRL-WRIST.R/TGT-Hand.R
-    m_Weight: 1
-  - m_Path: Nova/ROOT/CTRL-WRIST.R/TGT-Hand.R/TGT-Hand.R_end
-    m_Weight: 1
-  - m_Path: Nova/ROOT/DEF-Hips
+  - m_Path: Chonk/ROOT/DEF-Hips/DEF-UpLeg.L/DEF-Leg.L
     m_Weight: 0
-  - m_Path: Nova/ROOT/DEF-Hips/DEF-Spine
-    m_Weight: 1
-  - m_Path: Nova/ROOT/DEF-Hips/DEF-Spine/DEF-Spine1
-    m_Weight: 1
-  - m_Path: Nova/ROOT/DEF-Hips/DEF-Spine/DEF-Spine1/DEF-Spine2
-    m_Weight: 1
-  - m_Path: Nova/ROOT/DEF-Hips/DEF-Spine/DEF-Spine1/DEF-Spine2/DEF-Neck
-    m_Weight: 1
-  - m_Path: Nova/ROOT/DEF-Hips/DEF-Spine/DEF-Spine1/DEF-Spine2/DEF-Neck/DEF-Head
-    m_Weight: 1
-  - m_Path: Nova/ROOT/DEF-Hips/DEF-Spine/DEF-Spine1/DEF-Spine2/DEF-Neck/DEF-Head/DEF-Head_end
-    m_Weight: 1
-  - m_Path: Nova/ROOT/DEF-Hips/DEF-Spine/DEF-Spine1/DEF-Spine2/DEF-Shoulder.L
-    m_Weight: 1
-  - m_Path: Nova/ROOT/DEF-Hips/DEF-Spine/DEF-Spine1/DEF-Spine2/DEF-Shoulder.L/DEF-Arm.L
-    m_Weight: 1
-  - m_Path: Nova/ROOT/DEF-Hips/DEF-Spine/DEF-Spine1/DEF-Spine2/DEF-Shoulder.L/DEF-Arm.L/DEF-ForeArm.L
-    m_Weight: 1
-  - m_Path: Nova/ROOT/DEF-Hips/DEF-Spine/DEF-Spine1/DEF-Spine2/DEF-Shoulder.L/DEF-Arm.L/DEF-ForeArm.L/DEF-Hand.L
-    m_Weight: 1
-  - m_Path: Nova/ROOT/DEF-Hips/DEF-Spine/DEF-Spine1/DEF-Spine2/DEF-Shoulder.L/DEF-Arm.L/DEF-ForeArm.L/DEF-Hand.L/DEF-Hand.L_end
-    m_Weight: 1
-  - m_Path: Nova/ROOT/DEF-Hips/DEF-Spine/DEF-Spine1/DEF-Spine2/DEF-Shoulder.R
-    m_Weight: 1
-  - m_Path: Nova/ROOT/DEF-Hips/DEF-Spine/DEF-Spine1/DEF-Spine2/DEF-Shoulder.R/DEF-Arm.R
-    m_Weight: 1
-  - m_Path: Nova/ROOT/DEF-Hips/DEF-Spine/DEF-Spine1/DEF-Spine2/DEF-Shoulder.R/DEF-Arm.R/DEF-ForeArm.R
-    m_Weight: 1
-  - m_Path: Nova/ROOT/DEF-Hips/DEF-Spine/DEF-Spine1/DEF-Spine2/DEF-Shoulder.R/DEF-Arm.R/DEF-ForeArm.R/DEF-Hand.R
-    m_Weight: 1
-  - m_Path: Nova/ROOT/DEF-Hips/DEF-Spine/DEF-Spine1/DEF-Spine2/DEF-Shoulder.R/DEF-Arm.R/DEF-ForeArm.R/DEF-Hand.R/DEF-Hand.R_end
-    m_Weight: 1
-  - m_Path: Nova/ROOT/DEF-Hips/DEF-UpLeg.L
+  - m_Path: Chonk/ROOT/DEF-Hips/DEF-UpLeg.L/DEF-Leg.L/DEF-Foot.L
     m_Weight: 0
-  - m_Path: Nova/ROOT/DEF-Hips/DEF-UpLeg.L/DEF-Leg.L
+  - m_Path: Chonk/ROOT/DEF-Hips/DEF-UpLeg.L/DEF-Leg.L/DEF-Foot.L/DEF-ToeBase.L
     m_Weight: 0
-  - m_Path: Nova/ROOT/DEF-Hips/DEF-UpLeg.L/DEF-Leg.L/DEF-Foot.L
+  - m_Path: Chonk/ROOT/DEF-Hips/DEF-UpLeg.L/DEF-Leg.L/DEF-Foot.L/DEF-ToeBase.L/DEF-Toe_End.L
     m_Weight: 0
-  - m_Path: Nova/ROOT/DEF-Hips/DEF-UpLeg.L/DEF-Leg.L/DEF-Foot.L/DEF-ToeBase.L
+  - m_Path: Chonk/ROOT/DEF-Hips/DEF-UpLeg.L/DEF-Leg.L/DEF-Foot.L/DEF-ToeBase.L/DEF-Toe_End.L/DEF-Toe_End.L_end
     m_Weight: 0
-  - m_Path: Nova/ROOT/DEF-Hips/DEF-UpLeg.L/DEF-Leg.L/DEF-Foot.L/DEF-ToeBase.L/DEF-Toe_End.L
+  - m_Path: Chonk/ROOT/DEF-Hips/DEF-UpLeg.R
     m_Weight: 0
-  - m_Path: Nova/ROOT/DEF-Hips/DEF-UpLeg.L/DEF-Leg.L/DEF-Foot.L/DEF-ToeBase.L/DEF-Toe_End.L/DEF-Toe_End.L_end
+  - m_Path: Chonk/ROOT/DEF-Hips/DEF-UpLeg.R/DEF-Leg.R
     m_Weight: 0
-  - m_Path: Nova/ROOT/DEF-Hips/DEF-UpLeg.R
+  - m_Path: Chonk/ROOT/DEF-Hips/DEF-UpLeg.R/DEF-Leg.R/DEF-Foot.R
     m_Weight: 0
-  - m_Path: Nova/ROOT/DEF-Hips/DEF-UpLeg.R/DEF-Leg.R
+  - m_Path: Chonk/ROOT/DEF-Hips/DEF-UpLeg.R/DEF-Leg.R/DEF-Foot.R/DEF-ToeBase.R
     m_Weight: 0
-  - m_Path: Nova/ROOT/DEF-Hips/DEF-UpLeg.R/DEF-Leg.R/DEF-Foot.R
+  - m_Path: Chonk/ROOT/DEF-Hips/DEF-UpLeg.R/DEF-Leg.R/DEF-Foot.R/DEF-ToeBase.R/DEF-Toe_End.R
     m_Weight: 0
-  - m_Path: Nova/ROOT/DEF-Hips/DEF-UpLeg.R/DEF-Leg.R/DEF-Foot.R/DEF-ToeBase.R
+  - m_Path: Chonk/ROOT/DEF-Hips/DEF-UpLeg.R/DEF-Leg.R/DEF-Foot.R/DEF-ToeBase.R/DEF-Toe_End.R/DEF-Toe_End.R_end
     m_Weight: 0
-  - m_Path: Nova/ROOT/DEF-Hips/DEF-UpLeg.R/DEF-Leg.R/DEF-Foot.R/DEF-ToeBase.R/DEF-Toe_End.R
+  - m_Path: Chonk/ROOT/TGT-Hips
     m_Weight: 0
-  - m_Path: Nova/ROOT/DEF-Hips/DEF-UpLeg.R/DEF-Leg.R/DEF-Foot.R/DEF-ToeBase.R/DEF-Toe_End.R/DEF-Toe_End.R_end
-    m_Weight: 0
-  - m_Path: Nova/ROOT/TGT-Hips
-    m_Weight: 0
-  - m_Path: Nova/ROOT/TGT-Hips/TGT-Spine
+  - m_Path: Chonk/ROOT/TGT-Hips/TGT-Spine
     m_Weight: 1
-  - m_Path: Nova/ROOT/TGT-Hips/TGT-Spine/TGT-Spine1
+  - m_Path: Chonk/ROOT/TGT-Hips/TGT-Spine/TGT-Spine1
     m_Weight: 1
-  - m_Path: Nova/ROOT/TGT-Hips/TGT-Spine/TGT-Spine1/TGT-Spine2
+  - m_Path: Chonk/ROOT/TGT-Hips/TGT-Spine/TGT-Spine1/TGT-Spine2
     m_Weight: 1
-  - m_Path: Nova/ROOT/TGT-Hips/TGT-Spine/TGT-Spine1/TGT-Spine2/TGT-Shoulder.L
+  - m_Path: Chonk/ROOT/TGT-Hips/TGT-Spine/TGT-Spine1/TGT-Spine2/Shield cube back
     m_Weight: 1
-  - m_Path: Nova/ROOT/TGT-Hips/TGT-Spine/TGT-Spine1/TGT-Spine2/TGT-Shoulder.L/TGT-Arm.L
+  - m_Path: Chonk/ROOT/TGT-Hips/TGT-Spine/TGT-Spine1/TGT-Spine2/Shield cube front
     m_Weight: 1
-  - m_Path: Nova/ROOT/TGT-Hips/TGT-Spine/TGT-Spine1/TGT-Spine2/TGT-Shoulder.L/TGT-Arm.L/TGT-ForeArm.L
+  - m_Path: Chonk/ROOT/TGT-Hips/TGT-Spine/TGT-Spine1/TGT-Spine2/Shield cube left
     m_Weight: 1
-  - m_Path: Nova/ROOT/TGT-Hips/TGT-Spine/TGT-Spine1/TGT-Spine2/TGT-Shoulder.L/TGT-Arm.L/TGT-ForeArm.L/TGT-ForeArm.L_end
+  - m_Path: Chonk/ROOT/TGT-Hips/TGT-Spine/TGT-Spine1/TGT-Spine2/Shield cube right
     m_Weight: 1
-  - m_Path: Nova/ROOT/TGT-Hips/TGT-Spine/TGT-Spine1/TGT-Spine2/TGT-Shoulder.R
+  - m_Path: Chonk/ROOT/TGT-Hips/TGT-Spine/TGT-Spine1/TGT-Spine2/TGT-Shoulder.L
     m_Weight: 1
-  - m_Path: Nova/ROOT/TGT-Hips/TGT-Spine/TGT-Spine1/TGT-Spine2/TGT-Shoulder.R/TGT-Arm.R
+  - m_Path: Chonk/ROOT/TGT-Hips/TGT-Spine/TGT-Spine1/TGT-Spine2/TGT-Shoulder.L/TGT-Arm.L
     m_Weight: 1
-  - m_Path: Nova/ROOT/TGT-Hips/TGT-Spine/TGT-Spine1/TGT-Spine2/TGT-Shoulder.R/TGT-Arm.R/TGT-ForeArm.R
+  - m_Path: Chonk/ROOT/TGT-Hips/TGT-Spine/TGT-Spine1/TGT-Spine2/TGT-Shoulder.L/TGT-Arm.L/TGT-ForeArm.L
     m_Weight: 1
-  - m_Path: Nova/ROOT/TGT-Hips/TGT-Spine/TGT-Spine1/TGT-Spine2/TGT-Shoulder.R/TGT-Arm.R/TGT-ForeArm.R/TGT-ForeArm.R_end
+  - m_Path: Chonk/ROOT/TGT-Hips/TGT-Spine/TGT-Spine1/TGT-Spine2/TGT-Shoulder.L/TGT-Arm.L/TGT-ForeArm.L/TGT-ForeArm.L_end
     m_Weight: 1
-  - m_Path: Nova/ROOT/TGT-Hips/TGT-UpLeg.L
+  - m_Path: Chonk/ROOT/TGT-Hips/TGT-Spine/TGT-Spine1/TGT-Spine2/TGT-Shoulder.R
+    m_Weight: 1
+  - m_Path: Chonk/ROOT/TGT-Hips/TGT-Spine/TGT-Spine1/TGT-Spine2/TGT-Shoulder.R/TGT-Arm.R
+    m_Weight: 1
+  - m_Path: Chonk/ROOT/TGT-Hips/TGT-Spine/TGT-Spine1/TGT-Spine2/TGT-Shoulder.R/TGT-Arm.R/TGT-ForeArm.R
+    m_Weight: 1
+  - m_Path: Chonk/ROOT/TGT-Hips/TGT-Spine/TGT-Spine1/TGT-Spine2/TGT-Shoulder.R/TGT-Arm.R/TGT-ForeArm.R/TGT-ForeArm.R_end
+    m_Weight: 1
+  - m_Path: Chonk/ROOT/TGT-Hips/TGT-UpLeg.L
     m_Weight: 0
-  - m_Path: Nova/ROOT/TGT-Hips/TGT-UpLeg.L/TGT-Leg.L
+  - m_Path: Chonk/ROOT/TGT-Hips/TGT-UpLeg.L/TGT-Leg.L
     m_Weight: 0
-  - m_Path: Nova/ROOT/TGT-Hips/TGT-UpLeg.L/TGT-Leg.L/TGT-Leg.L_end
+  - m_Path: Chonk/ROOT/TGT-Hips/TGT-UpLeg.L/TGT-Leg.L/TGT-Leg.L_end
     m_Weight: 0
-  - m_Path: Nova/ROOT/TGT-Hips/TGT-UpLeg.R
+  - m_Path: Chonk/ROOT/TGT-Hips/TGT-UpLeg.R
     m_Weight: 0
-  - m_Path: Nova/ROOT/TGT-Hips/TGT-UpLeg.R/TGT-Leg.R
+  - m_Path: Chonk/ROOT/TGT-Hips/TGT-UpLeg.R/TGT-Leg.R
     m_Weight: 0
-  - m_Path: Nova/ROOT/TGT-Hips/TGT-UpLeg.R/TGT-Leg.R/TGT-Leg.R_end
+  - m_Path: Chonk/ROOT/TGT-Hips/TGT-UpLeg.R/TGT-Leg.R/TGT-Leg.R_end
     m_Weight: 0
-  - m_Path: Right boot.001
-    m_Weight: 0
-  - m_Path: Right thigh.001
-    m_Weight: 0
-  - m_Path: Shoulder straps
+  - m_Path: Forearm.006
     m_Weight: 1
-  - m_Path: Shoulders.002
+  - m_Path: GloveRight.005
     m_Weight: 1
-  - m_Path: Tank
+  - m_Path: Head.006
     m_Weight: 1
-  - m_Path: Torso.001
+  - m_Path: Hips.005
+    m_Weight: 0
+  - m_Path: Left boot.005
+    m_Weight: 0
+  - m_Path: Left thigh.005
+    m_Weight: 0
+  - m_Path: Neck.005
     m_Weight: 1
-  - m_Path: Upper arm.002
+  - m_Path: Right boot.005
+    m_Weight: 0
+  - m_Path: Right thigh.005
+    m_Weight: 0
+  - m_Path: Shoulders.006
+    m_Weight: 1
+  - m_Path: Torso.005
+    m_Weight: 1
+  - m_Path: Upper arm.006
     m_Weight: 1

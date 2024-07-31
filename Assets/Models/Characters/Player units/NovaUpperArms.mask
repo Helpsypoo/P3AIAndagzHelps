@@ -28,7 +28,7 @@ AvatarMask:
   - m_Path: Head.002
     m_Weight: 1
   - m_Path: Hips.001
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: Juice
     m_Weight: 1
   - m_Path: Left boot.001
@@ -108,7 +108,7 @@ AvatarMask:
   - m_Path: Nova/ROOT/CTRL-WRIST.R/TGT-Hand.R/TGT-Hand.R_end
     m_Weight: 1
   - m_Path: Nova/ROOT/DEF-Hips
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: Nova/ROOT/DEF-Hips/DEF-Spine
     m_Weight: 1
   - m_Path: Nova/ROOT/DEF-Hips/DEF-Spine/DEF-Spine1
@@ -166,7 +166,7 @@ AvatarMask:
   - m_Path: Nova/ROOT/DEF-Hips/DEF-UpLeg.R/DEF-Leg.R/DEF-Foot.R/DEF-ToeBase.R/DEF-Toe_End.R/DEF-Toe_End.R_end
     m_Weight: 0
   - m_Path: Nova/ROOT/TGT-Hips
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: Nova/ROOT/TGT-Hips/TGT-Spine
     m_Weight: 1
   - m_Path: Nova/ROOT/TGT-Hips/TGT-Spine/TGT-Spine1

@@ -63,7 +63,6 @@ public class Nova : Unit {
 	}
 	
 	public override void PerformAction(Vector3 position, Transform target = null) {
-		Anim?.SetTrigger(actionTrigger);
 		if (Health <= 0) {
 			return;
 		}
@@ -72,6 +71,7 @@ public class Nova : Unit {
 			return;
 		}
 		
+		Anim?.SetTrigger(actionTrigger);
 		base.PerformAction(position, target);
 
 		Collider[] _colliders = Physics.OverlapSphere(transform.position, UnitStats.ActionRange);
