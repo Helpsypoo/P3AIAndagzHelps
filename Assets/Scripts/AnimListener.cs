@@ -20,6 +20,7 @@ public class AnimListener : MonoBehaviour {
     }
     
     public void LeftFootstep() {
+        Debug.Log("Left Step");
         if (!unit || !unit.UnitStats || unit.UnitStats.Footsteps.Length == 0 || !unit.LeftFoot) {
             return;
         }
