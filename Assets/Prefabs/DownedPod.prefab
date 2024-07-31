@@ -1,53 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &921837411644226789
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2706292955782222892}
-  - component: {fileID: 1991885221684826507}
-  m_Layer: 7
-  m_Name: TutorialBarrier
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2706292955782222892
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 921837411644226789}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.17, y: 0, z: 1.6}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5313872973574961676}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!208 &1991885221684826507
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 921837411644226789}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 1.15, y: 7.415, z: 29.67}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 0.5
 --- !u!1 &4013250042738686667
 GameObject:
   m_ObjectHideFlags: 0
@@ -82,7 +34,6 @@ Transform:
   - {fileID: 5450707581884522063}
   - {fileID: 8293855088934008258}
   - {fileID: 3028199043714602735}
-  - {fileID: 2706292955782222892}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &7700452450253710610
@@ -104,8 +55,8 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 6.2909603
-  m_Height: 12.581921
+  m_Radius: 7.661564
+  m_Height: 15.323128
   m_Direction: 1
   m_Center: {x: 0.42305946, y: 0.6464014, z: -0.2965622}
 --- !u!114 &1675759009569136789
@@ -132,6 +83,7 @@ MonoBehaviour:
   _lookAtPivotModifier: {x: 0, y: 0, z: 0}
   LeftFoot: {fileID: 0}
   RightFoot: {fileID: 0}
+  UpgradesSet: 0
   LastDamagedBy: {fileID: 0}
   Anim: {fileID: 0}
   <State>k__BackingField: 0
@@ -142,6 +94,7 @@ MonoBehaviour:
   HealFX: {fileID: 0}
   _deathFX: {fileID: 0}
   _attackAlertSound: {fileID: 0}
+  _attackTarget: {fileID: 0}
   _destructionEffect: {fileID: 0}
 --- !u!1001 &2877281911820377753
 PrefabInstance:
