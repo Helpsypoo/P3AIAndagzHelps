@@ -175,17 +175,22 @@ public class Unit : MonoBehaviour {
             return;
         }
         
-        if (Health <= 0 || ImmuneFromSun) {
+        if (Health <= 0) {
             if(_sunBeam) {_sunBeam.gameObject.SetActive(false);}
             return;
         }
 
-        ProcessSunLaserDisplay();
+        if (ImmuneFromSun) {
+            if(_sunBeam) {_sunBeam.gameObject.SetActive(false);}
+        } else {
+            ProcessSunLaserDisplay();
+        }
 
         if (State != UnitState.Locked) {
             LookWhereYoureGoing();
         }
 
+        //Debug.Log($"Setting speed on {UnitStats.Name} to {_navAgent.velocity.magnitude}");
         if(Anim && _navAgent){ Anim.SetFloat(speed, _navAgent.velocity.magnitude);}
 
         if (_attackCooldown > 0f) {

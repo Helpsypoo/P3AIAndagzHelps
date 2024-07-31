@@ -13,20 +13,20 @@ MonoBehaviour:
   m_Name: Chonk (Tank)
   m_EditorClassIdentifier: 
   Name: Chonk
-  Colour: {r: 0, g: 1, b: 0.15667748, a: 1}
-  UIAvatar: {fileID: 21300000, guid: 69a9c8c38d2e98d4ba35bd061e8aec96, type: 3}
-  Level: 0
+  Colour: {r: 0.33397114, g: 0.7951675, b: 0.8962264, a: 1}
+  UIAvatar: {fileID: 21300000, guid: d5e01cd31507a7844b902c0d03c05e1f, type: 3}
   MaxHealth: 300
   HealthRegenRate: 5
   HealthRegenDelay: 3
-  Speed: 10
-  AttackDamage: -7
+  Speed: 7
+  AttackDamage: -8
   AttackRate: 1
   AttackRange: 2
   IsEnemy: 0
   InvunerableToSun: 0
   IsDestructable: 0
   ActionRange: 1.5
+  ActionCharges: 2
   AlertRange: 0
   ImmediateAction: 1
   UnitUpgrades:

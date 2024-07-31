@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Shepard (Scout)
   m_EditorClassIdentifier: 
   Name: Shepard
-  Colour: {r: 0, g: 0.3090248, b: 1, a: 1}
-  UIAvatar: {fileID: 21300000, guid: 28af5ac500d599e4e99a46c3db3b16d2, type: 3}
+  Colour: {r: 0.32872015, g: 0.8396226, b: 0.3806473, a: 1}
+  UIAvatar: {fileID: 21300000, guid: e653866f869dd3942b1784a11c2713c4, type: 3}
   MaxHealth: 50
   HealthRegenRate: 5
   HealthRegenDelay: 3
@@ -26,6 +26,7 @@ MonoBehaviour:
   InvunerableToSun: 0
   IsDestructable: 0
   ActionRange: 1.5
+  ActionCharges: 5
   AlertRange: 0
   ImmediateAction: 0
   UnitUpgrades:
