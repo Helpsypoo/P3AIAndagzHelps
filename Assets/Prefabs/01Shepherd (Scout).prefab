@@ -821,6 +821,10 @@ PrefabInstance:
         type: 3}
       insertIndex: 1
       addedObject: {fileID: 195223514003126191}
+    - targetCorrespondingSourceObject: {fileID: 1146178398153969443, guid: 21e4e28341cf4064ca245be07c9b5fb4,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2229527406341923454}
   m_SourcePrefab: {fileID: 100100000, guid: 21e4e28341cf4064ca245be07c9b5fb4, type: 3}
 --- !u!137 &607577624898840312 stripped
 SkinnedMeshRenderer:
@@ -846,6 +850,39 @@ SkinnedMeshRenderer:
     type: 3}
   m_PrefabInstance: {fileID: 2451726602140047725}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &3309656945851323982 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1146178398153969443, guid: 21e4e28341cf4064ca245be07c9b5fb4,
+    type: 3}
+  m_PrefabInstance: {fileID: 2451726602140047725}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2229527406341923454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3309656945851323982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d965bd05506b8448a548c6e71b306b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 195223514003126191}
+        m_TargetAssemblyTypeName: Shepherd, Assembly-CSharp
+        m_MethodName: PlaceWayPoint
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3515605750064277025 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1355504972749881164, guid: 21e4e28341cf4064ca245be07c9b5fb4,
@@ -964,6 +1001,8 @@ MonoBehaviour:
   _lookAtPivotModifier: {x: 0, y: 0, z: 0}
   LeftFoot: {fileID: 3592143080474692027}
   RightFoot: {fileID: 7915966611221132441}
+  UpgradesSet: 0
+  ImmuneFromSun: 0
   LastDamagedBy: {fileID: 0}
   Anim: {fileID: 8805860342815756073}
   <State>k__BackingField: 0
@@ -974,6 +1013,7 @@ MonoBehaviour:
   HealFX: {fileID: 8953589181529752702}
   _deathFX: {fileID: 6155360144096060028}
   _attackAlertSound: {fileID: 0}
+  _attackTarget: {fileID: 0}
   _wayPointPrefab: {fileID: 8140501686989059288, guid: 30bc4a42a61d79e4bb372657023d13e3,
     type: 3}
 --- !u!4 &7915966611221132441 stripped

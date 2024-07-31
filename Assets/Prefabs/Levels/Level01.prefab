@@ -496,8 +496,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stages:
   - Title: Dissidents
-    Message: It turns out, not everyone is happy with being liberated. Not to worry,
-      we have a guy for that. Meet your enforcer, he calls himself Chonk.
+    Message: It turns out, not everyone is happy with being transmuted... I mean
+      liberated. Not to worry, we have a guy for that. Meet your enforcer, he calls
+      himself Chonk.
     ShowCloseButton: 1
     ShowNextMessage: 1
     Target: {fileID: 0}
@@ -509,8 +510,8 @@ MonoBehaviour:
     ShowNextMessage: 1
     Target: {fileID: 0}
   - Title: Dissidents
-    Message: If you right click on a unit or liberated, the selected unit will follow
-      them. Try squadding up before proceeding so Chonk can do his job.
+    Message: If you right click on a unit, the selected unit will follow them. Try
+      squadding up before proceeding so Chonk can do his job.
     ShowCloseButton: 0
     ShowNextMessage: 1
     Target: {fileID: 3413150740626551800}

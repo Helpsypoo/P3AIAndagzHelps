@@ -62,7 +62,6 @@ public class Shepherd : Unit {
 
         // If we're not there yet, we don't need to do anything here.
         if (Vector3.Distance(transform.position, _wayPointPlacement.Value) > Globals.MIN_ACTION_DIST) return;
-
         // If we get to here, we have a waypoint to place and we are close enough to place it. So place it.
         GameObject newBeacon = Instantiate(_wayPointPrefab, _wayPointPlacement.Value, Quaternion.identity);
         Waypoint waypoint = newBeacon.GetComponent<Waypoint>();
@@ -73,14 +72,28 @@ public class Shepherd : Unit {
 
     }
 
+    public void PlaceWayPoint() {
+        GameObject newBeacon = Instantiate(_wayPointPrefab, _wayPointPlacement.Value, Quaternion.identity);
+        Waypoint waypoint = newBeacon.GetComponent<Waypoint>();
+        GameManager.Instance.AddWaypoint(waypoint);
+        _wayPointPlacement = null;
+        GameManager.Instance.SelectionMarker.Deactivate();
+        SquadManager.Instance.DecrementWaypoints();
+    }
+
+    public void RemoveWayPoint() {
+        GameManager.Instance.RemoveWaypoint(_wayPointToRemove);
+        GameManager.Instance.SelectionMarker.Deactivate();
+    }
+
     private void CheckWayPointToRemove() {
 
         // If we're not there yet, we don't need to do anything here.
         if (Vector3.Distance(transform.position, _wayPointToRemove.transform.position) > Globals.MIN_ACTION_DIST) return;
 
         // Once we're there, remove the waypoint.
-        GameManager.Instance.RemoveWaypoint(_wayPointToRemove);
-        GameManager.Instance.SelectionMarker.Deactivate();
+        //GameManager.Instance.RemoveWaypoint(_wayPointToRemove);
+        //GameManager.Instance.SelectionMarker.Deactivate();
 
     }
 

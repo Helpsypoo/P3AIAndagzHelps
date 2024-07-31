@@ -659,7 +659,7 @@ MonoBehaviour:
     Target: {fileID: 4285932537931755883}
   - Title: Liberation!
     Message: Well done squad leader. Just lead them over to the green circle and
-      we'll begin processing them. You did good, kid.
+      we'll begin transmuting... I mean processing them. You did good, kid.
     ShowCloseButton: 1
     ShowNextMessage: 0
     Target: {fileID: 0}
