@@ -33,6 +33,8 @@ public class Liberated : Unit {
         IsPrisoner = false;
         LiberationRange.gameObject.SetActive(false);
         GameManager.Instance.JoinLiberated(this);
+        AudioManager.Instance.Play(AudioManager.Instance.LiberatedFree, MixerGroups.SFX, default, 1f,
+            transform.position);
     }
 
     private void FreeNearby() {

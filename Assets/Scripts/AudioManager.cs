@@ -43,6 +43,7 @@ public class AudioManager : MonoBehaviour {
     [SerializeField] private AudioClip[] _turretDeath;
     [SerializeField] private AudioClip[] _unitDeath;
     [SerializeField] private AudioClip[] _liberatedDeath;
+    [SerializeField] private AudioClip[] _liberatedFree;
     [SerializeField] private AudioClip[] _hit;
 
     public AudioClip UIClick => _uiClick;
@@ -65,6 +66,7 @@ public class AudioManager : MonoBehaviour {
     public AudioClip[] TurretDeath => _turretDeath;
     public AudioClip[] UnitDeath => _unitDeath;
     public AudioClip[] LiberatedDeath => _liberatedDeath;
+    public AudioClip[] LiberatedFree => _liberatedFree;
     public AudioClip[] Hit => _hit;
 
 
