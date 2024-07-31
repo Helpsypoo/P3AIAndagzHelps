@@ -40,10 +40,10 @@ public class LevelUp : MonoBehaviour {
 		UnitUpgrade _currentLevel = _unit.UnitStats.UnitUpgrades[SessionManager.Instance.GetLevel(_unit)];
 
 
-		HealthValue.fillAmount = _currentLevel.MaxHealth/500f;
+		HealthValue.fillAmount = _currentLevel.MaxHealth/400f;
 		SpeedValue.fillAmount = _currentLevel.Speed/10f;
-		DamageValue.fillAmount = Mathf.Abs(_currentLevel.Damage)/10f;
-		AbilityValue.fillAmount = _currentLevel.Ability/10f;
+		DamageValue.fillAmount = Mathf.Abs(_currentLevel.Damage)/20f;
+		AbilityValue.fillAmount = _currentLevel.Ability/5f;
 
 		UpdateAvailability();
 	}

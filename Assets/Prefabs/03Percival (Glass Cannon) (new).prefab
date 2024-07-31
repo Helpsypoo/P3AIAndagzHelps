@@ -862,7 +862,7 @@ MonoBehaviour:
   - {fileID: 5076527232554744021}
   - {fileID: 6718050415358157968}
   - {fileID: 4805217344747690197}
-  _weapon: {fileID: 0}
+  _weapon: {fileID: 5862393311460944179}
   _weaponPrefab: {fileID: 920266114437748004, guid: 4f55b7ee73ca6254eb645abb952dc4be,
     type: 3}
   _lookAtPivot: {fileID: 0}
@@ -977,6 +977,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4074934030344262, guid: a7f7e53efb9c16141af1c5631e25cbb8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114715709320567964, guid: a7f7e53efb9c16141af1c5631e25cbb8,
+        type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 199513454217386212, guid: a7f7e53efb9c16141af1c5631e25cbb8,
