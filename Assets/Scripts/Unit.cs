@@ -26,6 +26,8 @@ public class Unit : MonoBehaviour {
     public Transform RightFoot;
     public bool UpgradesSet;
 
+    public bool ImmuneFromSun = false;
+
     private CapsuleCollider _hitbox;
     private float _healthTickCooldownDuration = .4f;
     private bool _canHealthTick;
@@ -118,6 +120,7 @@ public class Unit : MonoBehaviour {
         if (CompareTag(Globals.UNIT_TAG)) {
             GameManager.Instance.ProcessUnitLife(this);
         }
+        ImmuneFromSun = UnitStats.InvunerableToSun;
     }
 
     public void ApplyUpgrades(int _ref) {
@@ -172,7 +175,7 @@ public class Unit : MonoBehaviour {
             return;
         }
         
-        if (Health <= 0) {
+        if (Health <= 0 || ImmuneFromSun) {
             if(_sunBeam) {_sunBeam.gameObject.SetActive(false);}
             return;
         }
@@ -364,13 +367,18 @@ public class Unit : MonoBehaviour {
     /// Checks if the object is in shade or not
     /// </summary>
     public virtual void CheckLightingStatus(float _timeSinceLastCheck) {
-        if (UnitStats.InvunerableToSun) {
-            return;
-        }
+        //if (ImmuneFromSun) {
+        //    return;
+        //}
         Vector3 lightDir = -_mainLight.transform.forward;
         //Debug.DrawLine(transform.position, transform.position + lightDir * 100f, Color.red, 1f);
-        _isInShadow = Physics.Raycast(transform.position, lightDir, out RaycastHit _hitInfo, 2000f, GameManager.Instance.ShadeLayerMask, QueryTriggerInteraction.Ignore);
-       
+
+        if (ImmuneFromSun) {
+            _isInShadow = true;
+        } else {
+            _isInShadow = Physics.Raycast(transform.position, lightDir, out RaycastHit _hitInfo, 2000f, GameManager.Instance.ShadeLayerMask, QueryTriggerInteraction.Ignore);
+        }
+
         if (_isInShadow) {
             //Debug.Log(gameObject.name + $" is shaded by {_hitInfo.transform.gameObject.name}.");
             return;
@@ -590,7 +598,7 @@ public class Unit : MonoBehaviour {
     public virtual void Die() {
         //Debug.LogError($"{gameObject.name} died");
         // If we're already dead, we don't need to die again.
-        if (State == UnitState.Dead) return;
+        //if (State == UnitState.Dead) return;
         if(_deathFX) {_deathFX.Play();}
         _tickEntity?.RemoveFromTickEventManager();
         //Stop any current health regen

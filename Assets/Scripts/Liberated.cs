@@ -67,7 +67,7 @@ public class Liberated : Unit {
 
     public override void Die() {
 
-        if (State == UnitState.Dead) return;
+        //if (State == UnitState.Dead) return;
 
         base.Die();
         GameManager.Instance.ProcessLiberatedDeath(this);

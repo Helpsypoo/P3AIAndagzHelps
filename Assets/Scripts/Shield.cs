@@ -28,25 +28,35 @@ public class Shield : MonoBehaviour {
     }
 
     public void PeriodicUpdate() {
+        if (!IsActive) return;
 
+        List<Liberated> currentLibs = new();
         foreach (Liberated lib in GameManager.Instance.ActiveLiberated) {
 
             // Get a list of liberated currently within range of the shield.
-            List<Liberated> currentLibs = new();
-            if (Vector3.Distance (transform.position, lib.transform.position) < CurrentRadius) {
+            if (Vector3.Distance (transform.position, lib.transform.position) <= CurrentRadius * 2f) {
                 currentLibs.Add(lib);
-                lib.UnitStats.InvunerableToSun = true;
+                lib.ImmuneFromSun = true;
             }
 
-            // Any liberated that are no longer under the shield need to be made vulnerable to sun again.
-            foreach (Liberated l in _protectedLibs) {
-                if (!currentLibs.Contains (l)) {
-                    l.UnitStats.InvunerableToSun = false;
-                }
+        }
+
+        // Any liberated that are no longer under the shield need to be made vulnerable to sun again.
+        foreach (Liberated l in _protectedLibs) {
+            if (!currentLibs.Contains(l)) {
+                l.ImmuneFromSun = false;
             }
+        }
 
-            _protectedLibs = currentLibs;
+        _protectedLibs = currentLibs;
 
+        foreach (Unit unit in GameManager.Instance.PlayerUnits) {
+            
+            if (Vector3.Distance(transform.position, unit.transform.position) <= CurrentRadius * 2f) {
+                unit.ImmuneFromSun = true;
+            } else {
+                unit.ImmuneFromSun = false;
+            }
         }
 
     }
@@ -59,6 +69,9 @@ public class Shield : MonoBehaviour {
     public void Deactivate() {
 
         StartCoroutine(ExpandContract(CurrentRadius, 0f));
+        foreach (Liberated l in _protectedLibs) {
+            l.ImmuneFromSun = false;
+        }
 
     }
 
