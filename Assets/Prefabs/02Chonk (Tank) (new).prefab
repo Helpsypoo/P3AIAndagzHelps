@@ -844,7 +844,7 @@ PrefabInstance:
         type: 3}
       propertyPath: LeftFoot
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 9166532038148142907}
     - target: {fileID: 7532648924021596425, guid: 21e4e28341cf4064ca245be07c9b5fb4,
         type: 3}
       propertyPath: _deathFX
@@ -854,7 +854,7 @@ PrefabInstance:
         type: 3}
       propertyPath: RightFoot
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 942893595149073256}
     - target: {fileID: 7532648924021596425, guid: 21e4e28341cf4064ca245be07c9b5fb4,
         type: 3}
       propertyPath: _renderers.Array.size
@@ -1077,6 +1077,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 120
+--- !u!4 &942893595149073256 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4201575885845222674, guid: 3f5543c1522a9cf4f8afa092983b725b,
+    type: 3}
+  m_PrefabInstance: {fileID: 3988829979197517434}
+  m_PrefabAsset: {fileID: 0}
 --- !u!137 &1060761006417782884 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 4171387929670780446, guid: 3f5543c1522a9cf4f8afa092983b725b,
@@ -1206,6 +1212,12 @@ SkinnedMeshRenderer:
 --- !u!4 &9018876666887241414 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5364445970251665596, guid: 3f5543c1522a9cf4f8afa092983b725b,
+    type: 3}
+  m_PrefabInstance: {fileID: 3988829979197517434}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &9166532038148142907 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5218893419391326529, guid: 3f5543c1522a9cf4f8afa092983b725b,
     type: 3}
   m_PrefabInstance: {fileID: 3988829979197517434}
   m_PrefabAsset: {fileID: 0}

@@ -16,5 +16,5 @@ MonoBehaviour:
   MaxHealth: 125
   Speed: 8.5
   Damage: -3
-  Ability: 2
+  Ability: 4
   Description: More health, speed, & ability charges.

@@ -20,7 +20,7 @@ MonoBehaviour:
   HealthRegenDelay: 3
   Speed: 7.5
   AttackDamage: -13
-  AttackRate: 5
+  AttackRate: 3
   AttackRange: 40
   IsEnemy: 0
   InvunerableToSun: 0

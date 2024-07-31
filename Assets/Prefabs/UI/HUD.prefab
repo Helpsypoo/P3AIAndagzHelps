@@ -530,7 +530,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1028020973140484530
 RectTransform:
   m_ObjectHideFlags: 0
@@ -724,6 +724,7 @@ GameObject:
   - component: {fileID: 1273951890697427329}
   - component: {fileID: 624161801489909033}
   - component: {fileID: 152234938022551565}
+  - component: {fileID: 3504239118673826023}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -771,7 +772,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.18792273, g: 0.9716981, b: 0.20943817, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -844,6 +845,36 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3504239118673826023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8058036533078702037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19f2c64633dbeaf44afb136f3bc5b904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  power: 1
+  useUnscaledTime: 0
+  stagger: 0
+  positionJig:
+    enabled: 0
+    amount: {x: 0.1, y: 0, z: 0}
+    frequency: 10
+    time: 0
+  rotationJig:
+    enabled: 1
+    amount: {x: 0, y: 0, z: 0}
+    frequency: 10
+    time: 0
+  scaleJig:
+    enabled: 1
+    amount: {x: 0.1, y: -0.1, z: 0.1}
+    frequency: 10
+    time: 0
 --- !u!1001 &584088400430098013
 PrefabInstance:
   m_ObjectHideFlags: 0

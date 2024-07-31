@@ -290,7 +290,7 @@ public class Unit : MonoBehaviour {
     /// <param name="position">The position that the action should be performed at (where the click happened)</param>
     /// <param name="target">The thing that was clicked on. Can be null.</param>
     public virtual void PerformAction(Vector3 position, Transform target = null) {
-        Debug.Log($"{UnitStats.Name}'s action has been called.");
+        //Debug.Log($"{UnitStats.Name}'s action has been called.");
     }
 
     /// <summary>
@@ -683,7 +683,7 @@ public class Unit : MonoBehaviour {
         //Debug.Log($"Processing attack for {UnitStats.name} to attack {AttackTarget.gameObject.name}");
         if (AttackTarget.Health <= 0 || Health <= 0) { 
             //If the thing we're following cannot be attacked exit
-            Debug.Log($"{UnitStats.name} cannot attack {AttackTarget.gameObject.name}. It's health is {AttackTarget.Health}. Our health is {Health}");
+            //Debug.Log($"{UnitStats.name} cannot attack {AttackTarget.gameObject.name}. It's health is {AttackTarget.Health}. Our health is {Health}");
             AttackTarget = null;
             Anim?.SetBool(hasAttackTargetInRange, false);
             

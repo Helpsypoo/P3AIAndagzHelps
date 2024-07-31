@@ -280,7 +280,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70c654c7889fd654ab08bb0824397145, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  followOffset: {x: 0, y: 25, z: -18}
+  followOffset: {x: 0, y: 35, z: -18}
   aimOffset: {x: 0, y: 0, z: 0}
   positionSmoothTime: 0.2
   rotationSmoothTime: 0.8

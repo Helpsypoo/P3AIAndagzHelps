@@ -16,5 +16,5 @@ MonoBehaviour:
   MaxHealth: 100
   Speed: 7.5
   Damage: -3
-  Ability: 1
+  Ability: 3
   Description: 

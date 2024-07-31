@@ -983,8 +983,8 @@ MonoBehaviour:
     type: 3}
   _lookAtPivot: {fileID: 0}
   _lookAtPivotModifier: {x: 0, y: 0, z: 0}
-  LeftFoot: {fileID: 0}
-  RightFoot: {fileID: 0}
+  LeftFoot: {fileID: 2096621466202400286}
+  RightFoot: {fileID: 8315645308458703026}
   UpgradesSet: 0
   ImmuneFromSun: 0
   LastDamagedBy: {fileID: 0}
@@ -1248,6 +1248,12 @@ SkinnedMeshRenderer:
     type: 3}
   m_PrefabInstance: {fileID: 8940185777901150038}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &2096621466202400286 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6992218321898699080, guid: 720186dd1cc2bbb4d88005008c149504,
+    type: 3}
+  m_PrefabInstance: {fileID: 8940185777901150038}
+  m_PrefabAsset: {fileID: 0}
 --- !u!137 &3345306716921095952 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 5943908341943334982, guid: 720186dd1cc2bbb4d88005008c149504,
@@ -1287,6 +1293,12 @@ SkinnedMeshRenderer:
 --- !u!4 &7914269652934319338 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -7943001980434005060, guid: 720186dd1cc2bbb4d88005008c149504,
+    type: 3}
+  m_PrefabInstance: {fileID: 8940185777901150038}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8315645308458703026 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8109029368973555740, guid: 720186dd1cc2bbb4d88005008c149504,
     type: 3}
   m_PrefabInstance: {fileID: 8940185777901150038}
   m_PrefabAsset: {fileID: 0}

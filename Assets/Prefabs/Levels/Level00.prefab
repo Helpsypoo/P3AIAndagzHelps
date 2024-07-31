@@ -862,6 +862,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: VFX_Fire_Floor_02_Smoke (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1255053967005034563, guid: 982b091f07779d846ad915e29a06ddc8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1255053967005034564, guid: 982b091f07779d846ad915e29a06ddc8,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -1259,12 +1264,12 @@ PrefabInstance:
     - target: {fileID: 1920584841702332106, guid: c6a4b2e0da315234ca97f8424a910d98,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6775814467275482670, guid: c6a4b2e0da315234ca97f8424a910d98,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -59.71
+      value: -59.530003
       objectReference: {fileID: 0}
     - target: {fileID: 6775814467275482670, guid: c6a4b2e0da315234ca97f8424a910d98,
         type: 3}
@@ -1274,7 +1279,7 @@ PrefabInstance:
     - target: {fileID: 6775814467275482670, guid: c6a4b2e0da315234ca97f8424a910d98,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 229.97
+      value: 230.23
       objectReference: {fileID: 0}
     - target: {fileID: 6775814467275482670, guid: c6a4b2e0da315234ca97f8424a910d98,
         type: 3}
@@ -1413,12 +1418,12 @@ PrefabInstance:
     - target: {fileID: 1920584841702332106, guid: c6a4b2e0da315234ca97f8424a910d98,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6775814467275482670, guid: c6a4b2e0da315234ca97f8424a910d98,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -56.15
+      value: -59.120003
       objectReference: {fileID: 0}
     - target: {fileID: 6775814467275482670, guid: c6a4b2e0da315234ca97f8424a910d98,
         type: 3}
@@ -1428,7 +1433,7 @@ PrefabInstance:
     - target: {fileID: 6775814467275482670, guid: c6a4b2e0da315234ca97f8424a910d98,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 231.18
+      value: 231.43001
       objectReference: {fileID: 0}
     - target: {fileID: 6775814467275482670, guid: c6a4b2e0da315234ca97f8424a910d98,
         type: 3}
@@ -1642,12 +1647,12 @@ PrefabInstance:
     - target: {fileID: 1920584841702332106, guid: c6a4b2e0da315234ca97f8424a910d98,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6775814467275482670, guid: c6a4b2e0da315234ca97f8424a910d98,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -57.280003
+      value: -56.81
       objectReference: {fileID: 0}
     - target: {fileID: 6775814467275482670, guid: c6a4b2e0da315234ca97f8424a910d98,
         type: 3}
@@ -1657,7 +1662,7 @@ PrefabInstance:
     - target: {fileID: 6775814467275482670, guid: c6a4b2e0da315234ca97f8424a910d98,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 232.45
+      value: 232.22
       objectReference: {fileID: 0}
     - target: {fileID: 6775814467275482670, guid: c6a4b2e0da315234ca97f8424a910d98,
         type: 3}
@@ -1717,6 +1722,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: VFX_Fire_Floor_02_Smoke (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1255053967005034563, guid: 982b091f07779d846ad915e29a06ddc8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1255053967005034564, guid: 982b091f07779d846ad915e29a06ddc8,
         type: 3}
@@ -2190,12 +2200,12 @@ PrefabInstance:
     - target: {fileID: 1920584841702332106, guid: c6a4b2e0da315234ca97f8424a910d98,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6775814467275482670, guid: c6a4b2e0da315234ca97f8424a910d98,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -56.8
+      value: -57.090004
       objectReference: {fileID: 0}
     - target: {fileID: 6775814467275482670, guid: c6a4b2e0da315234ca97f8424a910d98,
         type: 3}
@@ -2205,7 +2215,7 @@ PrefabInstance:
     - target: {fileID: 6775814467275482670, guid: c6a4b2e0da315234ca97f8424a910d98,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 233.91
+      value: 230.97
       objectReference: {fileID: 0}
     - target: {fileID: 6775814467275482670, guid: c6a4b2e0da315234ca97f8424a910d98,
         type: 3}
@@ -2269,12 +2279,12 @@ PrefabInstance:
     - target: {fileID: 1920584841702332106, guid: c6a4b2e0da315234ca97f8424a910d98,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6775814467275482670, guid: c6a4b2e0da315234ca97f8424a910d98,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -58.99
+      value: -58.24
       objectReference: {fileID: 0}
     - target: {fileID: 6775814467275482670, guid: c6a4b2e0da315234ca97f8424a910d98,
         type: 3}
@@ -2284,7 +2294,7 @@ PrefabInstance:
     - target: {fileID: 6775814467275482670, guid: c6a4b2e0da315234ca97f8424a910d98,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 231.54
+      value: 230.54
       objectReference: {fileID: 0}
     - target: {fileID: 6775814467275482670, guid: c6a4b2e0da315234ca97f8424a910d98,
         type: 3}
@@ -3105,6 +3115,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: VFX_Fire_01_Medium_Smoke
       objectReference: {fileID: 0}
+    - target: {fileID: 8295591563862043295, guid: e01f2e62cf41a3449be2dade3b2c2d79,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3207,12 +3222,12 @@ PrefabInstance:
     - target: {fileID: 1920584841702332106, guid: c6a4b2e0da315234ca97f8424a910d98,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6775814467275482670, guid: c6a4b2e0da315234ca97f8424a910d98,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -57.96
+      value: -58.100002
       objectReference: {fileID: 0}
     - target: {fileID: 6775814467275482670, guid: c6a4b2e0da315234ca97f8424a910d98,
         type: 3}
@@ -3222,7 +3237,7 @@ PrefabInstance:
     - target: {fileID: 6775814467275482670, guid: c6a4b2e0da315234ca97f8424a910d98,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 230.20999
+      value: 231.85
       objectReference: {fileID: 0}
     - target: {fileID: 6775814467275482670, guid: c6a4b2e0da315234ca97f8424a910d98,
         type: 3}
@@ -3282,6 +3297,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: VFX_Fire_Floor_02_Smoke
+      objectReference: {fileID: 0}
+    - target: {fileID: 1255053967005034563, guid: 982b091f07779d846ad915e29a06ddc8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1255053967005034564, guid: 982b091f07779d846ad915e29a06ddc8,
         type: 3}
