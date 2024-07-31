@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Percival : Unit {
@@ -51,6 +50,7 @@ public class Percival : Unit {
         if (_abilityCharges < 1) return;
 
         StartCoroutine(ThrowMine(position));
+        Anim?.SetTrigger(actionTrigger);
         GameManager.Instance.MoveArrow.Play(GameManager.Instance.SelectionMarker.Position, GameManager.Instance.SelectionMarker.transform.up);
         //_placingMine = true;
         //MoveTo(position);
